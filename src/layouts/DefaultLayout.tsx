@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom"
 export function DefaultLayout () {
 
   return (
-    <div className="flex flex-col mx-10">
+    <div className="flex flex-col">
       
       <Outlet />
     </div>

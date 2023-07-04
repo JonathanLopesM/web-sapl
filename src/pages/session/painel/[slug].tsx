@@ -24,15 +24,7 @@ export function Painel({sessions}){
     // },[!sessions])
     console.log(sessions, 'sessions depois do effect')
     let session = '' as any
-    let ses = JSON.parse(localStorage.getItem('sessions'))
-    console.log(ses, 'sessons do local Storage')
-    if(ses){
-      session = ses.filter(ses => {
-        if(ses.id == id){
-          return ses
-        }
-      })
-    }
+  
     
     if(sessions){
       session = sessions.filter(ses => {
@@ -44,7 +36,7 @@ export function Painel({sessions}){
 
   return (
     <>
-    {session &&
+    {
       <div className="flex flex-col text-white h-screen w-full bg-gray-900 " >
         <header className="flex w-full h-44 border-b justify-center text-white gap-4 my-4 pb-4">
             <div className="flex w-[80%] justify-between items-center ">
@@ -59,7 +51,7 @@ export function Painel({sessions}){
         <div className="flex flex-col">
           <div className="flex justify-center">
             <h3 className="border p-4 text-3xl">
-              {session[0].__str__}
+              nome da sessao 
             </h3>
             
               {session.iniciada && <span className="flex bg-white text-green-500 justify-center text-center items-center font-extrabold px-4 text-3xl">SESSÃO AUTORIZADA </span>}

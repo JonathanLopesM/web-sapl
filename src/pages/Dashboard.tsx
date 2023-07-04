@@ -64,19 +64,19 @@ export function Dashboard () {
     <ModalAddSession open={open} setOpen={setOpen} />
     
       
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 px-10">
         <h3 className="flex text-xl sm:text-4xl font-semibold">
           Pesquisar Sessão Plenária
         </h3>
-        <div className=" flex w-full gap-4 justify-end">
+        {/* <div className=" flex w-full gap-4 justify-end">
           <button onClick={()=> setOpenSearch(!openSearch)} 
             className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300 ">
             Pesquisa Textual
           </button>
           <button onClick={()=> setOpen(!open)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300">Adicionar Sessão Plenária</button>
-        </div>
+        </div> */}
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mx-10">
         <h3 className="flex text-xl">Pesquisa de sessão Plenária</h3>
         <div className="flex flex-col sm:flex-row gap-2">
          <div className="flex gap-2">
@@ -103,7 +103,7 @@ export function Dashboard () {
               </select>
             </label>
          </div>
-        <div className="flex  gap-2">
+        <div className="flex  gap-2 mx-auto">
           <label className="flex flex-col" htmlFor="mes">Dia
               <select className="flex border w-44 rounded-md px-2 py-1" name="dia" id="dia">
                 <option value="------">-------</option>

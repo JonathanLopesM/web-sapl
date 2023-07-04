@@ -83,6 +83,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     localStorage.setItem('sessions', JSON.stringify(sessions))
   }
 
+  
   async function GetParlamentares (){
     const response = await getParlamentares()
 

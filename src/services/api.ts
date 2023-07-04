@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL:'http://20.161.22.105'
+  baseURL:'https://sapl.valenca.rj.leg.br'
 })
 
 export const getToken = async ({username, password}) => {
