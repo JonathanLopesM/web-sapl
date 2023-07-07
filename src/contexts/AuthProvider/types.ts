@@ -39,6 +39,7 @@ export interface IContext extends IUser {
   painelLayout :any, setPainelLayout:any
 
   GetPainel: any, dadosPainel:any, setDadosPainel:any
+  Logout:any
 }
 
 export interface IAuthProvider {

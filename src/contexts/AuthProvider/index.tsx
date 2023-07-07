@@ -1,8 +1,8 @@
-import React,{ createContext, useState } from "react"
+import React,{ createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
 import { createSession, getParlamentares, getSession, getToken, paineldados } from "../../services/api"
 import { useNavigate } from "react-router-dom"
-import Cookies from "js-cookie"
+
 
 
 export const AuthContext = createContext<IContext>({} as IContext)
@@ -34,6 +34,22 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const [painelLayout, setPainelLayout] = useState('parlamentares')
 
   const [ dadosPainel, setDadosPainel ] = useState('') as any
+
+  //MmViNDIxMmYw
+
+  useEffect(()=> {
+    // Conferir se tem um token, 
+
+    // se tiver rediciona para a dashboard 
+    const token = localStorage.getItem('sessionid')
+    if(!token){
+      navigate('/')
+    }
+    else {
+      navigate('/sessoes')
+    }
+    //se não direciona Login
+  }, [idSession])
   
   async function CreateSession(username, password) {
 
@@ -44,7 +60,6 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       const token = response.data.token
 
       localStorage.setItem('sessionid', token)
-      Cookies.set('sessionid', token)
 
       console.log('deveria direcionar')
       navigate('/sessoes')
@@ -93,16 +108,20 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   async function GetPainel({id}){
-    const token = Cookies.get('sessionid')
-    console.log(token, 'cookie context')
-    const response = await paineldados({id, token})
-    console.log(response, 'painel no context')
-    setDadosPainel(response)
+
+  }
+
+  async function Logout (){
+    localStorage.removeItem('sessionid')
+    navigate('/')
+
   }
 
 
+
+
   return (
-    <AuthContext.Provider value={{ authenticated: true , CreateSession, GetSessions, sessions, navigate, basicDataOpen, setBasicDataOpen, tableOpen, setTableOpen, presenceOpen, setPresenceOpen, absenceOpen, setAbsenceOpen, personalTalkOpen, setPersonalTalkOpen, finalTalkOpen, setFinalTalkOpen, retirarPautaOpen, setRetirarPautaOpen,idSession, setIdSession,year, setYear,month, setMonth,day, setDay,type, setType, dash, setDash, sess,setSess,parlamentares, setParlamentares,GetParlamentares, CreateSessionPlen, painelLayout, setPainelLayout, GetPainel, dadosPainel, setDadosPainel }} >
+    <AuthContext.Provider value={{ authenticated: true , CreateSession, GetSessions, sessions, navigate, basicDataOpen, setBasicDataOpen, tableOpen, setTableOpen, presenceOpen, setPresenceOpen, absenceOpen, setAbsenceOpen, personalTalkOpen, setPersonalTalkOpen, finalTalkOpen, setFinalTalkOpen, retirarPautaOpen, setRetirarPautaOpen,idSession, setIdSession,year, setYear,month, setMonth,day, setDay,type, setType, dash, setDash, sess,setSess,parlamentares, setParlamentares,GetParlamentares, CreateSessionPlen, painelLayout, setPainelLayout, GetPainel, dadosPainel, setDadosPainel, Logout }} >
       {children}
     </AuthContext.Provider>
   )

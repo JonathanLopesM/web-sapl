@@ -1,7 +1,10 @@
-import React from "react"
+import React, { useContext } from "react"
+import { AuthContext } from "../contexts/AuthProvider"
 
 
 export function Header(){
+  const { Logout } = useContext(AuthContext)
+
   return (
     <div className="flex items-center gap-4">
         <img className="w-28" src="/Brasao_barra_Mansa.jpeg" alt="" />
@@ -13,6 +16,9 @@ export function Header(){
             Sistema de Apoio ao Processo Legislativo
           </p>
         </div>
+        <button onClick={Logout}>
+          Logout
+        </button>
       </div>
   )
 }
