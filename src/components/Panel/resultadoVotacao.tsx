@@ -3,7 +3,7 @@ import React from "react"
 export function ResultadoVotacao(){
   return (
     <div className="flex w-full justify-center">
-      <div>
+      <div className="flex flex-col">
         <span>
           Sim: 
         </span>

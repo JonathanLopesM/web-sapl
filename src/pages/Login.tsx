@@ -1,13 +1,28 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../contexts/AuthProvider"
 import { useNavigate } from "react-router-dom"
 
 export default function Login() {
-  const { CreateSession } = useContext(AuthContext)
+  const { CreateSession, idSession } = useContext(AuthContext)
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
   const history = useNavigate()
+  const navigate = useNavigate();
+
+  useEffect(()=> {
+    // Conferir se tem um token, 
+
+    // se tiver rediciona para a dashboard 
+    const token = localStorage.getItem('sessionid')
+    if(!token){
+      navigate('/')
+    }
+    else {
+      navigate('/sessoes')
+    }
+    //se não direciona Login
+  }, [idSession])
 
   function HandleSetPass (e){
     console.log(password)

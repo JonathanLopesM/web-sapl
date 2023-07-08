@@ -4,17 +4,6 @@ export const api = axios.create({
   baseURL:'https://sapl.valenca.rj.leg.br'
 })
 
-export const getToken = async ({username, password}) => {
-  let errors = []
-  console.log(username, password)
-  const response = await api.post('/api/auth/token', {
-    username,
-    password
-  }, { validateStatus: false} as any)
-  errors = response.data
-
-  return response 
-}
 
 export const createSession = async ({
   cod_andamento_sessao, painel_aberto, data_inicio, hora_inicio,

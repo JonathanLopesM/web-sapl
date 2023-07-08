@@ -9,7 +9,7 @@ import { AuthContext } from "../../contexts/AuthProvider/index"
 import { useNavigate, useParams } from "react-router-dom"
 import { Processo } from "../../components/Processo"
 import { MesaDiretora } from "../../components/Mesa"
-import { PainelEletronico } from "../../components/PainelEletronico/index"
+import { PainelEletronico } from "../../components/ControlPanel/index"
 import { OrdemDoDiaLayout } from "../../components/OrdemDoDia"
 import { Presenca } from "../../components/Presenca"
 import { Ausencia } from "../../components/Ausencia"
@@ -45,7 +45,7 @@ export function Session () {
   console.log( id, 'id e session')
 
   return (
-    <>
+    <div className="flex flex-col w-[95%] mx-auto">
     <Header />
     {/* <ModalSearch open={openSearch} setOpen={setOpenSearch} />
     <ModalAddSession open={open} setOpen={setOpen} /> */}
@@ -76,6 +76,6 @@ export function Session () {
       </div> 
     }
     
-    </>
+    </div>
   )
 }

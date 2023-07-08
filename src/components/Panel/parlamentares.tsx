@@ -18,17 +18,25 @@ export function PainelParlamentares () {
       <div className="grid grid-cols-2 gap-4 w-[80%]">
         {parlamentares.map(par=> (
           par.titular == 'Sim' &&
-          <div className="flex gap-4 ">
-            <img className="flex rounded-full w-16 " src={par.fotografia} alt="" />
-            <div>
-              <h2 className="flex text-2xl font-semibold">
-                {par.nome_parlamentar}
-              </h2>
-              <span>
-                ({par.partido})
-              </span>
+          <div className="flex gap-4 justify-between">
+            <div className="flex gap-4">
+              <img className="flex rounded-full w-16 " src={par.fotografia} alt="" />
+              <div>
+                <h2 className="flex text-2xl font-semibold">
+                  {par.nome_parlamentar}
+                </h2>
+                <span>
+                  ({par.partido})
+                </span>
 
+              </div>
             </div>
+            <div className="flex border items-center justify-center px-2">
+              <span className="font-bold">
+                NÃO VOTOU
+              </span>
+            </div>
+
           </div>
         ))}
       </div>

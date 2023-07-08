@@ -58,13 +58,13 @@ export function Dashboard () {
 
 
   return (
-    <>
+    <div className="flex flex-col w-[95%] mx-auto">
     <Header />
     <ModalSearch open={openSearch} setOpen={setOpenSearch} />
     <ModalAddSession open={open} setOpen={setOpen} />
     
       
-      <div className="flex flex-col gap-2 px-10">
+      <div className="flex flex-col gap-2">
         <h3 className="flex text-xl sm:text-4xl font-semibold">
           Pesquisar Sessão Plenária
         </h3>
@@ -76,7 +76,7 @@ export function Dashboard () {
           <button onClick={()=> setOpen(!open)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300">Adicionar Sessão Plenária</button>
         </div> */}
       </div>
-      <div className="flex flex-col gap-4 mx-10">
+      <div className="flex flex-col gap-4 ">
         <h3 className="flex text-xl">Pesquisa de sessão Plenária</h3>
         <div className="flex flex-col sm:flex-row gap-2">
          <div className="flex gap-2">
@@ -188,6 +188,6 @@ export function Dashboard () {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

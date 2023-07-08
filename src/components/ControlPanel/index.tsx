@@ -71,7 +71,7 @@ export function PainelEletronico({id, session}){
         </span> 
       </h2>
       <div className="flex w-full justify-between my-5">
-        <a onClick={() => window.open(`/sessoes/painel/${id}`, "_blank", "width=1200, height=900")} href={`/painel/${id}`} target="_blank">
+        <a onClick={() => window.open(`/sessoes/painel`, "_blank", "width=1200, height=900")} href={`/painel/${id}`} target="_blank">
           <button className="flex border px-4 py-2 rounded-lg bg-blue-400 hover:bg-blue-300 text-white ">
             Iniciar painel completo
           </button>

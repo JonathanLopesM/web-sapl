@@ -1,7 +1,8 @@
 import React,{ createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, getToken, paineldados } from "../../services/api"
+import { createSession, getParlamentares, getSession, paineldados } from "../../services/api"
 import { useNavigate } from "react-router-dom"
+import { getToken } from "../../services/apiNode"
 
 
 
@@ -37,19 +38,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   //MmViNDIxMmYw
 
-  useEffect(()=> {
-    // Conferir se tem um token, 
-
-    // se tiver rediciona para a dashboard 
-    const token = localStorage.getItem('sessionid')
-    if(!token){
-      navigate('/')
-    }
-    else {
-      navigate('/sessoes')
-    }
-    //se não direciona Login
-  }, [idSession])
+  
   
   async function CreateSession(username, password) {
 

@@ -8,7 +8,7 @@ import { AuthContext, AuthProvider } from './contexts/AuthProvider'
 import { Dashboard } from './pages/Dashboard'
 import { Session } from './pages/session/[slug]'
 import { DefaultLayout } from './layouts/DefaultLayout'
-import { Painel } from './pages/session/painel/[slug]'
+import { Painel } from './pages/PanelPage'
 
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
             <Route path='/sessoes' element={<Private><DefaultLayout /></Private>}>
               <Route path='/sessoes' element={ <Dashboard  />} />
               <Route path='/sessoes/sessao/:id' element={<Session />} />
-              <Route path='/sessoes/painel/:id/' element={<Painel sessions={sessions} />} />
+              <Route path='/sessoes/painel' element={<Painel sessions={sessions} />} />
             </Route>
             {/* <Route path='/dashboard' element={<Private> <Dashboard  /></Private>} /> */}
             
