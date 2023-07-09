@@ -9,16 +9,17 @@ import { Dashboard } from './pages/Dashboard'
 import { Session } from './pages/session/[slug]'
 import { DefaultLayout } from './layouts/DefaultLayout'
 import { Painel } from './pages/PanelPage'
+import { NewUser } from './pages/NewUser'
 
 
 function App() {
-  const { authenticated, sessions} = useContext(AuthContext)
-  const Private = ( { children }) => {
-    const { authenticated, sessions} = useContext(AuthContext)
-    
-      if(!authenticated){
-        return <Navigate to='/' />
-      }
+  const { authenticated, sessions } = useContext(AuthContext)
+  const Private = ({ children }) => {
+    const { authenticated, sessions } = useContext(AuthContext)
+
+    if (!authenticated) {
+      return <Navigate to='/' />
+    }
     return children
   }
   console.log(sessions, 'sessions no app')
@@ -26,19 +27,20 @@ function App() {
   return (
     <AuthProvider>
 
-          <Routes>
-            <Route path='/' element={<Login  />} />
-            <Route path='/sessoes' element={<Private><DefaultLayout /></Private>}>
-              <Route path='/sessoes' element={ <Dashboard  />} />
-              <Route path='/sessoes/sessao/:id' element={<Session />} />
-              <Route path='/sessoes/painel' element={<Painel sessions={sessions} />} />
-            </Route>
-            {/* <Route path='/dashboard' element={<Private> <Dashboard  /></Private>} /> */}
-            
-          </Routes>
+      <Routes>
+        <Route path='/' element={<Login />} />
+        <Route path='/sessoes' element={<Private><DefaultLayout /></Private>}>
+          <Route path='/sessoes' element={<Dashboard />} />
+          <Route path='/sessoes/cadastros' element={<NewUser />} />
+          <Route path='/sessoes/sessao/:id' element={<Session />} />
+          <Route path='/sessoes/painel' element={<Painel sessions={sessions} />} />
+        </Route>
+        {/* <Route path='/dashboard' element={<Private> <Dashboard  /></Private>} /> */}
 
-      </AuthProvider>
-    
+      </Routes>
+
+    </AuthProvider>
+
   )
 }
 

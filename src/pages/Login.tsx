@@ -44,15 +44,7 @@ export default function Login() {
   return (
     <div className="flex px-10 justify-items-center h-screen ">
       <div className="flex flex-col items-center gap-4 justify-center mx-auto ">
-          <img className="w-28" src="/Brasao_barra_Mansa.jpeg" alt="brasão de barra mansa" />
-          <div className="flex flex-col">
-            <h2 className="flex w-72 text-center text-2xl text-blue-500 sm:text-3xl font-bold">
-              Câmara Municipal de Barra Mansa
-            </h2>
-            <p className="flex text-gray-500">
-              Sistema de Apoio ao Processo Legislativo
-            </p>
-          </div>
+          <img className="w-70" src="/novace_logo.png" alt="Logo Novace" />
         </div>
         <div className="flex min-h-full flex-col justify-center  py-12 px-12 border-l-2 ">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
