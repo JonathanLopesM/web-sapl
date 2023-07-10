@@ -33,7 +33,7 @@ function App() {
           <Route path='/sessoes' element={<Dashboard />} />
           <Route path='/sessoes/cadastros' element={<NewUser />} />
           <Route path='/sessoes/sessao/:id' element={<Session />} />
-          <Route path='/sessoes/painel' element={<Painel sessions={sessions} />} />
+          <Route path='/sessoes/painel' element={<Painel />} />
         </Route>
         {/* <Route path='/dashboard' element={<Private> <Dashboard  /></Private>} /> */}
 

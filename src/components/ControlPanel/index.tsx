@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import { AuthContext } from "../../contexts/AuthProvider"
+import { io } from "socket.io-client"
 
 export function PainelEletronico({id, session}){
   console.log(id, 'id de chegada')
@@ -58,7 +59,20 @@ export function PainelEletronico({id, session}){
   ]
   const [form, setForm] = useState('presencavotacao')
   const [discurso, setDiscurso] = useState('')
+  // const socket = io('http://localhost:3333');
+  const handleFunction = () => {
+    window.open(`/sessoes/painel`, "_blank", "width=1200, height=900")
+  
+  }
 
+  const handleOpenPanel = (state) => {
+    console.log("fechar ou abrir painel")
+    console.log(state)
+  }
+
+  const handleViewWindow = (tela) => {
+    console.log(tela)
+  }
 
 
   console.log(painelLayout, 'no controle do painel')
@@ -71,24 +85,38 @@ export function PainelEletronico({id, session}){
         </span> 
       </h2>
       <div className="flex w-full justify-between my-5">
-        <a onClick={() => window.open(`/sessoes/painel`, "_blank", "width=1200, height=900")} href={`/painel/${id}`} target="_blank">
+        <a onClick={handleFunction} target="_blank">
           <button className="flex border px-4 py-2 rounded-lg bg-blue-400 hover:bg-blue-300 text-white ">
             Iniciar painel completo
           </button>
         </a>
         <div className="flex">
-          <button className="flex border px-4 py-2 rounded-l-lg bg-green-400 hover:bg-green-300 text-white ">
+          <button onClick={handleOpenPanel} className="flex border px-4 py-2 rounded-l-lg bg-green-400 hover:bg-green-300 text-white ">
               Abrir painel
           </button>
-          <button className="flex border px-4 py-2 rounded-r-lg bg-red-400 hover:bg-red-300 text-white ">
+          <button onClick={handleOpenPanel} className="flex border px-4 py-2 rounded-r-lg bg-red-400 hover:bg-red-300 text-white ">
               Fechar painel
           </button>
         </div>
       </div>
       <form className="flex flex-col gap-4">
               <div className="flex justify-between">
+              <button 
+                    onClick={(e:any)=>{
+                      handleViewWindow(0)
+                      setForm(e.target.value)}
+                    } 
+                    className={`flex border px-2 py-2 rounded-md ${form == 'precensavotacao' && 'bg-gray-400 text-white'}`} 
+                    value="precensavotacao"
+                    type="button"
+                >
+                  Bem vindos
+                </button>
                 <button 
-                    onClick={(e:any)=>setForm(e.target.value)} 
+                    onClick={(e:any)=>{
+                      handleViewWindow(1)
+                      setForm(e.target.value)}
+                    } 
                     className={`flex border px-2 py-2 rounded-md ${form == 'precensavotacao' && 'bg-gray-400 text-white'}`} 
                     value="precensavotacao"
                     type="button"
@@ -97,6 +125,7 @@ export function PainelEletronico({id, session}){
                 </button>
                 <button 
                   onClick={(e:any)=>{
+                      handleViewWindow(2)
                       setForm(e.target.value)
                       setPainelLayout('resultadovotacao')
                     }

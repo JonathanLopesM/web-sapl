@@ -60,14 +60,14 @@ export function Dashboard() {
   return (
     <div>
       <Header />
-      <div className="flex flex-col w-[95%] mx-auto">
+      <div className="flex flex-col w-[95%] mx-auto mt-10">
         <ModalSearch open={openSearch} setOpen={setOpenSearch} />
         <ModalAddSession open={open} setOpen={setOpen} />
 
 
         <div className="flex flex-col gap-2">
           <h3 className="flex text-xl sm:text-4xl font-semibold">
-            Pesquisar Sessão Plenária
+            Selecionar Sessão Plenária
           </h3>
           {/* <div className=" flex w-full gap-4 justify-end">
           <button onClick={()=> setOpenSearch(!openSearch)} 
@@ -159,7 +159,7 @@ export function Dashboard() {
           </div>
         </div>
         <div className="flex flex-col mt-5 divide-y-2 gap-5">
-          <h3 className="flex text-lg"> Foram encontradas 3 sessões</h3>
+          <h3 className="flex text-lg">Sessões encontradas</h3>
           <div className="flex flex-col gap-2">
             <h3 className="px-2 py-4 text-xl">Resultados</h3>
             <div className="flex flex-col gap-5">

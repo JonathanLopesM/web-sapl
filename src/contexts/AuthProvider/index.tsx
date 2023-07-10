@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
 import { createSession, getParlamentares, getSession, paineldados } from "../../services/api"
 import { Link, useNavigate } from "react-router-dom"
-import { getToken } from "../../services/apiNode"
+import { getData, getToken } from "../../services/apiNode"
 
 
 
@@ -96,8 +96,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   }
 
-  async function GetPainel({ id }) {
-
+  async function GetPainel(setDados) {
+    const respon = await getData(setDados)
+    console.log(respon, 'respon no context')
   }
 
   async function Logout() {

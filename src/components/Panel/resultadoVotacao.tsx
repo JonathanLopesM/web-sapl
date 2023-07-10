@@ -1,6 +1,6 @@
 import React from "react"
 
-export function ResultadoVotacao(){
+export function ResultadoVotacao(dados){
   return (
     <div className="flex w-full justify-center">
       <div className="flex flex-col">
