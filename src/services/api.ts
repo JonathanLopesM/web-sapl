@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL:'https://sapl.valenca.rj.leg.br'
+  // @ts-ignore
+  baseURL: import.meta.env.VITE_URL_API,
 })
 
 
@@ -51,3 +52,11 @@ export const paineldados = async ({ id, token }) => {
   errors = response.data.errors
   return response
 }
+
+export const parliamentariansSearch = async () => {
+  let errors = []
+  const response = await api.get("/api/parlamentares/parlamentar/")
+  errors = response.data.errors
+  return response
+}
+

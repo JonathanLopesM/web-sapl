@@ -42,6 +42,8 @@ export interface IContext extends IUser {
   Logout: any
   Cadastros: any
   MenuInicial: any
+
+  SearchParliamen:any,searchParl:any, setSearchParl:any
 }
 
 export interface IAuthProvider {

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, paineldados } from "../../services/api"
+import { createSession, getParlamentares, getSession, paineldados, parliamentariansSearch } from "../../services/api"
 import { Link, useNavigate } from "react-router-dom"
 import { getData, getToken } from "../../services/apiNode"
 
@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const [painelLayout, setPainelLayout] = useState('parlamentares')
 
   const [dadosPainel, setDadosPainel] = useState('') as any
+
+  const [searchParl, setSearchParl] = useState([])
 
   //MmViNDIxMmYw
 
@@ -107,6 +109,12 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   }
 
+  async function SearchParliamen () {
+    const response = await parliamentariansSearch() as any
+    console.log(response, 'response no context')
+    setSearchParl(response.data.results)
+  }
+
   async function Cadastros() {
     navigate('/sessoes/cadastros')
   }
@@ -116,8 +124,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
 
+
   return (
-    <AuthContext.Provider value={{ authenticated: true, CreateSession, GetSessions, sessions, navigate, basicDataOpen, setBasicDataOpen, tableOpen, setTableOpen, presenceOpen, setPresenceOpen, absenceOpen, setAbsenceOpen, personalTalkOpen, setPersonalTalkOpen, finalTalkOpen, setFinalTalkOpen, retirarPautaOpen, setRetirarPautaOpen, idSession, setIdSession, year, setYear, month, setMonth, day, setDay, type, setType, dash, setDash, sess, setSess, parlamentares, setParlamentares, GetParlamentares, CreateSessionPlen, painelLayout, setPainelLayout, GetPainel, dadosPainel, setDadosPainel, Logout, Cadastros, MenuInicial }} >
+    <AuthContext.Provider value={{ authenticated: true, CreateSession, GetSessions, sessions, navigate, basicDataOpen, setBasicDataOpen, tableOpen, setTableOpen, presenceOpen, setPresenceOpen, absenceOpen, setAbsenceOpen, personalTalkOpen, setPersonalTalkOpen, finalTalkOpen, setFinalTalkOpen, retirarPautaOpen, setRetirarPautaOpen, idSession, setIdSession, year, setYear, month, setMonth, day, setDay, type, setType, dash, setDash, sess, setSess, parlamentares, setParlamentares, GetParlamentares, CreateSessionPlen, painelLayout, setPainelLayout, GetPainel, dadosPainel, setDadosPainel, Logout, Cadastros, MenuInicial, SearchParliamen,searchParl, setSearchParl }} >
       {children}
     </AuthContext.Provider>
   )
