@@ -1,40 +1,72 @@
 import React from "react"
 import { Header } from "../components/Header"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { UserCircleIcon } from '@heroicons/react/24/solid'
 
 export function NewUser() {
+    interface FormState {
+        confirmPass: string
+    }
+
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [pessoas, setPessoas] = useState([])
+    const [confirmPass, setConfirmPass] = useState<FormState>({ confirmPass: '' })
+    const newUsername = firstName + lastName
     const [user, setUser] = useState({
-        username: "",
+        username: newUsername,
         email: "",
         password: "",
-        confirmpassword: "",
-        active: "1",
-        nivel: "1",
+        active: "",
+        nivel: "",
         id: ""
     })
 
-    const [pessoas, setPessoas] = useState([]);
+    useEffect(() => {
+        const newUsername = firstName + lastName
+        setUser((prevUser) => ({ ...prevUser, username: newUsername.toLowerCase() }))
+    }, [firstName, lastName])
 
     const enviaForm = (event) => {
-        event.preventDefault();
-        if (user.username === '') {
+        event.preventDefault()
+        if (firstName === '') {
             alert('Preencha o campo "Nome"');
-            return;
+            return
         }
-        if (user.email === '') {
-            alert('Preencha o campo "E-mail"')
-            return;
+        if (lastName === '') {
+            alert('Preencha o campo "Sobrenome"');
+            return
         }
-        if (user.password === '') {
-            alert('Preencha o campo "Senha"')
-            return;
-        }
-        // if (user.password !== user.confirmpassword) {
-        //     alert('Senhas não conferem. Revise os campos')
+        // if (user.email === '') {
+        //     alert('Preencha o campo "E-mail"')
         //     return;
         // }
-        setPessoas([...pessoas, user]);
+        if (user.password === '') {
+            alert('Preencha o campo "Senha"')
+            return
+        }
+        if (user.password !== confirmPass.confirmPass) {
+            alert('Senhas não conferem. Revise os campos')
+            return
+        }
+        if (user.id === '') {
+            alert('Preencha o campo "N° de Identificação"')
+            return
+        }
+        setPessoas([...pessoas, user])
+
+        // Limpar os <input> após realizar cadastro
+        setFirstName('')
+        setLastName('')
+        setConfirmPass({ confirmPass: '' })
+        setUser({
+            username: '',
+            email: '',
+            password: '',
+            active: '',
+            nivel: '',
+            id: ''
+        })
     }
 
     return (
@@ -43,7 +75,6 @@ export function NewUser() {
             <form
                 action="#"
                 method="post"
-                autoComplete="off"
                 onSubmit={enviaForm}>
                 <div className="border-b border-gray-900/10 pb-12 w-[95%] mx-auto">
                     <h2 className="text-center font-semibold leading-7 text-gray-900 text-3xl mt-5">Informações Pessoais</h2>
@@ -64,15 +95,18 @@ export function NewUser() {
                         {/* INPUT FIRST-NAME */}
                         <div className="sm:col-span-3">
                             <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Nome
+                                Nome:
                             </label>
                             <div className="mt-2">
                                 <input
                                     type="text"
                                     name="first-name"
                                     id="first-name"
-                                    value={user.username}
-                                    onChange={(event) => setUser({ ...user, username: event.target.value })}
+                                    value={firstName}
+                                    onChange={(event) => {
+                                        const firstNameValue = event.target.value;
+                                        if (/^[a-zA-Z]*$/.test(firstNameValue)) { setFirstName(firstNameValue) }
+                                    }}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5" />
                             </div>
                         </div>
@@ -80,15 +114,18 @@ export function NewUser() {
                         {/* INPUT LAST-NAME */}
                         <div className="sm:col-span-3">
                             <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Sobrenome
+                                Sobrenome:
                             </label>
                             <div className="mt-2">
                                 <input
                                     type="text"
                                     name="last-name"
                                     id="last-name"
-                                    value={user.username}
-                                    onChange={(event) => setUser({ ...user, username: event.target.value })}
+                                    value={lastName}
+                                    onChange={(event) => {
+                                        const lastNameValue = event.target.value;
+                                        if (/^[a-zA-Z]*$/.test(lastNameValue)) { setLastName(lastNameValue) }
+                                    }}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5"
                                 />
                             </div>
@@ -104,6 +141,7 @@ export function NewUser() {
                                     id="email"
                                     name="email"
                                     type="email"
+                                    autoComplete="new-email"
                                     value={user.email}
                                     onChange={(event) => setUser({ ...user, email: event.target.value })}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5" />
@@ -113,14 +151,14 @@ export function NewUser() {
                         {/* INPUT PASSWORD */}
                         <div className="sm:col-span-3">
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                Criar Senha de Acesso
+                                Senha de Acesso:
                             </label>
                             <div className="mt-2">
                                 <input
                                     id="password"
                                     name="password"
                                     type="password"
-                                    autoComplete="none"
+                                    autoComplete="new-password"
                                     value={user.password}
                                     onChange={(event) => setUser({ ...user, password: event.target.value })}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5"
@@ -128,16 +166,18 @@ export function NewUser() {
                             </div>
                         </div>
 
-                        {/* INPUT CONFIRMPASSWORD */}
+                        {/* INPUT CONFIRMPASS */}
                         <div className="sm:col-span-3">
                             <label htmlFor="confirmpassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                Confirme a Senha
+                                Confirme a Senha:
                             </label>
                             <div className="mt-2">
                                 <input
-                                    id="confirmpassword"
-                                    name="confirmpassword"
+                                    id="confirmpass"
+                                    name="confirmpass"
                                     type="password"
+                                    value={confirmPass.confirmPass}
+                                    onChange={(event) => setConfirmPass((prevState) => ({ ...prevState, confirmPass: event.target.value }))}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5" />
                             </div>
                         </div>
@@ -145,17 +185,17 @@ export function NewUser() {
                         {/* SELECT ACTIVE */}
                         <div className="sm:col-span-3">
                             <label htmlFor="confirmpassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                Ativo / Inativo
+                                Acesso:
                             </label>
                             <div className="mt-2">
                                 <select
                                     id="active"
                                     name="active"
                                     value={user.active}
-                                    onChange={(event) => setUser({ ...user, active: event.target.value })}
+                                    onChange={(event) => { const activeValue = event.target.value; if (activeValue === "1" || activeValue === "2") { setUser({ ...user, active: event.target.value }) } }}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5">
-                                    <option>1 - Ativo</option>
-                                    <option>2 - Inativo</option>
+                                    <option value="1">1 - Ativo</option>
+                                    <option value="2">2 - Inativo</option>
                                 </select>
                             </div>
                         </div>
@@ -163,17 +203,17 @@ export function NewUser() {
                         {/* SELECT NIVEL */}
                         <div className="sm:col-span-3">
                             <label htmlFor="confirmpassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                Nível de Acesso
+                                Nível de Acesso:
                             </label>
                             <div className="mt-2">
                                 <select
                                     id="nivel"
                                     name="nivel"
                                     value={user.nivel}
-                                    onChange={(event) => setUser({ ...user, nivel: event.target.value })}
+                                    onChange={(event) => { const nivelValue = event.target.value; if (nivelValue === "1" || nivelValue === "2") { setUser({ ...user, nivel: nivelValue }) } }}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5">
-                                    <option>1 - Parlamentar</option>
-                                    <option>2 - Administrador</option>
+                                    <option value="1">1 - Parlamentar</option>
+                                    <option value="2">2 - Administrador</option>
                                 </select>
                             </div>
                         </div>
@@ -181,34 +221,39 @@ export function NewUser() {
                         {/* INPUT ID */}
                         <div className="sm:col-span-3">
                             <label htmlFor="confirmpassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                N° de Identificação
+                                N° de Identificação:
                             </label>
                             <div className="mt-2">
                                 <input
                                     id="id"
                                     name="id"
-                                    type="number"
-                                    min={0}
                                     value={user.id}
-                                    onChange={(event) => setUser({ ...user, id: event.target.value })}
+                                    onChange={(event) => { const idValue = event.target.value; if (/^\d*$/.test(idValue)) { setUser({ ...user, id: idValue }) } }}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5" />
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" className="mt-10 rounded-md bg-slate-300 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50">
+                    <button
+                        type="submit"
+                        className="mt-10 rounded-md bg-slate-300 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50">
                         Cadastrar
                     </button>
                 </div>
                 <ul>
                     {pessoas.map((pessoa) => (
-                        <li>
-                            {pessoa.username} - {' '}
-                            {pessoa.email} - {' '}
-                            {pessoa.password} - {' '}
-                            {pessoa.active} - {' '}
-                            {pessoa.nivel}
-                        </li>
+                        <>
+                            <li> Nome - {pessoa.username} </li>
+                            <li> Email - {pessoa.email} </li>
+                            <li> Senha - {pessoa.password} </li>
+                            <li> Ativo - {pessoa.active} </li>
+                            <li> Nivel - {pessoa.nivel} </li>
+                            <li> ID - {pessoa.id} </li>
+                            <li>{firstName}</li>
+                            <li>{lastName}</li>
+                            <li>{newUsername}</li>
+                            <hr />
+                        </>
                     ))}
                 </ul>
             </form>
