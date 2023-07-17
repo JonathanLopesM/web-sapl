@@ -1,11 +1,12 @@
 import React, { useContext, useMemo } from "react"
 import { Header } from "../components/Header"
 import { useState, useEffect } from "react"
-import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { AuthContext } from "../contexts/AuthProvider"
 import ModalCleanSession from "../components/CleanModalModal"
+import ModalCadastro from "./ModalCadastro"
 
 export function NewUser() {
+    const [openCadastro, setOpenCadastro] = useState(false)
     const { SearchParliamen, searchParl, setSearchParl } = useContext(AuthContext)
     interface FormState {
         confirmPass: string
