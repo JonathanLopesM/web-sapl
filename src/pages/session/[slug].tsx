@@ -72,7 +72,7 @@ export function Session () {
         {layout == 'ausencia' && <Ausencia />}
         
         {layout == 'ordemdodia' && <OrdemDoDiaLayout />}
-        {layout == 'paineleletronico' && <PainelEletronico id={id} session={session} />}
+        {layout == 'paineleletronico' && <PainelEletronico />}
       </div> 
     }
     
