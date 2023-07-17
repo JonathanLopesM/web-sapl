@@ -18,9 +18,9 @@ async function PoolingToBack (setDados) {
 }
 export function Painel(){
 
-  const [dados, setDados] = useState([]) as any
   
-  const { GetSessions, painelLayout, setPainelLayout, GetPainel, dadosPainel, setDadosPainel } = useContext(AuthContext)
+  
+  const { GetSessions, painelLayout, setPainelLayout, GetPainel, dadosPainel, setDadosPainel, dados, setDados } = useContext(AuthContext)
   
   useEffect(()=>{
    PoolingToBack(setDados)
@@ -73,15 +73,20 @@ export function Painel(){
             </div>
         </header>
         <div className="flex flex-col items-center justify-items-center ">
-          <div className="flex w-full justify-center items-center h-[600px]">
+          <div className="flex flex-col w-full  items-center h-[600px]">
               {/* { <h3 className="flex bg-white text-green-500 justify-center text-center items-center font-extrabold px-8 p-2 text-3xl">SESSÃO AUTORIZADA </h3>} */}
-              {}
-          
-            {dados?.data?.tela === 0 && <WelcomeToPeapleHome dados={dados?.data} />}
-            {dados?.data?.tela === 1 && <PainelParlamentares dados={dados?.data.stateVote} />}
-            {dados?.data?.tela === 2 && <ResultadoVotacao dados={dados?.data.stateVote} />}
-            {dados?.data?.tela === 3 && <h5 className="flex w-full text-center mx-auto justify-center items-center bg-white text-black text-6xl font-extrabold p-4">SILÊNCIO!</h5>}
-            {dados?.data?.tela === 4 && <Message  />}
+           
+            {!dados?.data?.estado ? <WelcomeToPeapleHome dados={dados?.data} /> 
+            : <>
+                {dados?.data?.tela === 0 && <WelcomeToPeapleHome dados={dados?.data} />}
+                {dados?.data?.tela === 1 && <PainelParlamentares dados={dados?.data.stateVote} materia={dados?.data.materia}  />}
+                {dados?.data?.tela === 2 && <ResultadoVotacao dados={dados?.data} materia={dados?.data.materia}  />}
+                {dados?.data?.tela === 3 && <h5 className="flex w-full text-center mx-auto justify-center items-center bg-white text-black text-6xl font-extrabold p-4">Discurso!</h5>}
+                {dados?.data?.tela === 4 && <h5 className="flex w-full text-center mx-auto justify-center items-center bg-white text-black text-6xl font-extrabold p-4">SILÊNCIO!</h5>}
+                {dados?.data?.tela === 5 && <Message dados={dados?.data}  />}
+              </>
+            }
+            
             {/* {<ResultadoVotacao /> } */}
             </div>
         </div>

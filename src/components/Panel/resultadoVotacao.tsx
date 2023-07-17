@@ -1,24 +1,32 @@
 import React from "react"
 
-export function ResultadoVotacao(dados){
+export function ResultadoVotacao({dados, materia}){
+  console.log(dados.response, 'dados dentro do ')
   return (
-    <div className="flex w-full justify-center">
-      <div className="flex flex-col">
-        <span>
-          Sim: 
-        </span>
-        <span>
-          Não:
-        </span>
-        <span>
-          Abstenções:
-        </span>
-        <span>
-          Presentes: 0
-        </span>
-        <span>
-          Total votos:
-        </span>
+    <div className="flex flex-col w-full justify-center">
+      <div className="flex h-14 text-center justify-center items-center ">
+        <h4 className="text-2xl font-extrabold">
+          {materia}
+        </h4>  
+      </div>
+      <div className="flex flex-col w-[80%] mx-auto text-2xl  mt-20 items-center justify-center">
+        <div className="flex flex-col w-[300px] font-bold text-4xl gap-4">
+          <span>
+            Sim: {dados.response.Yes}
+          </span>
+          <span>
+            Não: {dados.response.Not}
+          </span>
+          <span>
+            Abstenções: {dados.response.NVote}
+          </span>
+          <span>
+            Presentes: {dados.response.Presence}
+          </span>
+          <span>
+            Total votos: {dados.response.totalVotes}
+          </span>
+        </div>
 
       </div>
     </div>

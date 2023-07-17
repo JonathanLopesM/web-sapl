@@ -3,6 +3,7 @@ import { Header } from "../components/Header"
 import { useState, useEffect } from "react"
 import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { AuthContext } from "../contexts/AuthProvider"
+import ModalCleanSession from "../components/CleanModalModal"
 
 export function NewUser() {
     const { SearchParliamen, searchParl, setSearchParl } = useContext(AuthContext)
@@ -66,9 +67,12 @@ export function NewUser() {
         return searchParl ? searchParl.filter(par => par.nome_completo.toLowerCase().includes(lowerCaseName)) : []
     }, [formParl, searchParl])
 
+    const [open, setOpen] = useState(false)
     return (
         <div>
             <Header />
+            <button onClick={()=> setOpen(true)}>Opne Modal</button>
+            <ModalCleanSession open={open} setOpen={setOpen} />
             <form
                 action="#"
                 method="post"

@@ -44,6 +44,26 @@ export interface IContext extends IUser {
   MenuInicial: any
 
   SearchParliamen:any,searchParl:any, setSearchParl:any
+
+  SaveIdPanel:any
+  panelId:any, 
+  setPanelId:any
+  estado:any, setEstado:any
+  dados:any
+  setDados:any
+  SearchMaterias:any
+  materias:any 
+  setMaterias:any
+
+  MatterUpdated:any
+
+  GetVotes:any
+  resultVote:any
+  setResultVote:any
+  PatchPanelMessage:any
+  SearchParlSpeech:any
+  parlSpeech:any
+  setParlSpeech:any
 }
 
 export interface IAuthProvider {
