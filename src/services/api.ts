@@ -26,7 +26,7 @@ export const createSession = async ({
 export const getSession = async ({year, month, day, type}) => {
   let errors = []
 
-  const response =  await api.get(`/api/sessao/sessaoplenaria?data_inicio__year=${year}&data_inicio__month=${month}&data_inicio__day=${day}&tipo=${type}&salvar=Pesquisar`, 
+  const response =  await api.get(`/api/sessao/sessaoplenaria?data_inicio__year=${year}&data_inicio__month=${month}&data_inicio__day=${day}&tipo=${type}&salvar=Pesquisar&page_size=100`, 
   { validateStatus: false} as any)
   errors = response.data.errors
   return response
