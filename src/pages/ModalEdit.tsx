@@ -3,15 +3,18 @@ import { Dialog, Transition } from '@headlessui/react'
 import React, { useContext, useMemo } from "react"
 import { AuthContext } from "../contexts/AuthProvider"
 
-export default function ModalCadastro({ open, setOpen,  }) {
+export default function ModalEdit({ openEdit, setOpenEdit, selectUser  }) {
 
     const cancelButtonRef = useRef(null)
-    const [openSearch, setOpenSearch] = useState(false)
+    const [openEditSearch, setOpenEditSearch] = useState(false)
 
-    const { SearchParliamen, searchParl, setSearchParl } = useContext(AuthContext)
+    console.log(selectUser, 'dados usussario ')
+
     interface FormState {
         confirmPass: string
     }
+
+    console.log(selectUser, 'ususari no modal')
 
     const [formParl, setFormParl] = useState('')
     const [formIdParl, setFormIdParl] = useState()
@@ -19,16 +22,12 @@ export default function ModalCadastro({ open, setOpen,  }) {
     const [pessoas, setPessoas] = useState([])
     const [confirmPass, setConfirmPass] = useState<FormState>({ confirmPass: '' })
     const [user, setUser] = useState({
-        username: "",
+        username: selectUser ? selectUser?.username : "",
         password: "",
         active: "0",
         nivel: "1",
-        id: {formIdParl}
+        id: selectUser ? selectUser?.id : ""
     })
-    useEffect(() => {
-        //Função de busca dos parlamentares na api
-        SearchParliamen()
-    }, [])
 
     const enviaForm = (event) => {
         event.preventDefault()
@@ -60,19 +59,16 @@ export default function ModalCadastro({ open, setOpen,  }) {
             password: '',
             active: '0',
             nivel: '1',
-            id: {formIdParl}
+            id: ''
         })
     }
 
-    const filterNameParlm = useMemo(() => {
-        const lowerCaseName = formParl.toLowerCase()
-        return searchParl ? searchParl.filter(par => par.nome_completo.toLowerCase().includes(lowerCaseName)) : []
-    }, [formParl, searchParl])
+
 
     return (
         <div>
-            <Transition.Root show={open} as={Fragment}>
-                <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+            <Transition.Root show={openEdit} as={Fragment}>
+                <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpenEdit}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -98,34 +94,18 @@ export default function ModalCadastro({ open, setOpen,  }) {
                                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-[95%] sm:w-[80%] max-w-[1200px] ">
                                     <div className=" bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 mx-auto">
                                         <div className="flex flex-col  sm:items-start ">
-                                            <div>
+                                            <div className='w-full'>
                                                 <form
                                                     action="#"
                                                     method="post"
                                                     onSubmit={enviaForm}>
                                                     <div className="border-b border-gray-900/10 pb-12 w-[95%] mx-auto ">
-                                                        <h2 className="text-center font-semibold leading-7 text-gray-900 text-3xl mt-5">Informações Pessoais</h2>
+                                                        <h2 className="text-center font-semibold leading-7 text-gray-900 text-3xl mt-5">
+                                                            Editar usuario
+                                                        </h2>
+                                                        {selectUser.username}
 
                                                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 max-w-[900px] mx-auto">
-
-                                                            {/* SELECT NIVEL */}
-                                                            <div className="sm:col-span-3">
-                                                                <label htmlFor="confirmpassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                                                    Tipo de Usuário:
-                                                                </label>
-                                                                <div className="mt-2">
-                                                                    <select
-                                                                        id="nivel"
-                                                                        name="nivel"
-                                                                        value={user.nivel}
-                                                                        onChange={(event) => setUser({ ...user, nivel: event.target.value })}
-                                                                        className="flex w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4">
-                                                                        <option value={1}> Parlamentar</option>
-                                                                        <option value={2}> Sub-Administrador</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <br />
 
                                                             {/* INPUT PARLAMENTAR - ID */}
                                                             <div className={`${user.nivel !== '1' ? 'hidden' : ''} sm:col-span-3 relative`}>
@@ -140,7 +120,7 @@ export default function ModalCadastro({ open, setOpen,  }) {
                                                                         onChange={e => { setFormParl(e.target.value); setViewParOptions(true); }}
                                                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5" />
                                                                 </div>
-                                                                {
+                                                                {/* {
                                                                     viewParOptions && formParl.length > 0 &&
                                                                     <div className="absolute border py-2 h-28 bg-white w-full">
                                                                         <ul className="flex flex-col overflow-auto h-24">
@@ -151,7 +131,7 @@ export default function ModalCadastro({ open, setOpen,  }) {
                                                                             ))}
                                                                         </ul>
                                                                     </div>
-                                                                }
+                                                                } */}
                                                             </div>
 
                                                             {/* INPUT USERNAME */}

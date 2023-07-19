@@ -92,3 +92,10 @@ export const patchPanelMessage = async (idPanel, tela, message) => {
   errors= response.data
   return response
 }
+
+export const getUsers = async () => {
+  let errors = [];
+  const response = await api.get(`/auth/users`)
+  errors= response.data
+  return response
+}

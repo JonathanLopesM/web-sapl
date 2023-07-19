@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, paineldados, parliamentariansSearch } from "../../services/api"
+import { createSession, getParlamentares, getSession, paineldados, parliamentariansSearch } from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, getData, getDataIdPanel, getToken, getVotes, patchPanelMessage, searchMaterias, searchParlSpeech } from "../../services/apiNode"
+import { PatchMatterVote, getData, getDataIdPanel, getToken, getUsers, getVotes, patchPanelMessage, searchMaterias, searchParlSpeech } from "../../services/apiNode"
 
 
 
@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const [resultVote, setResultVote] = useState() as any
 
   const [parlSpeech, setParlSpeech] = useState() as any
+  const [usersGet, setUsersGet] = useState( ) as any
 
   //MmViNDIxMmYw
 
@@ -135,6 +136,13 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     setPanelId(response.data.idPanel)
   }
 
+  async function GetUsers() {
+    const response = await getUsers()
+    console.log(response, "get user contexto ")
+    setUsersGet(response.data)
+
+  }
+
   async function SearchParliamen () {
     const response = await parliamentariansSearch() as any
     console.log(response, 'response no context no context')
@@ -182,7 +190,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         searchParl, setSearchParl, SaveIdPanel, panelId, setPanelId, 
         estado, setEstado, dados, setDados, SearchMaterias,materias, setMaterias,
         MatterUpdated, GetVotes,resultVote, setResultVote,PatchPanelMessage, 
-        SearchParlSpeech,parlSpeech, setParlSpeech
+        SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet
 
       }} >
       {children}
