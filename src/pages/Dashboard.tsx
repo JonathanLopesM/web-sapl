@@ -77,7 +77,7 @@ export function Dashboard() {
           <button onClick={()=> setOpen(!open)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300">Adicionar Sessão Plenária</button>
         </div> */}
         </div>
-        <div className="flex flex-col gap-4 ">
+        <div className="hidden flex-col gap-4 ">
           <h3 className="flex text-xl">Pesquisa de sessão Plenária</h3>
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="flex gap-2">

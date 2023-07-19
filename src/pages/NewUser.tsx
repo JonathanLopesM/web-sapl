@@ -10,6 +10,7 @@ export function NewUser() {
     const [openEdit, setOpenEdit] = useState(false)
     const [openDelete, setOpenDelete] = useState()
     const { SearchParliamen, searchParl, setSearchParl } = useContext(AuthContext)
+
     const [selectUser, setSelectUser] = useState({})
 
     const handleEdit = (userId) => {
@@ -33,10 +34,16 @@ export function NewUser() {
     //     setOpenCadastro(false);
     // }
 
+
+    
+    const [openCadastro2, setOpenCadastro2] = useState()
+    console.log(openCadastro2, "Teste")
+
     return (
         <div>
             <Header />
             <ModalCadastro open={openCadastro} setOpen={setOpenCadastro} />
+
             <ModalEdit open={openEdit} setOpen={setOpenEdit} selectUser={selectUser} />
 
             <button
@@ -60,6 +67,22 @@ export function NewUser() {
                     ))}
                 </ul>
             </div>
+
+            <div className="flex flex-col">
+                {
+                    
+                    searchParl.map((par:any)=>(
+                        <span className="flex gap-8" key={par.id}>
+                            {par.nome_completo}
+                            <button onClick={()=>setOpenCadastro2(par.id)}>exlcuir</button>
+                        </span>
+                    ))
+                }
+            </div>
+                <button 
+                onClick={() => setOpenCadastro(!openCadastro)}
+                className="flex mt-10 rounded-md bg-slate-300 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 mx-auto">Cadastrar Novo Usuário</button>
+
         </div>
     )
 }
