@@ -7,13 +7,7 @@ export default function ModalEdit({ open, setOpen, selectUser }) {
     const cancelButtonRef = useRef(null)
     console.log(selectUser, 'usuário dentro do modal')
 
-    const [user2, setUser2] = useState({
-        username: {!!selectUser ? selectUser?.__str__ : ""},
-        password: "",
-        active: "0",
-        nivel: "1",
-        id: {}
-    })
+    const [user2, setUser2] = useState()
 
     return (
         <div>
@@ -41,11 +35,11 @@ export default function ModalEdit({ open, setOpen, selectUser }) {
                                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-[95%] sm:w-[80%] max-w-[1200px] ">
-                                    {/* <div>
+                                    <div>
                                         <input
                                         type="text"
                                         value={selectUser.nome_completo} />
-                                    </div> */}
+                                    </div>
                                     <div className="sm:col-span-3">
                                         <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                             Username:
