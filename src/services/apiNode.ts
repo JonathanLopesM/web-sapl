@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const api = axios.create({
   // @ts-ignore
-  baseURL: "http://localhost:3333" //import.meta.env.VITE_URL_API_NODE,
+  baseURL: "https://api-sapl.onrender.com" //import.meta.env.VITE_URL_API_NODE,
 })
 //https://api-sapl.onrender.com http://localhost:3333
 
@@ -96,6 +96,13 @@ export const patchPanelMessage = async (idPanel, tela, message) => {
 export const getUsers = async () => {
   let errors = [];
   const response = await api.get(`/auth/users`)
+  errors= response.data
+  return response
+}
+
+export const patchUsers = async ({id, username, password, active}) => {
+  let errors = [];
+  const response = await api.patch(`/auth/user/${id}`)
   errors= response.data
   return response
 }

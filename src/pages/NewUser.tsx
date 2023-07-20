@@ -1,63 +1,69 @@
-import React, { useContext, useMemo } from "react"
+import React, { useContext } from "react"
 import { Header } from "../components/Header"
 import { useState, useEffect } from "react"
 import { AuthContext } from "../contexts/AuthProvider"
 import ModalCadastro from "./ModalCadastro"
 import ModalEdit from "./ModalEdit"
+import { Link } from "react-router-dom"
+import axios from "axios"
 
 export function NewUser() {
     const [openCadastro, setOpenCadastro] = useState(false)
-    const { SearchParliamen, searchParl, setSearchParl, GetUsers,usersGet, setUsersGet } = useContext(AuthContext)
-    
-    const [openCadastro2, setOpenCadastro2] = useState()
-    const [openEdit, setOpenEdit] = useState(false)
-
+    const [openDelete, setOpenDelete] = useState()
     const [selectUser, setSelectUser] = useState(null)
+    const [data, setData] = useState([])
+
+    const { SearchParliamen, searchParl, setSearchParl, GetUsers, usersGet, setUsersGet } = useContext(AuthContext)
     console.log(usersGet, "Teste")
 
-    useEffect(()=>{
+    useEffect(() => {
         GetUsers()
-    },[])
+        // axios.get(`https://api-sapl.onrender.com/auth/users`)
+        // .then(res => setData(res.data))
+        // .catch(err => console.log(err))
+    }, [])
 
-    const handleEdit = (userId) => {
-        const user2 = usersGet?.resParl.find(par => par.id === userId);
-
-        setSelectUser(user2)
-
-        setTimeout(()=>{
-            setOpenEdit(true)
-        },2000)
-    }
     return (
         <div>
             <Header />
             <ModalCadastro open={openCadastro} setOpen={setOpenCadastro} />
-            <ModalEdit openEdit={openEdit} setOpenEdit={setOpenEdit} selectUser={selectUser} />
-            <div className="flex flex-col">
-                {
-                    usersGet &&
-                    usersGet?.resParl.map((par:any)=>(
-                        <span onClick={()=>handleEdit(par.id)} className="flex gap-8" key={par.id}>
-                            {par.nome_completo}
-                            <button onClick={()=>setOpenCadastro2(par.id)}>exlcuir</button>
-                        </span>
-                    ))
-                }
-            </div>
-            <div className="flex flex-col">
-                {
-                   usersGet && 
-                    usersGet?.response.map((par:any)=>(
-                        <span onClick={()=>handleEdit(par.id)} className="flex gap-8" key={par.id}>
-                            {par.username}
-                            <button onClick={()=>setOpenCadastro2(par.id)}>exlcuir</button>
-                        </span>
-                    ))
-                }
-            </div>
-                <button 
+
+            <button
                 onClick={() => setOpenCadastro(!openCadastro)}
-                className="flex mt-10 rounded-md bg-slate-300 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 mx-auto">Cadastrar Novo Usuário</button>
+                className="flex mt-10 rounded-md bg-slate-300 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 mx-auto">Cadastrar Usuário</button>
+
+<h2 className="text-center font-bold text-xl mt-7">Parlamentares:</h2>
+            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4">
+                <ul role="list" className="divide-y divide-gray-200">
+                    {
+                        usersGet && usersGet?.resParl.map((par: any) => (
+                            <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100">
+                                {par.nome_completo}
+                                <div className="flex gap-5 font-semibold">
+                                <Link to={`/sessoes/cadastros/editar/${par.id}`}>
+                                    Editar
+                                </Link>
+                                <button onClick={() => setOpenDelete(par.id)}>Excluir</button>
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+
+            <h2 className="text-center font-bold text-xl mt-7">Administradores:</h2>
+            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4">
+                <ul role="list" className="divide-y divide-gray-200">
+                    {
+                        usersGet && usersGet?.response.map((par: any) => (
+                            <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100">
+                                {par.username}
+                                <button onClick={() => setOpenDelete(par.id)}>Excluir</button>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
         </div>
     )
 }

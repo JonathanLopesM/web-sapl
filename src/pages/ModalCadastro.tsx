@@ -33,7 +33,7 @@ export default function ModalCadastro({ open, setOpen,  }) {
     const enviaForm = (event) => {
         event.preventDefault()
         if (formParl === '') {
-            alert('Preencha o campo "Parlamentar relacionado"')
+            alert('Preencha o campo "Parlamentar Relacionado"')
             return
         }
         if (user.username === '') {
@@ -97,7 +97,7 @@ export default function ModalCadastro({ open, setOpen,  }) {
                             >
                                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-[95%] sm:w-[80%] max-w-[1200px] ">
                                     <div className=" bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 mx-auto">
-                                        <div className="flex flex-col  sm:items-start ">
+                                        <div className="flex flex-col  sm:items-start">
                                             <div>
                                                 <form
                                                     action="#"
@@ -130,7 +130,7 @@ export default function ModalCadastro({ open, setOpen,  }) {
                                                             {/* INPUT PARLAMENTAR - ID */}
                                                             <div className={`${user.nivel !== '1' ? 'hidden' : ''} sm:col-span-3 relative`}>
                                                                 <label htmlFor="confirmpassword" className="block text-sm font-medium leading-6 text-gray-900">
-                                                                    Parlamentar relacionado:
+                                                                    Parlamentar Relacionado:
                                                                 </label>
                                                                 <div className="mt-2">
                                                                     <input
