@@ -32,7 +32,9 @@ export function NewUser() {
                 onClick={() => setOpenCadastro(!openCadastro)}
                 className="flex mt-10 rounded-md bg-slate-300 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 mx-auto">Cadastrar Usuário</button>
 
-<h2 className="text-center font-bold text-xl mt-7">Parlamentares:</h2>
+                <h2 className="text-center font-bold text-xl mt-7">
+                    Parlamentares:
+                </h2>
             <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4">
                 <ul role="list" className="divide-y divide-gray-200">
                     {

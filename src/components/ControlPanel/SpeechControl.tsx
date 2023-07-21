@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { AuthContext } from "../../contexts/AuthProvider"
+import { ControlTimes } from "./ControlTimes"
 
 export function SpeechControl () {
   const parlamentares = [
@@ -82,6 +83,7 @@ return (
       <button type="button" onClick={handleSetMessage} className="flex bg-green-500 text-white text-center justify-center py-2 rounded-md">
             ATUALIZAR PAINEL
       </button>
+      <ControlTimes />
   </div>
 )
 }

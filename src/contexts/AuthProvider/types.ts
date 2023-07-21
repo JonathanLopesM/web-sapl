@@ -67,6 +67,9 @@ export interface IContext extends IUser {
   GetUsers:any
   usersGet:any 
   setUsersGet:any
+  DayOrderIds:any
+  dayOrder:any
+  setDayOrders:any
 }
 
 export interface IAuthProvider {

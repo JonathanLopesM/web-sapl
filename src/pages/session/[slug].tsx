@@ -18,7 +18,7 @@ import { Header } from "../../components/Header"
 export function Session () {
   const [open, setOpen] = useState(false)
   const [openSearch, setOpenSearch] = useState(false)
-  const {sessions, GetSessions } = useContext(AuthContext)
+  const {sessions, GetSessions, DayOrderIds,dayOrder, setDayOrders } = useContext(AuthContext)
   const { id } = useParams()
   const [layout, setLayout] = useState('dadosbasicos')
 
@@ -28,7 +28,11 @@ export function Session () {
         GetSessions('2023', '','', '')
       }
   },[])
+  useEffect(()=>{
+    DayOrderIds(id)
+  },[])
 
+  
   const history = useNavigate()
   console.log(id, 'id')
 
@@ -41,8 +45,6 @@ export function Session () {
       }
     })
   }
-  console.log(session, 'session')
-  console.log( id, 'id e session')
 
   return (
     <div className="flex flex-col ">
@@ -72,7 +74,7 @@ export function Session () {
         {layout == 'ausencia' && <Ausencia />}
         
         {layout == 'ordemdodia' && <OrdemDoDiaLayout />}
-        {layout == 'paineleletronico' && <PainelEletronico />}
+        {layout == 'paineleletronico' && <PainelEletronico session={session[0]} />}
       </div> 
     }
     

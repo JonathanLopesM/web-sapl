@@ -7,6 +7,7 @@ import { io } from "socket.io-client"
 import { getData } from "../../services/apiNode"
 import { WelcomeToPeapleHome } from "../../components/Panel/Welcome"
 import { Message } from "../../components/Panel/Message"
+import { Speech } from "../../components/Panel/Speech"
 
 // const socket = io('http://localhost:3333');
 let poolingTimeout;
@@ -14,7 +15,7 @@ let dataReturn;
 async function PoolingToBack (setDados) {
   await getData(setDados)
 
-  poolingTimeout = setTimeout(()=> PoolingToBack(setDados), 1000)
+  poolingTimeout = setTimeout(()=> PoolingToBack(setDados), 800)
 }
 export function Painel(){
 
@@ -81,7 +82,7 @@ export function Painel(){
                 {dados?.data?.tela === 0 && <WelcomeToPeapleHome dados={dados?.data} />}
                 {dados?.data?.tela === 1 && <PainelParlamentares dados={dados?.data.stateVote} materia={dados?.data.materia}  />}
                 {dados?.data?.tela === 2 && <ResultadoVotacao dados={dados?.data} materia={dados?.data.materia}  />}
-                {dados?.data?.tela === 3 && <h5 className="flex w-full text-center mx-auto justify-center items-center bg-white text-black text-6xl font-extrabold p-4">Discurso!</h5>}
+                {dados?.data?.tela === 3 && <Speech />}
                 {dados?.data?.tela === 4 && <h5 className="flex w-full text-center mx-auto justify-center items-center bg-white text-black text-6xl font-extrabold p-4">SILÊNCIO!</h5>}
                 {dados?.data?.tela === 5 && <Message dados={dados?.data}  />}
               </>

@@ -3,16 +3,20 @@ import { Dialog, Transition } from '@headlessui/react'
 import React, { useContext, useMemo } from "react"
 import { AuthContext } from "../contexts/AuthProvider"
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import { Header } from '../components/Header'
+
 
 export default function ModalEdit() {
+    // Busca dos usuarios no Contexto
+    const { usersGet } = useContext(AuthContext) 
     const cancelButtonRef = useRef(null)
     const [openEditSearch, setOpenEditSearch] = useState(false)
     interface FormState {
         confirmPass: string
     }
-
+    // Id para fazer o filter
     const { id } = useParams()
+
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -20,13 +24,15 @@ export default function ModalEdit() {
         nivel: "",
         id: id
     })
-    useEffect(() => {
-        axios.get('https://api-sapl.onrender.com' + id)
-            .then(res => {
-                setUser({ ...user, username: res.data.username })
-            })
-            .catch(err => console.log(err))
-    }, [])
+    // retornando os dados do usuario normal
+    console.log(usersGet, "user dentro do modal edit") 
+    // useEffect(() => {
+    //     axios.get('https://api-sapl.onrender.com/auth/users/' + id)
+    //         .then(res => {
+    //             setUser({ ...user, username: res.data.username })
+    //         })
+    //         .catch(err => console.log(err))
+    // }, [])
 
     const [formParl, setFormParl] = useState('')
     const [formIdParl, setFormIdParl] = useState()
@@ -62,6 +68,7 @@ export default function ModalEdit() {
 
     return (
         <div>
+            <Header />
             <div className=" bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 mx-auto">
                 <div className="flex flex-col  sm:items-start ">
                     <div className='w-full'>

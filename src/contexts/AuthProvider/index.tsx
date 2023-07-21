@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, paineldados, parliamentariansSearch } from "../../services/api";
+import { createSession, getParlamentares, getSession, ordemDia, paineldados, parliamentariansSearch } from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
 import { PatchMatterVote, getData, getDataIdPanel, getToken, getUsers, getVotes, patchPanelMessage, searchMaterias, searchParlSpeech } from "../../services/apiNode"
 
@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   const [parlSpeech, setParlSpeech] = useState() as any
   const [usersGet, setUsersGet] = useState( ) as any
+  const [dayOrder, setDayOrders] = useState() as any
 
   //MmViNDIxMmYw
 
@@ -166,6 +167,13 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     const response = await PatchMatterVote(panelId, matter)
     console.log(response, 'response do Matter no context no context')
   }
+  async function DayOrderIds(idSes){
+    console.log(idSes, "idSes")
+    const response = await ordemDia({idSes})
+
+    console.log(response, "response do DayOrderIds context")
+    setDayOrders(response.data.results)
+  }
 
   async function Cadastros() {
     navigate('/sessoes/cadastros')
@@ -190,7 +198,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         searchParl, setSearchParl, SaveIdPanel, panelId, setPanelId, 
         estado, setEstado, dados, setDados, SearchMaterias,materias, setMaterias,
         MatterUpdated, GetVotes,resultVote, setResultVote,PatchPanelMessage, 
-        SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet
+        SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet,
+        DayOrderIds,dayOrder, setDayOrders
 
       }} >
       {children}

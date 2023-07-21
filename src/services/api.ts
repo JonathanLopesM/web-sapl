@@ -60,3 +60,9 @@ export const parliamentariansSearch = async () => {
   return response
 }
 
+export const ordemDia = async ({idSes}) => {
+  let errors = [];
+  const response = await api.get(`/api/sessao/ordemdia/?sessao_plenaria=${idSes}`)
+  errors = response.data.errors
+  return response
+}

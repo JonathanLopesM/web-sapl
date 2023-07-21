@@ -4,9 +4,9 @@ import { PresenceVoteControl } from "./PresenceVote"
 import { PatchPanelView, openClosePanelView } from "../../services/apiNode"
 import { ResultVoteControl } from "./ResultVote"
 import {  MessageControl } from "./Message"
-import { SpeechControl } from "./Speech"
+import { SpeechControl } from "./SpeechControl"
 
-export function PainelEletronico(){
+export function PainelEletronico({ session }){
   const { painelLayout, setPainelLayout,SearchParlSpeech, SaveIdPanel, panelId, setPanelId, estado, setEstado } = useContext(AuthContext)
 
   const [form, setForm] = useState('bemvindos')
@@ -29,14 +29,15 @@ export function PainelEletronico(){
   const handleViewWindow = (tela) => {
     PatchPanelView(panelId, tela);
   }
+  console.log(session, "session no controle")
 
   return (
     <div className="flex flex-col w-full">
-      <h2>
-        Painel Eletrônico 
-        <span>
-          (2ª Sessão Ordinária de 2023 da 3ª Sessão Legislativa da 50ª Legislatura)
-        </span> 
+      <h2 className="flex gap-2 font-bold text-2xl">
+
+        {session &&
+          session.__str__
+        }
       </h2>
       <div className="flex w-full justify-between my-5">
         <a onClick={handleFunction} target="_blank">
@@ -131,7 +132,7 @@ export function PainelEletronico(){
               </div>
         {
           form == 'presencavotacao' 
-          && <PresenceVoteControl />
+          && <PresenceVoteControl sessionId={session.id} />
         }
         {
           form == 'resultadodevotacao' 

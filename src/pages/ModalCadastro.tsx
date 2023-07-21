@@ -98,7 +98,7 @@ export default function ModalCadastro({ open, setOpen,  }) {
                                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-[95%] sm:w-[80%] max-w-[1200px] ">
                                     <div className=" bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 mx-auto">
                                         <div className="flex flex-col  sm:items-start">
-                                            <div>
+                                            <div className="w-full">
                                                 <form
                                                     action="#"
                                                     method="post"
