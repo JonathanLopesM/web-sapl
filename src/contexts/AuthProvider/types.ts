@@ -64,6 +64,10 @@ export interface IContext extends IUser {
   SearchParlSpeech:any
   parlSpeech:any
   setParlSpeech:any
+  GetUsers:any
+  usersGet:any 
+  setUsersGet:any
+  CreateUser:any
 }
 
 export interface IAuthProvider {

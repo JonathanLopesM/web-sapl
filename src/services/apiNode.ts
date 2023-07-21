@@ -92,3 +92,40 @@ export const patchPanelMessage = async (idPanel, tela, message) => {
   errors= response.data
   return response
 }
+
+export const createUsers = async ({
+  username,
+  password,
+  confirmpassword,
+  active,
+  nivel,
+  id
+}) => {
+  let errors = [];
+  
+  const response = await api.post(`/auth/user`, {
+    username,
+    password,
+    confirmpassword,
+    active,
+    nivel,
+    id
+  })
+  errors= response.data
+  return response
+}
+
+//Buscar Usuários
+export const getUsers = async () => {
+  let errors = [];
+  const response = await api.get(`/auth/users`)
+  errors= response.data
+  return response
+}
+
+export const patchUsers = async ({id, username, password, active}) => {
+  let errors = [];
+  const response = await api.patch(`/auth/user/${id}`)
+  errors= response.data
+  return response
+}
