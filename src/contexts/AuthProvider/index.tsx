@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, ordemDia, paineldados, parliamentariansSearch } from "../../services/api";
+import { createSession, getParlamentares, getSession, ordemDia,paineldados, parliamentariansSearch } from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, getData, getDataIdPanel, getToken, getUsers, getVotes, patchPanelMessage, searchMaterias, searchParlSpeech } from "../../services/apiNode"
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getToken, getUsers, getVotes, patchPanelMessage, searchMaterias, searchParlSpeech } from "../../services/apiNode"
 
 
 
@@ -137,6 +137,23 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     setPanelId(response.data.idPanel)
   }
 
+  async function CreateUser(
+    username,
+    password,
+    confirmpassword,
+    active,
+    nivel,
+    id ){
+      console.log( username,
+        password,
+        confirmpassword,
+        active,
+        nivel,
+        id, "dados de cadastro dentro do context 151")
+    const response = await createUsers({username, password, confirmpassword,active,nivel,id})
+// Larga na typagem o nome da funcao
+    console.log(response, "response do Create User no context")
+  }
   async function GetUsers() {
     const response = await getUsers()
     console.log(response, "get user contexto ")
@@ -199,7 +216,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         estado, setEstado, dados, setDados, SearchMaterias,materias, setMaterias,
         MatterUpdated, GetVotes,resultVote, setResultVote,PatchPanelMessage, 
         SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet,
-        DayOrderIds,dayOrder, setDayOrders
+        DayOrderIds,dayOrder, setDayOrders,
+        CreateUser
 
       }} >
       {children}

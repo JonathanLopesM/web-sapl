@@ -6,9 +6,7 @@ import { AuthContext } from "../contexts/AuthProvider"
 export default function ModalCadastro({ open, setOpen,  }) {
 
     const cancelButtonRef = useRef(null)
-    const [openSearch, setOpenSearch] = useState(false)
-
-    const { SearchParliamen, searchParl, setSearchParl } = useContext(AuthContext)
+    const { SearchParliamen, searchParl, CreateUser } = useContext(AuthContext)
     interface FormState {
         confirmPass: string
     }
@@ -49,9 +47,9 @@ export default function ModalCadastro({ open, setOpen,  }) {
             return
         }
         setPessoas([...pessoas, user])
-
+        const id = formIdParl
         // props da funcao
-        console.log(user.username, user.password, confirmPass, user.active, user.nivel, formIdParl)
+        CreateUser(user.username, user.password, confirmPass.confirmPass, user.active, user.nivel, id)
 
         // Limpar os <input> após realizar cadastro
         setConfirmPass({ confirmPass: '' })

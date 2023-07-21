@@ -67,6 +67,7 @@ export interface IContext extends IUser {
   GetUsers:any
   usersGet:any 
   setUsersGet:any
+  CreateUser:any
   DayOrderIds:any
   dayOrder:any
   setDayOrders:any
