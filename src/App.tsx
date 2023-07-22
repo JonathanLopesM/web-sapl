@@ -10,6 +10,7 @@ import { Session } from './pages/session/[slug]'
 import { DefaultLayout } from './layouts/DefaultLayout'
 import { Painel } from './pages/PanelPage'
 import { NewUser } from './pages/NewUser'
+import ModalEdit from './pages/ModalEdit'
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path='/sessoes' element={<Private><DefaultLayout /></Private>}>
           <Route path='/sessoes' element={<Dashboard />} />
           <Route path='/sessoes/cadastros' element={<NewUser />} />
+          <Route path='/sessoes/cadastros/editar/:id' element={<ModalEdit />} />
           <Route path='/sessoes/sessao/:id' element={<Session />} />
           <Route path='/sessoes/painel' element={<Painel />} />
         </Route>
