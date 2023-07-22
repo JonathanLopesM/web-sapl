@@ -99,8 +99,8 @@ export default function ModalCadastro({ open, setOpen, }) {
                                         method="post"
                                         onSubmit={enviaForm}>
 
-                                        <h2 className="text-center font-semibold leading-7 text-gray-900 text-3xl mt-5">
-                                            Informações Pessoais:
+                                        <h2 className="text-center font-semibold leading-7 text-gray-900 text-3xl mt-5 underline tracking-wider">
+                                            Informações Pessoais
                                         </h2>
 
                                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 mx-auto">
