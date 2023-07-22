@@ -43,7 +43,7 @@ export function PainelParlamentares ({ dados, materia }) {
               </div>
             </div>
             <div className="flex border items-center justify-center px-2">
-              <span className="font-bold w-[80px]">
+              <span className="font-bold w-[80px] text-center">
                 {par.voto}
               </span>
             </div>

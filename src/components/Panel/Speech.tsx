@@ -9,7 +9,7 @@ export function Speech () {
 
   useEffect(()=>{
     if(totalTimeInSeconds === 0){
-      alert("tempo acabou")
+      console.log("tempo acabou")
       return 
     } else {
       if(timerOn){

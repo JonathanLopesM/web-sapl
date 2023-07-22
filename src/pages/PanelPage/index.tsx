@@ -52,7 +52,16 @@ export function Painel(){
   //     socket.off('erro');
   //   };
   // },[])
-  
+  let presences = []
+
+  if(dados){
+    presences = dados?.data?.stateVote.filter(fil => {
+      if(fil.presenca == true){
+        return fil
+      }
+    })
+  }
+  console.log(presences?.length, "presentes mesmos")
   console.log(dados, 'dadaos')
 
 
@@ -98,7 +107,7 @@ export function Painel(){
                 PRESENÇA PARLAMENTAR
               </h4>
               <h4 className=" text-green-500 text-3xl font-bold ">
-                {dados?.data?.stateVote.length} Presente(s)
+                {presences?.length} Presente(s)
               </h4>
               
             </div>

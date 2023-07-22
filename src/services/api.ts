@@ -66,3 +66,4 @@ export const ordemDia = async ({idSes}) => {
   errors = response.data.errors
   return response
 }
+

@@ -11,7 +11,7 @@ export function ControlTimes () {
 
   useEffect(()=>{
     if(totalTimeInSeconds === 0){
-      alert("tempo acabou")
+      console.log("tempo acabou")
     }  
     if(timerOn){
       setTimeout(()=>{
