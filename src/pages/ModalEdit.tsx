@@ -18,12 +18,12 @@ export default function ModalEdit() {
     console.log(filterUserRes, 'filterUserRes')
 
     const [user, setUser] = useState({
+        id: filterUserRes[0]._id,
         username: filterUserRes[0].username,
-        password: filterUserRes[0].password,
+        password: '',
+        confirmPass: '',
         active: filterUserRes[0].active,
     })
-    const [pessoas, setPessoas] = useState([])
-    const [confirmPass, setConfirmPass] = useState({ confirmPass: filterUserRes[0].password })
 
     const enviaForm = (event) => {
         event.preventDefault()
@@ -31,16 +31,17 @@ export default function ModalEdit() {
             alert('Preencha o campo "Username"')
             return
         }
-        if (user.password === '') {
+        if (user.password !== '') {
+            if (user.password === '') {
             alert('Preencha o campo "Senha de Acesso"')
             return
+            }
         }
-        if (user.password !== confirmPass.confirmPass) {
+        if (user.password !== user.confirmPass) {
             alert('Senhas não conferem. Revise os campos')
             return
         }
-        setPessoas([...pessoas, user])
-        console.log(pessoas, 'pessoas')
+        console.log(user, 'useState: user')
         alert('Edição salva com sucesso!')
         Cadastros()
     }
@@ -88,6 +89,7 @@ export default function ModalEdit() {
                                         name="password"
                                         type="text"
                                         autoComplete="new-password"
+                                        placeholder='* Opcional'
                                         value={user.password}
                                         onChange={(event) => setUser({ ...user, password: event.target.value })}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5"
@@ -105,8 +107,8 @@ export default function ModalEdit() {
                                         id="confirmpass"
                                         name="confirmpass"
                                         type="text"
-                                        value={confirmPass.confirmPass}
-                                        onChange={(event) => setConfirmPass((prevState) => ({ ...prevState, confirmPass: event.target.value }))}
+                                        value={user.confirmPass}
+                                        onChange={(event) => setUser({ ...user, confirmPass: event.target.value})}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2.5" />
                                 </div>
                             </div>
@@ -143,8 +145,6 @@ export default function ModalEdit() {
                         </div>
                     </form>
                 </div>
-
-
             </div>
         </div>
     )

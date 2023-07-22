@@ -192,8 +192,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     navigate('/sessoes')
   }
 
-  async function DeleteUser(idDel) {
-      deleteUser(idDel)
+  async function DeleteUser(id) {
+      deleteUser(id)
+      alert('Usuário Deletado!')
   }
 
   return (

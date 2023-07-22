@@ -4,23 +4,15 @@ import { useState, useEffect } from "react"
 import { AuthContext } from "../contexts/AuthProvider"
 import ModalCadastro from "./ModalCadastro"
 import { Link } from "react-router-dom"
-import { useParams } from 'react-router-dom'
 
 export function NewUser() {
     const [openCadastro, setOpenCadastro] = useState(false)
     const { GetUsers, usersGet, DeleteUser } = useContext(AuthContext)
-    console.log(usersGet, "Teste")
-    const { id } = useParams()
-    console.log(id, 'useParams')
+    console.log(usersGet, "useContext: usersGet")
 
     useEffect(() => {
         GetUsers()
     }, [])
-
-    const handleDelete = (idDel) => {
-        DeleteUser(idDel)
-        console.log(idDel, 'idDel NewUser')
-    }
 
     return (
         <div>
@@ -53,7 +45,7 @@ export function NewUser() {
                                 <Link className="hover:text-black" to={`/sessoes/cadastros/editar/${par.id}`}>
                                     Editar
                                 </Link>
-                                <button className="hover:text-black" onClick={() => handleDelete(par.id)}>
+                                <button className="hover:text-black" onClick={() => DeleteUser(par._id)}>
                                     Excluir
                                 </button>
                             </div>
@@ -71,7 +63,7 @@ export function NewUser() {
                     {usersGet && usersGet?.response.map((par: any) => (
                         <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100">
                             {par.username}
-                            <button onClick={() => handleDelete(par.id)} className="hover:text-black font-semibold text-blue-600 mr-4">
+                            <button onClick={() => DeleteUser(par._id)} className="hover:text-black font-semibold text-blue-600 mr-4">
                                 Excluir
                             </button>
                         </li>
