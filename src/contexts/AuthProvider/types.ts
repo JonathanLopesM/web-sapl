@@ -68,6 +68,7 @@ export interface IContext extends IUser {
   usersGet:any 
   setUsersGet:any
   CreateUser:any
+  DeleteUser: any
 }
 
 export interface IAuthProvider {

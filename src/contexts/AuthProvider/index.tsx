@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, paineldados, parliamentariansSearch } from "../../services/api";
+import { createSession, getParlamentares, getSession, paineldados, parliamentariansSearch, deleteUser } from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
 import { PatchMatterVote, createUsers, getData, getDataIdPanel, getToken, getUsers, getVotes, patchPanelMessage, searchMaterias, searchParlSpeech } from "../../services/apiNode"
 
@@ -192,6 +192,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     navigate('/sessoes')
   }
 
+  async function DeleteUser(idDel) {
+      deleteUser(idDel)
+  }
+
   return (
     <AuthContext.Provider value={
       { 
@@ -208,7 +212,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         estado, setEstado, dados, setDados, SearchMaterias,materias, setMaterias,
         MatterUpdated, GetVotes,resultVote, setResultVote,PatchPanelMessage, 
         SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet,
-        CreateUser
+        CreateUser, DeleteUser
 
       }} >
       {children}
