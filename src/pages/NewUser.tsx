@@ -27,10 +27,10 @@ export function NewUser() {
             <Header />
             <ModalCadastro open={openCadastro} setOpen={setOpenCadastro} />
 
-            <div className="flex self-center mt-10 gap-[30%]">
+            <div className="flex self-center mt-10 gap-[31%]">
                 <button
                     onClick={() => setOpenCadastro(!openCadastro)}
-                    className="mx-5 rounded-md bg-sky-200 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 justify-left">
+                    className="mx-10 rounded-md bg-sky-200 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 justify-left">
                     Cadastrar Usuário
                 </button>
 
