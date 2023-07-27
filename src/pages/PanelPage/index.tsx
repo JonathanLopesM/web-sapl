@@ -1,27 +1,38 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/AuthProvider"
-import { useParams } from "react-router-dom"
 import { PainelParlamentares } from "../../components/Panel/parlamentares"
 import { ResultadoVotacao } from "../../components/Panel/resultadoVotacao"
 import { io } from "socket.io-client"
 import { getData } from "../../services/apiNode"
 import { WelcomeToPeapleHome } from "../../components/Panel/Welcome"
 import { Message } from "../../components/Panel/Message"
-import { Speech } from "../../components/Panel/Speech"
+import { SpeechPanel } from "../../components/Panel/Speech/index"
+import { useNavigate } from "react-router-dom"
+
 
 // const socket = io('http://localhost:3333');
 let poolingTimeout;
-let dataReturn;
 async function PoolingToBack (setDados) {
   await getData(setDados)
 
   poolingTimeout = setTimeout(()=> PoolingToBack(setDados), 800)
 }
 export function Painel(){
+  const { dados, setDados, idSession } = useContext(AuthContext)
+    const navigate = useNavigate()
+  useEffect(()=> {
+    // Conferir se tem um token, 
 
-  
-  
-  const { GetSessions, painelLayout, setPainelLayout, GetPainel, dadosPainel, setDadosPainel, dados, setDados } = useContext(AuthContext)
+    // se tiver rediciona para a dashboard 
+    const token = localStorage.getItem('sessionid')
+    // if(!token){
+    //   navigate('/')
+    // }
+    // else {
+    //   navigate('/sessoes')
+    // }
+    //se não direciona Login
+  }, [idSession])
   
   useEffect(()=>{
    PoolingToBack(setDados)
@@ -54,16 +65,15 @@ export function Painel(){
   // },[])
   let presences = []
 
-  if(dados){
+  if(dados && dados?.data && dados?.data?.stateVote){
     presences = dados?.data?.stateVote.filter(fil => {
       if(fil.presenca == true){
         return fil
       }
     })
   }
-  console.log(presences?.length, "presentes mesmos")
-  console.log(dados, 'dadaos')
 
+  console.log(dados, "dados")
 
   return (
 
@@ -91,7 +101,7 @@ export function Painel(){
                 {dados?.data?.tela === 0 && <WelcomeToPeapleHome dados={dados?.data} />}
                 {dados?.data?.tela === 1 && <PainelParlamentares dados={dados?.data.stateVote} materia={dados?.data.materia}  />}
                 {dados?.data?.tela === 2 && <ResultadoVotacao dados={dados?.data} materia={dados?.data.materia}  />}
-                {dados?.data?.tela === 3 && <Speech />}
+                {dados?.data?.tela === 3 && <SpeechPanel dados={dados?.data} />}
                 {dados?.data?.tela === 4 && <h5 className="flex w-full text-center mx-auto justify-center items-center bg-white text-black text-6xl font-extrabold p-4">SILÊNCIO!</h5>}
                 {dados?.data?.tela === 5 && <Message dados={dados?.data}  />}
               </>

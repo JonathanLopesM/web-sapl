@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
 import { createSession, getParlamentares, getSession, ordemDia,paineldados, parliamentariansSearch } from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, createUsers, getData, getDataIdPanel, getToken, getUsers, getVotes, patchPanelMessage, searchMaterias, searchParlSpeech } from "../../services/apiNode"
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl, searchMaterias, searchParlSpeech } from "../../services/apiNode"
 
 
 
@@ -10,6 +10,8 @@ export const AuthContext = createContext<IContext>({} as IContext)
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
   const navigate = useNavigate();
+
+  const [tokenOn, setTokenOn] = useState("")
   const [error, setError] = useState('')
   const [sessions, setSessions] = useState()
 
@@ -50,20 +52,27 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const [usersGet, setUsersGet] = useState( ) as any
   const [dayOrder, setDayOrders] = useState() as any
 
-  //MmViNDIxMmYw
+  const [getIdSpeech, setGetIdSpeech] = useState() as any
+
+  useEffect(()=> {
+    const recoveredUser = localStorage.getItem('sessionid')
+    
+    if(recoveredUser){
+      setTokenOn(recoveredUser)
+    }
+    },[])
 
   async function CreateSession(username, password) {
 
     const response = await getToken({ username, password })
 
-    console.log(response, 'response no context')
     if (response.data.token) {
       const token = response.data.token
 
       localStorage.setItem('sessionid', token)
-
-      console.log('deveria direcionar no context')
-      navigate('/sessoes')
+      
+      setTokenOn(token)
+      // navigate('/sessoes')
     } else if (response.data.message) {
       setError(response.data.message)
       console.log(error, 'error no context')
@@ -87,13 +96,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       tema_solene, publicar_pauta, tipo, sessao_legislativa, legislatura
     })
 
-    console.log(response, 'session response context no context')
   }
 
   async function GetSessions(year: string, month: string, day: string, type: string) {
-    console.log(year, month, day, type, 'dados do get session no context')
     const response = await getSession({ year, month, day, type })
-    console.log(response.data.results, 'response do sessions no context')
     setSessions(response.data.results)
 
     localStorage.setItem('sessions', JSON.stringify(sessions))
@@ -103,14 +109,13 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   async function GetParlamentares() {
     const response = await getParlamentares()
 
-    console.log(response, 'response  no context')
     setParlamentares(response.data)
 
   }
-
+  // PAINEL - Returno do dados
   async function GetPainel() {
     const respon = await getData(setDados)
-    setDados(respon)
+    // setDados(respon)
     console.log(respon, 'respon no context no context')
   }
 
@@ -120,12 +125,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   async function PatchPanelMessage (tela, message){
-    const response = await patchPanelMessage(panelId, tela, message)
-    console.log(response, 'response do dados')
+     await patchPanelMessage(panelId, tela, message)
   }
   async function GetVotes(){
     const response = await getVotes()
-    console.log(response.data.response)
     setResultVote(response.data.response)
   }
 
@@ -191,6 +194,31 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     console.log(response, "response do DayOrderIds context")
     setDayOrders(response.data.results)
   }
+  // Updated Speech Parl
+  async function GetIdSpeech(){
+    const response = await getSpeechParlData()
+    console.log(response, "response do GetIdSpeech")
+     setGetIdSpeech(response.data.response._id)
+
+  }
+  //ADICIONAR AS FUNCOES QUE FALTAM DOS STATES 
+  async function PatchSpeechParl(getIdSpeech, id, name, fotografia, speechTime, speechTimeInit,
+    presenca, speechTimeInitBoolean, partTime, partTimeInit, partTimeInitBoolean,
+    orderQuestionTime, orderQuestionTimeInit,orderQuestionTimeInitBoolean,
+    finalConsiderationsTime,finalConsiderationsTimeInit,finalConsiderationsTimeInitBoolean,
+    soundPlay
+    ){
+      console.log(getIdSpeech, "id no context")
+    const response = await patchSpeechParl({
+      getIdSpeech, id, name, fotografia, 
+      speechTime, speechTimeInit,
+      presenca, speechTimeInitBoolean, partTime, partTimeInit, partTimeInitBoolean,
+      orderQuestionTime, orderQuestionTimeInit,orderQuestionTimeInitBoolean,
+      finalConsiderationsTime,finalConsiderationsTimeInit,finalConsiderationsTimeInitBoolean,
+      soundPlay
+     })
+      console.log(response, "response do updated")
+  }
 
   async function Cadastros() {
     navigate('/sessoes/cadastros')
@@ -203,7 +231,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   return (
     <AuthContext.Provider value={
       { 
-        authenticated: true, CreateSession, GetSessions, 
+        authenticated: !!tokenOn, CreateSession, GetSessions, 
         sessions, navigate, basicDataOpen, setBasicDataOpen,
         tableOpen, setTableOpen, presenceOpen, setPresenceOpen,
         absenceOpen, setAbsenceOpen, personalTalkOpen, setPersonalTalkOpen,
@@ -217,7 +245,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         MatterUpdated, GetVotes,resultVote, setResultVote,PatchPanelMessage, 
         SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet,
         DayOrderIds,dayOrder, setDayOrders,
-        CreateUser
+        CreateUser, GetIdSpeech,getIdSpeech, setGetIdSpeech, PatchSpeechParl
 
       }} >
       {children}

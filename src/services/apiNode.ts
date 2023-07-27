@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const api = axios.create({
   // @ts-ignore
-  baseURL: "http://localhost:3333" //import.meta.env.VITE_URL_API_NODE,
+  baseURL: import.meta.env.VITE_URL_API_NODE,
 })
 //https://api-sapl.onrender.com http://localhost:3333
 
@@ -92,7 +92,7 @@ export const patchPanelMessage = async (idPanel, tela, message) => {
   errors= response.data
   return response
 }
-
+//Crud dos users
 export const createUsers = async ({
   username,
   password,
@@ -115,7 +115,7 @@ export const createUsers = async ({
   return response
 }
 
-//Buscar Usuários
+//Buscar Usuários - retorno de usuarios parlamentares e admin's
 export const getUsers = async () => {
   let errors = [];
   const response = await api.get(`/auth/users`)
@@ -125,7 +125,38 @@ export const getUsers = async () => {
 
 export const patchUsers = async ({id, username, password, active}) => {
   let errors = [];
-  const response = await api.patch(`/auth/user/${id}`)
+  const response = await api.patch(`/auth/user/${id}`, {
+    username, password, active
+  })
+  errors= response.data
+  return response
+}
+
+export const getSpeechParlData = async () => {
+  let errors = [];
+  const response = await api.get(`/speech/timer`)
+  errors= response.data
+  return response
+}
+export const patchSpeechParl = async ({
+  getIdSpeech, id, name, fotografia, speechTime, speechTimeInit,
+  presenca, speechTimeInitBoolean,
+   partTime, partTimeInit, partTimeInitBoolean,
+   orderQuestionTime, orderQuestionTimeInit,orderQuestionTimeInitBoolean,
+   finalConsiderationsTime,finalConsiderationsTimeInit,finalConsiderationsTimeInitBoolean,
+   soundPlay
+}) => {
+  console.log(getIdSpeech,"na api")
+  let errors = [];
+  const response = await api.patch(`/speech/timer/${getIdSpeech}`, {
+    id, name, fotografia, speechTime, speechTimeInit,
+    presenca, speechTimeInitBoolean, 
+    partTime, partTimeInit, partTimeInitBoolean,
+    orderQuestionTime, orderQuestionTimeInit,orderQuestionTimeInitBoolean,
+    finalConsiderationsTime,finalConsiderationsTimeInit,finalConsiderationsTimeInitBoolean,
+    soundPlay 
+
+  })
   errors= response.data
   return response
 }

@@ -53,7 +53,7 @@ export function Session () {
     <ModalAddSession open={open} setOpen={setOpen} /> */}
     {
       session && 
-      <div className="flex flex-col w-[95%]  py-10 px-5 lg:px-0  md:max-w-[1200px] mx-auto gap-2">
+      <div className="flex flex-col w-[95%]  px-5 lg:px-0  md:max-w-[1200px] mx-auto gap-2">
         {/* <div className=" flex w-full gap-4 justify-end my-5">
             <button onClick={()=> setOpenSearch(!openSearch)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300 ">Pesquisa Textual</button>
             <button onClick={()=> setOpen(!open)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300">Adicionar Sessão Plenária</button>

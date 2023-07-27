@@ -15,9 +15,10 @@ import ModalEdit from './pages/ModalEdit'
 
 function App() {
   const { authenticated, sessions } = useContext(AuthContext)
+  
   const Private = ({ children }) => {
     const { authenticated, sessions } = useContext(AuthContext)
-
+    console.log(authenticated, "no app")
     if (!authenticated) {
       return <Navigate to='/' />
     }
@@ -31,12 +32,12 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/sessoes' element={<Private><DefaultLayout /></Private>}>
-          <Route path='/sessoes' element={<Dashboard />} />
+          <Route path='/sessoes' element={<Private> <Dashboard /> </Private>} />
           <Route path='/sessoes/cadastros' element={<NewUser />} />
           <Route path='/sessoes/cadastros/editar/:id' element={<ModalEdit />} />
-          <Route path='/sessoes/sessao/:id' element={<Session />} />
-          <Route path='/sessoes/painel' element={<Painel />} />
+          <Route path='/sessoes/sessao/:id' element={<Session />} />  
         </Route>
+        <Route path='/sessoes/painel' element={<Painel /> } />
         {/* <Route path='/dashboard' element={<Private> <Dashboard  /></Private>} /> */}
 
       </Routes>

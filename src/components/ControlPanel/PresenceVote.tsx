@@ -35,7 +35,7 @@ export function PresenceVoteControl ({sessionId} ){
   console.log(matterSession, 'cola ahshd')
   return (
     <div className="flex flex-col border p-4 py-5 gap-8">
-      <div className="flex flex-col w-full">
+      <div className="flex  w-full items-center">
         <label className="flex  flex-col p-2 rounded-lg text-lg font-semibold" htmlFor="">
           Matéria em votação
           <select 
@@ -63,40 +63,42 @@ export function PresenceVoteControl ({sessionId} ){
             }
           </select>
         </label>
+        <button type="button" onClick={handleSetMatter} 
+          className="flex bg-green-500 h-10 px-2 text-white text-center justify-center py-2 rounded-md mt-7">
+              ATUALIZAR PAINEL
+        </button>
       </div>
-      <button type="button" onClick={handleSetMatter} className="flex bg-green-500 text-white text-center justify-center py-2 rounded-md">
-            ATUALIZAR PAINEL
-      </button>
+      
 
       <div className="flex flex-col border p-8">
-      <div className="flex font-bold text-3xl">
-        <h3 className="flex flex-col">
-          Matéria Votada: 
-          <span  className="flex ml-4">
-            {resultVote?.materia && resultVote?.materia}
-          </span>
-        </h3>
-      </div>
-      <div>
-        <h6 className="flex text-3xl font-bold">
-          Votos
-        </h6>
-        <div className="flex flex-col ml-4">
-          <span>
-            SIM: {resultVote?.Yes}
-          </span>
-          <span>
-            NÃO: {resultVote?.Not}
-          </span>
-          <span>
-            Presença: {resultVote?.Presence}
-          </span>
-          <span>
-            Total de Votos: {resultVote?.totalVotes}
-          </span>
+        <div className="flex font-bold text-xl">
+          <h3 className="flex flex-col">
+            Matéria Votada: 
+            <span  className="flex ml-4">
+              {resultVote?.materia && resultVote?.materia}
+            </span>
+          </h3>
+        </div>
+        <div>
+          <h6 className="flex text-3xl font-bold">
+            Votos
+          </h6>
+          <div className="flex flex-col ml-4">
+            <span>
+              SIM: {resultVote?.Yes}
+            </span>
+            <span>
+              NÃO: {resultVote?.Not}
+            </span>
+            <span>
+              Presença: {resultVote?.Presence}
+            </span>
+            <span>
+              Total de Votos: {resultVote?.totalVotes}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   )
 }

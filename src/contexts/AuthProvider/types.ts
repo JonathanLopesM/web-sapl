@@ -71,6 +71,10 @@ export interface IContext extends IUser {
   DayOrderIds:any
   dayOrder:any
   setDayOrders:any
+  GetIdSpeech:any
+  getIdSpeech:any
+   setGetIdSpeech:any
+   PatchSpeechParl:any
 }
 
 export interface IAuthProvider {

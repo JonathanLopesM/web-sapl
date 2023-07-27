@@ -4,7 +4,7 @@ import { PresenceVoteControl } from "./PresenceVote"
 import { PatchPanelView, openClosePanelView } from "../../services/apiNode"
 import { ResultVoteControl } from "./ResultVote"
 import {  MessageControl } from "./Message"
-import { SpeechControl } from "./SpeechControl"
+import { SpeechControl } from "./SpeechControl/index"
 
 export function PainelEletronico({ session }){
   const { painelLayout, setPainelLayout,SearchParlSpeech, SaveIdPanel, panelId, setPanelId, estado, setEstado } = useContext(AuthContext)
@@ -37,7 +37,7 @@ export function PainelEletronico({ session }){
 
         {session &&
           session.__str__
-        }
+        } 
       </h2>
       <div className="flex w-full justify-between my-5">
         <a onClick={handleFunction} target="_blank">
@@ -87,7 +87,7 @@ export function PainelEletronico({ session }){
                       setPainelLayout('resultadovotacao')
                     }
                   } 
-                  className={`flex border px-2 py-2 rounded-md ${form == 'resultadodevotacao' && 'bg-gray-400 text-white'}`} 
+                  className={`hidden border px-2 py-2 rounded-md ${form == 'resultadodevotacao' && 'bg-gray-400 text-white'}`} 
                   value="resultadodevotacao"
                   type="button"
                 >

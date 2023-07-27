@@ -2,15 +2,11 @@ import React, { useContext, useEffect, useState } from "react"
 import ModalAddSession from "../components/ModalAddSession"
 import ModalSearch from "../components/ModalSearch"
 import { AuthContext } from "../contexts/AuthProvider"
-import { format } from 'date-fns'
 import { Header } from "../components/Header"
 
 export function Dashboard() {
   const [open, setOpen] = useState(false)
   const [openSearch, setOpenSearch] = useState(false)
-
-
-
   const { GetSessions, GetParlamentares, parlamentares, sessions, navigate, year, setYear, month, setMonth, day, setDay, type, setType, dash, setDash, sess, setSess } = useContext(AuthContext)
 
   useEffect(() => {
@@ -25,7 +21,6 @@ export function Dashboard() {
   }, [])
 
   function HandleSearch() {
-    console.log('log do se')
     GetSessions(year, month, day, type)
   }
   console.log(sessions, parlamentares, 'sessions e parlamentares')
@@ -56,15 +51,12 @@ export function Dashboard() {
     return formatted.toString()
   }
 
-
   return (
     <div>
       <Header />
       <div className="flex flex-col w-[95%] mx-auto mt-10">
         <ModalSearch open={openSearch} setOpen={setOpenSearch} />
         <ModalAddSession open={open} setOpen={setOpen} />
-
-
         <div className="flex flex-col gap-2">
           <h3 className="flex text-xl sm:text-4xl font-semibold">
             Selecionar Sessão Plenária
@@ -174,15 +166,15 @@ export function Dashboard() {
                   </div>
                   <div>
                     <span className="font-bold pr-2">Legislatura:</span>
-                    {ses.legislatura == 1 && <span>50ª (2021 - 2024)(Atual)</span>}
+                    {ses.legislatura == 1 && <span>{ses.numero}ª (2021 - 2024)(Atual)</span>}
                   </div>
                   <div>
                     <span className="font-bold pr-2">Sessão Legislativa:</span>
-                    {ses.sessao_legislativa == 2 && <span>3º (2023 - 2023)(Atual)</span>}
+                    {ses.sessao_legislativa == 1 && <span>3º (2023 - 2023)(Atual)</span>}
                   </div>
                   <div>
                     <span className="font-bold pr-2">Tipo:</span>
-                    {ses.tipo == 2 && <span>Sessão Ordinária</span>}
+                    {ses.tipo == 1 && <span>Sessão Ordinária</span>}
                   </div>
                 </div>
               )).reverse()}
