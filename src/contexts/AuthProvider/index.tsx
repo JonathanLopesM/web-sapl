@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, ordemDia,paineldados, parliamentariansSearch } from "../../services/api";
+import { createSession, getParlamentares, getSession, ordemDia,paineldados, parliamentariansSearch, deleteUser } from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
 import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl, searchMaterias, searchParlSpeech } from "../../services/apiNode"
 
@@ -226,6 +226,11 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   async function MenuInicial() {
     navigate('/sessoes')
+  }
+
+  async function DeleteUser(id) {
+      deleteUser(id)
+      alert('Usuário Deletado!')
   }
 
   return (

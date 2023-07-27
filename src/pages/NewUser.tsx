@@ -7,8 +7,8 @@ import { Link } from "react-router-dom"
 
 export function NewUser() {
     const [openCadastro, setOpenCadastro] = useState(false)
-    const { GetUsers, usersGet } = useContext(AuthContext)
-    console.log(usersGet, "Teste")
+    const { GetUsers, usersGet, DeleteUser } = useContext(AuthContext)
+    console.log(usersGet, "useContext: usersGet")
 
     useEffect(() => {
         GetUsers()
@@ -19,42 +19,51 @@ export function NewUser() {
             <Header />
             <ModalCadastro open={openCadastro} setOpen={setOpenCadastro} />
 
-            <button
-                onClick={() => setOpenCadastro(!openCadastro)}
-                className="flex mt-10 rounded-md bg-slate-300 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 mx-auto">
-                Cadastrar Usuário
-            </button>
+            <div className="flex self-center mt-10 gap-[29%]">
+                <button
+                    onClick={() => setOpenCadastro(!openCadastro)}
+                    className="mx-10 rounded-md bg-sky-200 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-50 justify-left">
+                    Cadastrar Usuário
+                </button>
 
-            <h2 className="text-center font-bold text-xl mt-7">
-                Parlamentares:
-            </h2>
-            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4">
+                <span className="self-center font-bold text-2xl underline tracking-wider"><h2>
+                    PARLAMENTARES
+                </h2>
+                </span>
+            </div>
+
+            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4 ">
                 <ul role="list" className="divide-y divide-gray-200">
-                    {
-                        usersGet && usersGet?.resParl.map((par: any) => (
-                            <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100">
+                    {usersGet && usersGet?.resParl.map((par: any) => (
+                        <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100 font-semibold">
+                            <div className="flex flex-col gap-2">
                                 {par.nome_completo}
-                                <div className="flex gap-5 font-semibold">
-                                    <Link to={`/sessoes/cadastros/editar/${par.id}`}>
-                                        Editar
-                                    </Link>
-                                    <button>Excluir</button>
-                                </div>
-                            </li>
-                        ))
+                                <span className="text-sm font-normal text-indigo-800">
+                                    {par.username} </span>
+                            </div>
+                            <div className="flex gap-10 font-semibold text-blue-600 self-center">
+                                <Link className="hover:text-black" to={`/sessoes/cadastros/editar/${par.id}`}>
+                                    Editar
+                                </Link>
+                                <button className="hover:text-black" onClick={() => DeleteUser(par._id)}>
+                                    Excluir
+                                </button>
+                            </div>
+                        </li>
+                    ))
                     }
                 </ul>
             </div>
 
-            <h2 className="text-center font-bold text-xl mt-7">
-                Administradores:
+            <h2 className="text-center font-bold text-2xl mt-7 underline tracking-wider">
+                ADMINISTRADORES
             </h2>
-            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4">
+            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4 mb-10">
                 <ul role="list" className="divide-y divide-gray-200">
                     {usersGet && usersGet?.response.map((par: any) => (
                         <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100">
                             {par.username}
-                            <button>
+                            <button onClick={() => DeleteUser(par._id)} className="hover:text-black font-semibold text-blue-600 mr-4">
                                 Excluir
                             </button>
                         </li>

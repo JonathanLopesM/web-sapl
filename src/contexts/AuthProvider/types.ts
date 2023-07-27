@@ -75,6 +75,7 @@ export interface IContext extends IUser {
   getIdSpeech:any
    setGetIdSpeech:any
    PatchSpeechParl:any
+  DeleteUser: any
 }
 
 export interface IAuthProvider {
