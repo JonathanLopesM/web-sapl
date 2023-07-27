@@ -10,7 +10,7 @@ import { Session } from './pages/session/[slug]'
 import { DefaultLayout } from './layouts/DefaultLayout'
 import { Painel } from './pages/PanelPage'
 import { NewUser } from './pages/NewUser'
-import ModalEdit from './pages/ModalEdit'
+import ModalEdit from './components/NewUser/ModalEdit'
 
 
 function App() {

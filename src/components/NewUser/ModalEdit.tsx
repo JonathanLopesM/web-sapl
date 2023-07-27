@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import React, { useContext } from "react"
-import { AuthContext } from "../contexts/AuthProvider"
+import { AuthContext } from "../../contexts/AuthProvider"
 import { useParams } from 'react-router-dom'
-import { Header } from '../components/Header'
+import { Header } from '../../components/Header'
 
 export default function ModalEdit() {
     const { usersGet, Cadastros } = useContext(AuthContext)

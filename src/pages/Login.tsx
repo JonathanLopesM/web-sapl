@@ -9,12 +9,12 @@ export default function Login() {
 
   const history = useNavigate()
   const navigate = useNavigate();
+  const token = localStorage.getItem('sessionid')
 
   useEffect(()=> {
     // Conferir se tem um token, 
-
     // se tiver rediciona para a dashboard 
-    const token = localStorage.getItem('sessionid')
+    
     if(!token){
       navigate('/')
     }
@@ -22,14 +22,12 @@ export default function Login() {
       navigate('/sessoes')
     }
     //se não direciona Login
-  }, [idSession])
+  }, [idSession, HandleSubmit])
 
   function HandleSetPass (e){
-    console.log(password)
     setPassword(e.target.value)
   }
   function HandleSetUser(e){
-    console.log(username)
     setUsername(e.target.value)
   }
 

@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession, getParlamentares, getSession, ordemDia,paineldados, parliamentariansSearch, deleteUser } from "../../services/api";
+import { createSession,  getParlamentares, getSession, ordemDia,paineldados, parliamentariansSearch} from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl, searchMaterias, searchParlSpeech } from "../../services/apiNode"
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl, searchMaterias, searchParlSpeech, deleteUser } from "../../services/apiNode"
 
 
 
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       // navigate('/sessoes')
     } else if (response.data.message) {
       setError(response.data.message)
-      console.log(error, 'error no context')
+      
     } else {
       setError('Email/Senha Inválidos!')
     }
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   async function GetPainel() {
     const respon = await getData(setDados)
     // setDados(respon)
-    console.log(respon, 'respon no context no context')
+    
   }
 
   async function Logout() {
@@ -135,7 +135,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   async function SaveIdPanel() {
     const response = await getDataIdPanel() as any
 
-    console.log(response, 'response do id do painel no context')
+    
     setEstado(response.data.estado)
     setPanelId(response.data.idPanel)
   }
@@ -147,57 +147,54 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     active,
     nivel,
     id ){
-      console.log( username,
-        password,
-        confirmpassword,
-        active,
-        nivel,
-        id, "dados de cadastro dentro do context 151")
-    const response = await createUsers({username, password, confirmpassword,active,nivel,id})
+      
+        
+     await createUsers({username, password, confirmpassword,active,nivel,id})
 // Larga na typagem o nome da funcao
-    console.log(response, "response do Create User no context")
+      GetUsers()
+    
   }
   async function GetUsers() {
     const response = await getUsers()
-    console.log(response, "get user contexto ")
+    
     setUsersGet(response.data)
 
   }
 
   async function SearchParliamen () {
     const response = await parliamentariansSearch() as any
-    console.log(response, 'response no context no context')
+    
     setSearchParl(response.data.results)
   }
 
   async function SearchMaterias(){
     const response = await searchMaterias()
-    console.log(response, 'Server no context')
+    
 
     setMaterias(response.data.results)
   }
 
   async function SearchParlSpeech () {
     const response = await searchParlSpeech()
-    console.log(response, 'Valor do responde do ParlSet')
+    
     setParlSpeech(response.data.results)
   }
 
   async function MatterUpdated(matter) {
     const response = await PatchMatterVote(panelId, matter)
-    console.log(response, 'response do Matter no context no context')
+    
   }
   async function DayOrderIds(idSes){
-    console.log(idSes, "idSes")
+    
     const response = await ordemDia({idSes})
 
-    console.log(response, "response do DayOrderIds context")
+    
     setDayOrders(response.data.results)
   }
   // Updated Speech Parl
   async function GetIdSpeech(){
     const response = await getSpeechParlData()
-    console.log(response, "response do GetIdSpeech")
+    
      setGetIdSpeech(response.data.response._id)
 
   }
@@ -208,7 +205,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     finalConsiderationsTime,finalConsiderationsTimeInit,finalConsiderationsTimeInitBoolean,
     soundPlay
     ){
-      console.log(getIdSpeech, "id no context")
+      
     const response = await patchSpeechParl({
       getIdSpeech, id, name, fotografia, 
       speechTime, speechTimeInit,
@@ -217,7 +214,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       finalConsiderationsTime,finalConsiderationsTimeInit,finalConsiderationsTimeInitBoolean,
       soundPlay
      })
-      console.log(response, "response do updated")
+      
   }
 
   async function Cadastros() {
@@ -250,7 +247,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         MatterUpdated, GetVotes,resultVote, setResultVote,PatchPanelMessage, 
         SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet,
         DayOrderIds,dayOrder, setDayOrders,
-        CreateUser, GetIdSpeech,getIdSpeech, setGetIdSpeech, PatchSpeechParl
+        GetIdSpeech,getIdSpeech, setGetIdSpeech, PatchSpeechParl,
+        CreateUser, DeleteUser
 
       }} >
       {children}

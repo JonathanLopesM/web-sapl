@@ -103,7 +103,7 @@ export const createUsers = async ({
 }) => {
   let errors = [];
   
-  const response = await api.post(`/auth/user`, {
+  const response = await api.post(`/auth/users`, {
     username,
     password,
     confirmpassword,
@@ -158,5 +158,15 @@ export const patchSpeechParl = async ({
 
   })
   errors= response.data
+  return response
+}
+
+export const deleteUser = async (id) => {
+  let errors = [];
+  const response = {
+    _id: id,
+    message: "Usuário deletado"
+  }  
+  console.log(response, 'response deleteUser')
   return response
 }

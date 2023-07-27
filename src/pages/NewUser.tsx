@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { Header } from "../components/Header"
 import { useState, useEffect } from "react"
 import { AuthContext } from "../contexts/AuthProvider"
-import ModalCadastro from "./ModalCadastro"
+import ModalCadastro from "../components/NewUser/ModalCadastro"
 import { Link } from "react-router-dom"
 
 export function NewUser() {
@@ -32,10 +32,10 @@ export function NewUser() {
                 </span>
             </div>
 
-            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4 ">
+            <div className="overflow-auto max-h-[28rem] mx-5  mt-5 bg-white rounded-xl shadow-xl space-x-4 ">
                 <ul role="list" className="divide-y divide-gray-200">
                     {usersGet && usersGet?.resParl.map((par: any) => (
-                        <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100 font-semibold">
+                        <li key={par.id} className="flex w-full justify-between px-4 py-5 hover:bg-gray-100 font-semibold">
                             <div className="flex flex-col gap-2">
                                 {par.nome_completo}
                                 <span className="text-sm font-normal text-indigo-800">
@@ -58,16 +58,21 @@ export function NewUser() {
             <h2 className="text-center font-bold text-2xl mt-7 underline tracking-wider">
                 ADMINISTRADORES
             </h2>
-            <div className="overflow-auto max-h-[28rem] px-6 mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4 mb-10">
+            <div className="overflow-auto max-h-[28rem] mx-5 mt-5 bg-white rounded-xl shadow-xl space-x-4 mb-10">
                 <ul role="list" className="divide-y divide-gray-200">
-                    {usersGet && usersGet?.response.map((par: any) => (
-                        <li key={par.id} className="flex justify-between py-5 hover:bg-gray-100">
-                            {par.username}
-                            <button onClick={() => DeleteUser(par._id)} className="hover:text-black font-semibold text-blue-600 mr-4">
-                                Excluir
-                            </button>
-                        </li>
-                    ))}
+                    {usersGet && usersGet?.response.map((par: any, index) => {
+                        if(par.nivel !== 5 ){
+                            return (
+                                <li key={index} className="flex justify-between px-4 py-5 hover:bg-gray-100">
+                                    {par.username}
+                                    <button onClick={() => DeleteUser(par._id)} className="hover:text-black font-semibold text-blue-600 mr-4">
+                                        Excluir
+                                    </button>
+                                </li>
+                            )
+                        }
+                        
+                    })}
                 </ul>
             </div>
         </div>

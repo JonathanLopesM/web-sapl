@@ -67,12 +67,4 @@ export const ordemDia = async ({idSes}) => {
   return response
 }
 
-export const deleteUser = async (id) => {
-  let errors = [];
-  const response = {
-    _id: id,
-    message: "Usuário deletado"
-  }  
-  console.log(response, 'response deleteUser')
-  return response
-}
+
