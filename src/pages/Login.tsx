@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom"
 
 export default function Login() {
   const { CreateSession, idSession } = useContext(AuthContext)
-  const [username, setUsername] = useState()
-  const [password, setPassword] = useState()
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
 
   const history = useNavigate()
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Login() {
       navigate('/sessoes')
     }
     //se não direciona Login
-  }, [idSession, HandleSubmit])
+  }, [idSession])
 
   function HandleSetPass (e){
     setPassword(e.target.value)
@@ -33,7 +33,6 @@ export default function Login() {
 
   async function HandleSubmit(e){
     e.preventDefault()
-    console.log(username, password, 'user e senha')
     CreateSession(username, password)
   }
 

@@ -14,17 +14,13 @@ import ModalEdit from './components/NewUser/ModalEdit'
 
 
 function App() {
-  const { authenticated, sessions } = useContext(AuthContext)
-  
   const Private = ({ children }) => {
-    const { authenticated, sessions } = useContext(AuthContext)
-    console.log(authenticated, "no app")
+    const { authenticated } = useContext(AuthContext)
     if (!authenticated) {
       return <Navigate to='/' />
     }
     return children
   }
-  console.log(sessions, 'sessions no app')
 
   return (
     <AuthProvider>

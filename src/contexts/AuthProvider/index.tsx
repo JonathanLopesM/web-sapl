@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       localStorage.setItem('sessionid', token)
       
       setTokenOn(token)
+      setIdSession(token)
       // navigate('/sessoes')
     } else if (response.data.message) {
       setError(response.data.message)
