@@ -71,14 +71,26 @@ export function SpeechControl () {
 
   function handleSetParl(){
     let user;
+    
     if(userObj){
+      console.log(userObj, "user obj")
       user = parlSpeech.filter(parl => {
         console.log(parl.id)
         if(parl.id == userObj){
+          
           return parl
         }
+        
         return
       })
+      if(userObj == "selecione"){
+         user = [{
+          ativo:true,
+          fotografia: "http://votacao.novace.com.br/novace_logo.png",
+          nome_parlamentar:"Usuário",
+        }]
+    }
+      console.log(user, "objeto que preciso")
       PatchSpeechParl(getIdSpeech, user[0].id, user[0].nome_parlamentar, user[0].fotografia)
     }
   }
@@ -88,7 +100,7 @@ export function SpeechControl () {
     console.log( soundPlay,"efeito sonoro ligado  ")
     PatchSpeechParl(getIdSpeech, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined , undefined, soundPlay )
   }
-
+  console.log(userObj, "user obj")
 return (
   <div className="flex flex-col w-full gap-4">
       <div className="flex w-full justify-between items-end border-b-2 pb-8">
@@ -100,7 +112,7 @@ return (
                 onChange={(e)=>setUserObj(e.target.value)}
                 className="flex w-full text-lg border px-4 py-1 rounded-md"
               name="" id="">
-                <option value="">Selecione...</option>
+                <option value="selecione">Selecione...</option>
                 {parlSpeech.map(par => (
                   <option key={par.id} value={par.id}>{par.__str__}</option>
                 ))}

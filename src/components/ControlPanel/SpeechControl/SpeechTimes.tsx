@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../contexts/AuthProvider"
 
-
 export function SpeechTimes () {
-  const { SearchParlSpeech, parlSpeech, GetPainel, dados, PatchSpeechParl,GetIdSpeech, getIdSpeech, setGetIdSpeech } = useContext(AuthContext)
-  console.log(dados.data, "dados.data no controlTime")
+  const { dados, PatchSpeechParl,GetIdSpeech, getIdSpeech } = useContext(AuthContext)
   const [timerOn, setTimerOn] = useState(false)
   const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(600)//dados?.data?.speechParl?.speechTimeInit)
-
   const minutes = Math.floor(totalTimeInSeconds / 60)
   const seconds = totalTimeInSeconds % 60
   let speechTime;
@@ -18,17 +15,13 @@ export function SpeechTimes () {
       GetIdSpeech()
     }
   },[])
-  console.log(getIdSpeech, "id speech")
   useEffect(()=>{
-    console.log(dados.data?.speechParl?.speechTimeInitBoolean
-      , "total seconds")
     // if(dados.data?.speechParl?.speechTime !== timerOn){
     //   setTimerOn(dados.data?.speechParl?.speechTime)
     //   // setTotalTimeInSeconds(dados.data?.speechParl?.speechTimeInit)
 
     // }
     if(dados.data?.speechParl?.speechTimeInitBoolean){
-      console.log("set restart seconds")
       speechTimeInitBoolean = false
       setTotalTimeInSeconds(dados.data?.speechParl?.speechTimeInit)
       PatchSpeechParl(getIdSpeech, undefined,undefined,undefined, undefined, undefined, undefined, speechTimeInitBoolean )
@@ -36,17 +29,14 @@ export function SpeechTimes () {
     }
 
     if(totalTimeInSeconds === 0){
-      console.log("tempo acabou")
       return 
     } else {
       if(timerOn){
-        console.log(totalTimeInSeconds, "total seconds")
       const interval = setInterval(()=>{
         setTotalTimeInSeconds((prev) => prev  - 1)
       },1000)
       return ()=> clearInterval(interval)
     }
-    console.log(totalTimeInSeconds, "total dentro do ")
   }
   },[totalTimeInSeconds, timerOn, dados?.data?.speechParl?.speechTime, dados?.data?.speechParl?.speechTimeBoolean, dados?.data?.speechParl?.speechTimeInitBoolean ])
  
@@ -70,8 +60,6 @@ export function SpeechTimes () {
     PatchSpeechParl(getIdSpeech, undefined,undefined,undefined, speechTime)
     setTimerOn(false)
   }
-
-  console.log(timerOn, "timerOn 50")
 
   return (
     <div className="flex w-full justify-between">
@@ -103,8 +91,6 @@ export function SpeechTimes () {
           </span>
         </div>
       </div>
-     
-
     </div>
   )
 }

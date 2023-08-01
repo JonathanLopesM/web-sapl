@@ -19,6 +19,8 @@ export const getToken = async ({username, password}) => {
 }
 
 
+
+
 export const getData = async (setDados) => {
   let errors = [];
   const response = await api.get("/painel/dados")
@@ -52,20 +54,7 @@ export const openClosePanelView = async (idPanel, estado) => {
   return response
 }
 
-export const searchMaterias = async ( ) => {
-  let errors =[];
-  const response = await axios.get('https://sapl.valenca.rj.leg.br/api/materia/materialegislativa/?o=-data_apresentacao&page_size=100')
-  console.log(response, 'na api response ')
 
-  errors= response.data
-  return response
-}
-export const searchParlSpeech = async () => {
-  let errors = [];
-  const response = await axios.get("https://sapl.valenca.rj.leg.br/api/parlamentares/parlamentar/")
-  errors= response.data
-  return response
-}
 
 export const PatchMatterVote = async (idPanel, matter) => {
   let errors = [];
@@ -163,10 +152,24 @@ export const patchSpeechParl = async ({
 
 export const deleteUser = async (id) => {
   let errors = [];
-  const response = {
-    _id: id,
-    message: "Usuário deletado"
-  }  
-  console.log(response, 'response deleteUser')
+  console.log(id, "id na api 166")
+  const response = await api.delete(`/auth/users/${id}`)
+  return response
+}
+
+export const getSession = async ({year, month, day, type}) => {
+  let errors = []
+
+  const response =  await api.get(`/api/sessao/sessaoplenaria/`, 
+  { validateStatus: false} as any)
+  errors = response.data.errors
+  return response
+}
+export const searchMaterias = async ( ) => {
+  let errors =[];
+  const response = await api.get('/api/materia/materialegislativa/')
+  console.log(response, 'na api response ')
+
+  errors= response.data
   return response
 }

@@ -8,7 +8,6 @@ import { SpeechControl } from "./SpeechControl/index"
 
 export function PainelEletronico({ session }){
   const { painelLayout, setPainelLayout,SearchParlSpeech, SaveIdPanel, panelId, setPanelId, estado, setEstado } = useContext(AuthContext)
-
   const [form, setForm] = useState('bemvindos')
   const [color, setColor] = useState(estado)
   
@@ -29,7 +28,6 @@ export function PainelEletronico({ session }){
   const handleViewWindow = (tela) => {
     PatchPanelView(panelId, tela);
   }
-  console.log(session, "session no controle")
 
   return (
     <div className="flex flex-col w-full">

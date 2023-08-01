@@ -2,7 +2,6 @@ import React from "react"
 
 export function Processo({session}){
   
-  console.log(session, 'session')
   return (
     <>
     <div className="flex flex-col gap-2">

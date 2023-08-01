@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/AuthProvider"
 
 export function OrderQuestionTimes () {
   const { SearchParlSpeech, parlSpeech, GetPainel, dados, PatchSpeechParl,GetIdSpeech, getIdSpeech, setGetIdSpeech } = useContext(AuthContext)
-  console.log(dados.data, "dados.data no controlTime")
+  
   const [timerOn, setTimerOn] = useState(false)
   const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(1*60)//dados?.data?.speechParl?.orderQuestionTimeInit)
 
@@ -18,17 +18,15 @@ export function OrderQuestionTimes () {
       GetIdSpeech()
     }
   },[])
-  console.log(getIdSpeech, "id speech")
+  
   useEffect(()=>{
-    console.log(dados.data?.speechParl?.orderQuestionTimeInitBoolean
-      , "total seconds")
     // if(dados.data?.speechParl?.orderQuestionTime !== timerOn){
     //   setTimerOn(dados.data?.speechParl?.orderQuestionTime)
     //   // setTotalTimeInSeconds(dados.data?.speechParl?.orderQuestionTimeInit)
 
     // }
     if(dados.data?.speechParl?.orderQuestionTimeInitBoolean){
-      console.log("set restart seconds")
+      
       orderQuestionTimeInitBoolean = false
       setTotalTimeInSeconds(dados.data?.speechParl?.orderQuestionTimeInit)
       PatchSpeechParl(getIdSpeech, undefined,undefined,undefined,undefined,undefined, undefined, undefined, undefined, undefined,undefined, undefined, undefined, orderQuestionTimeInitBoolean )
@@ -36,17 +34,17 @@ export function OrderQuestionTimes () {
     }
 
     if(totalTimeInSeconds === 0){
-      console.log("tempo acabou")
+      
       return 
     } else {
       if(timerOn){
-        console.log(totalTimeInSeconds, "total seconds")
+        
       const interval = setInterval(()=>{
         setTotalTimeInSeconds((prev) => prev  - 1)
       },1000)
       return ()=> clearInterval(interval)
     }
-    console.log(totalTimeInSeconds, "total dentro do ")
+    
   }
   },[totalTimeInSeconds, timerOn, dados?.data?.speechParl?.orderQuestionTime, dados?.data?.speechParl?.orderQuestionTimeBoolean, dados?.data?.speechParl?.orderQuestionTimeInitBoolean ])
   
@@ -71,7 +69,7 @@ export function OrderQuestionTimes () {
     setTimerOn(false)
   }
 
-  console.log(timerOn, "timerOn 50")
+  
 
   return (
     <div className="flex w-full justify-between">

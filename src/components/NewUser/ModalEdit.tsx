@@ -6,7 +6,6 @@ import { Header } from '../../components/Header'
 
 export default function ModalEdit() {
     const { usersGet, Cadastros } = useContext(AuthContext)
-    console.log(usersGet.resParl, "usersGet.resParl")
     const { id } = useParams()
 
     const filterUserRes = usersGet.resParl.filter((fil) => {
@@ -15,7 +14,6 @@ export default function ModalEdit() {
         }
         return
     })
-    console.log(filterUserRes, 'filterUserRes')
 
     const [user, setUser] = useState({
         id: filterUserRes[0]._id,
@@ -41,7 +39,6 @@ export default function ModalEdit() {
             alert('Senhas não conferem. Revise os campos')
             return
         }
-        console.log(user, 'useState: user')
         alert('Edição salva com sucesso!')
         Cadastros()
     }

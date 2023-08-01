@@ -177,7 +177,7 @@ export function Dashboard() {
                     {ses.tipo == 1 && <span>Sessão Ordinária</span>}
                   </div>
                 </div>
-              )).reverse()}
+              ))}
             </div>
           </div>
         </div>

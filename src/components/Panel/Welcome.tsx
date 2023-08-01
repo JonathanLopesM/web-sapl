@@ -1,7 +1,6 @@
 import React from "react"
 
 export function WelcomeToPeapleHome(dados){
-  console.log(dados.dados, 'dados no welcome')
   return (
     <div className="flex flex-col w-full text-center">
       <h2 className="text-4xl font-bold p-4 px-4">

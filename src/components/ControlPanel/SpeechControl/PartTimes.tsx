@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/AuthProvider"
 
 export function PartTimes () {
   const { SearchParlSpeech, parlSpeech, GetPainel, dados, PatchSpeechParl,GetIdSpeech, getIdSpeech, setGetIdSpeech } = useContext(AuthContext)
-  console.log(dados.data, "dados.data no controlTime")
+  
   const [timerOn, setTimerOn] = useState(false)
   const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(2*60)//dados?.data?.speechParl?.partTimeInit)
 
@@ -18,35 +18,27 @@ export function PartTimes () {
       GetIdSpeech()
     }
   },[])
-  console.log(getIdSpeech, "id speech")
+
   useEffect(()=>{
-    console.log(dados.data?.speechParl?.partTimeInitBoolean
-      , "total seconds")
     // if(dados.data?.speechParl?.partTime !== timerOn){
     //   setTimerOn(dados.data?.speechParl?.partTime)
     //   // setTotalTimeInSeconds(dados.data?.speechParl?.partTimeInit)
-
     // }
     if(dados.data?.speechParl?.partTimeInitBoolean){
-      console.log("set restart seconds")
       partTimeInitBoolean = false
       setTotalTimeInSeconds(dados.data?.speechParl?.partTimeInit)
       PatchSpeechParl(getIdSpeech, undefined,undefined,undefined,undefined,undefined, undefined, undefined, undefined, undefined, partTimeInitBoolean )
       return
     }
-
-    if(totalTimeInSeconds === 0){
-      console.log("tempo acabou")
+    if(totalTimeInSeconds === 0){ 
       return 
     } else {
       if(timerOn){
-        console.log(totalTimeInSeconds, "total seconds")
       const interval = setInterval(()=>{
         setTotalTimeInSeconds((prev) => prev  - 1)
       },1000)
       return ()=> clearInterval(interval)
     }
-    console.log(totalTimeInSeconds, "total dentro do ")
   }
   },[totalTimeInSeconds, timerOn, dados?.data?.speechParl?.partTime, dados?.data?.speechParl?.partTimeBoolean, dados?.data?.speechParl?.partTimeInitBoolean ])
   
@@ -56,7 +48,6 @@ export function PartTimes () {
     PatchSpeechParl(getIdSpeech, undefined,undefined,undefined,undefined,undefined, undefined, undefined, undefined, undefined, partTimeInitBoolean )
   }
   function handleInitTimerSpeech () {
-    
     partTime = true
     partTimeInit= totalTimeInSeconds
     PatchSpeechParl(getIdSpeech, undefined,undefined,undefined,undefined,undefined, undefined, undefined, partTime)
@@ -65,17 +56,13 @@ export function PartTimes () {
     }, 300);
   }
   function handleInitTimerSpeechNot(){
-    
     partTime = false
     PatchSpeechParl(getIdSpeech, undefined,undefined,undefined,undefined,undefined, undefined, undefined, partTime)
     setTimerOn(false)
   }
 
-  console.log(timerOn, "timerOn 50")
-
   return (
     <div className="flex w-full justify-between">
-
       <div className="flex flex-col">
         <span className="font-bold">
           Cronometro do Aparte
@@ -103,8 +90,6 @@ export function PartTimes () {
           </span>
         </div>
       </div>
-      
-
     </div>
   )
 }

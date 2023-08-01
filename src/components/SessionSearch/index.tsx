@@ -1,8 +1,5 @@
 import React, { useContext, useEffect } from "react"
 import { AuthContext } from "../../contexts/AuthProvider"
-
-
-
 export function SessionSearch ({setSearchVisible, setSessionVisible, open, setOpen, openSearch, setOpenSearch, year, setYear, month, setMonth, day, type}){
 
   const {GetSessions, sessions, navigate, idSession, setIdSession} = useContext(AuthContext)
@@ -13,10 +10,8 @@ export function SessionSearch ({setSearchVisible, setSessionVisible, open, setOp
     }
   },[])
   function HandleSearch (){
-    console.log( 'log do se')
     GetSessions(year, month, day, type)
   }
-  console.log(sessions, 'sessions')
 
   function formatDate(newDate) {
     const months = {

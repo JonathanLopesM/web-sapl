@@ -1,10 +1,8 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession,  getParlamentares, getSession, ordemDia,paineldados, parliamentariansSearch} from "../../services/api";
+import { createSession,  getParlamentares, ordemDia,paineldados, parliamentariansSearch,  searchParlSpeech} from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl, searchMaterias, searchParlSpeech, deleteUser } from "../../services/apiNode"
-
-
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias } from "../../services/apiNode"
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
@@ -100,8 +98,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   async function GetSessions(year: string, month: string, day: string, type: string) {
-    const response = await getSession({ year, month, day, type })
-    setSessions(response.data.results)
+    const response = await getSession({ year, month, day, type }) as any
+    console.log(response, "response sessions ")
+    setSessions(response.data)
 
     localStorage.setItem('sessions', JSON.stringify(sessions))
   }
@@ -171,8 +170,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   async function SearchMaterias(){
     const response = await searchMaterias()
     
-
-    setMaterias(response.data.results)
+    console.log(response, "data materias ")
+    setMaterias(response.data)
   }
 
   async function SearchParlSpeech () {
@@ -227,8 +226,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   async function DeleteUser(id) {
-      deleteUser(id)
-      alert('Usuário Deletado!')
+      await deleteUser(id)
+      await GetUsers()
   }
 
   return (

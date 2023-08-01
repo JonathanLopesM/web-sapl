@@ -9,10 +9,6 @@ export function PainelParlamentares ({ dados, materia }) {
       GetParlamentares()
     }
   },[])
-
-  console.log(dados, 'nos parlamntares')
-
-  console.log(parlamentares, 'parlamentares')
   return (
     <>
      <div className="flex h-14 text-center justify-center items-center ">
@@ -26,8 +22,8 @@ export function PainelParlamentares ({ dados, materia }) {
         {dados.map(par=> (
           <div key={par.id} className="flex gap-4 justify-between border rounded-l-[48px]">
             <div className="flex gap-2 ">
-              <div className="flex bg-white  w-24 h-24 relative overflow-hidden rounded-full">
-                <img className="flex w-24 overflow-hidden h-28 rounded-full" src={par.fotografia} alt={`foto do parlamentar ${par.name}`} />
+              <div className="flex bg-white  w-24 h-24 object-cover overflow-hidden rounded-full">
+                <img className="flex object-contain " src={par.fotografia} alt={`foto do parlamentar ${par.name}`} />
               </div>
               <div className="flex flex-col justify-center">
                 <h2 className="flex text-2xl font-semibold">

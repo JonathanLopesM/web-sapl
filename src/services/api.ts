@@ -23,14 +23,7 @@ export const createSession = async ({
   return response
 }
 
-export const getSession = async ({year, month, day, type}) => {
-  let errors = []
 
-  const response =  await api.get(`/api/sessao/sessaoplenaria?data_inicio_year=${year}&data_inicio__month=${month}&data_inicio__day=${day}&tipo=${type}&salvar=Pesquisar&page_size=100`, 
-  { validateStatus: false} as any)
-  errors = response.data.errors
-  return response
-}
 
 export const getParlamentares = async () => {
   let errors = []
@@ -62,8 +55,17 @@ export const parliamentariansSearch = async () => {
 
 export const ordemDia = async ({idSes}) => {
   let errors = [];
+  console.log(idSes, "ordem do dia id")
   const response = await api.get(`/api/sessao/ordemdia/?sessao_plenaria=${idSes}`)
   errors = response.data.errors
+  return response
+}
+
+
+export const searchParlSpeech = async () => {
+  let errors = [];
+  const response = await api.get("/api/parlamentares/parlamentar/")
+  errors= response.data
   return response
 }
 

@@ -37,7 +37,7 @@ export function NewUser() {
                     {usersGet && usersGet?.resParl.map((par: any) => (
                         <li key={par.id} className="flex w-full justify-between px-4 py-5 hover:bg-gray-100 font-semibold">
                             <div className="flex flex-col gap-2">
-                                {par.nome_completo}
+                                {par.__str__}
                                 <span className="text-sm font-normal text-indigo-800">
                                     {par.username} </span>
                             </div>

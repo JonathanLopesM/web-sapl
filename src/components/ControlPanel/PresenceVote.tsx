@@ -9,30 +9,22 @@ export function PresenceVoteControl ({sessionId} ){
   useEffect(()=>{
     SearchMaterias()
     GetVotes()
-  },[])
+  },[matter])
 
   const handleChange = (event) => {
     setMatter(event.target.value)
   }
   const handleSetMatter = (mat) => {
-
-    console.log(mat,' materia de votacao ')
     MatterUpdated(matter)
   }
-  console.log(sessionId, 'sessionId')
-  console.log(materias, "materias")
-  console.log(dayOrder, "day order antes do filter")
-  const matterSession = materias.filter((mate)=> {
-    for(let o =0; o <= dayOrder.length; o++ ){
-      console.log(dayOrder[o].materia, "dentro do for")
-      if(mate.id === dayOrder[o].materia){
-        return mate
-      }
-      return;
-    }
+  let matterSession= materias.filter(mate=> {
+    return dayOrder.some(order => mate.id == order.materia && !order.resultado )
+    // for(let o =0; o < dayOrder.length; o++ ){
+    //   if(dayOrder[o].materia === mate.id ){
+    //       return mate
+    //   }
+    // }
   })
-
-  console.log(matterSession, 'cola ahshd')
   return (
     <div className="flex flex-col border p-4 py-5 gap-8">
       <div className="flex  w-full items-center">
@@ -64,7 +56,7 @@ export function PresenceVoteControl ({sessionId} ){
           </select>
         </label>
         <button type="button" onClick={handleSetMatter} 
-          className="flex bg-green-500 h-10 px-2 text-white text-center justify-center py-2 rounded-md mt-7">
+          className="flex bg-green-500 min-w-[160px] h-10 px-2 text-white text-center justify-center py-2 rounded-md mt-7">
               ATUALIZAR PAINEL
         </button>
       </div>

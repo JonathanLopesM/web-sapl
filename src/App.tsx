@@ -1,6 +1,4 @@
 import React, { useContext, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Login from './pages/Login'
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
@@ -12,7 +10,6 @@ import { Painel } from './pages/PanelPage'
 import { NewUser } from './pages/NewUser'
 import ModalEdit from './components/NewUser/ModalEdit'
 
-
 function App() {
   const Private = ({ children }) => {
     const { authenticated } = useContext(AuthContext)
@@ -21,10 +18,8 @@ function App() {
     }
     return children
   }
-
   return (
     <AuthProvider>
-
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/sessoes' element={<Private><DefaultLayout /></Private>}>
@@ -35,11 +30,8 @@ function App() {
         </Route>
         <Route path='/sessoes/painel' element={<Painel /> } />
         {/* <Route path='/dashboard' element={<Private> <Dashboard  /></Private>} /> */}
-
       </Routes>
-
     </AuthProvider>
-
   )
 }
 

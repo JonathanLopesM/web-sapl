@@ -2,10 +2,8 @@ import React, { useContext } from "react"
 import { AuthContext } from "../../contexts/AuthProvider"
 
 export function Presenca(){
-
   const { parlamentares } = useContext(AuthContext)
 
-  console.log(parlamentares)
   return (
     <div className="flex flex-col w-full gap-4">
       <h1 className="flex text-2xl font-semibold">

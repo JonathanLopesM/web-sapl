@@ -2,14 +2,11 @@ import React, { useContext, useEffect } from "react"
 import { AuthContext } from "../../contexts/AuthProvider"
 
 export function ResultVoteControl () {
-  const { dados, dadosPainel, GetPainel, GetVotes,resultVote, setResultVote, SearchMaterias } = useContext(AuthContext)
-  console.log(dados, dadosPainel, 'dados do painel')
-  
+  const { GetVotes,resultVote } = useContext(AuthContext)
   useEffect(()=>{
-        GetVotes()
+      GetVotes()
   },[])
 
-  console.log(resultVote, 'dados do painel')
   return (
     <div className="flex flex-col border p-8">
       <div className="flex font-bold text-3xl">
