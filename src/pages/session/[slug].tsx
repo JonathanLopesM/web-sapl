@@ -25,7 +25,7 @@ export function Session () {
   
   useEffect(()=>{
       if(!sessions){
-        GetSessions('2023', '','', '')
+        GetSessions('2023', '','', '',)
       }
   },[])
   useEffect(()=>{

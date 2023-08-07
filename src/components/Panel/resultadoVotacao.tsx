@@ -1,6 +1,7 @@
 import React from "react"
 
 export function ResultadoVotacao({dados, materia}){
+  console.log(dados, "dados resultado de votacao")
   return (
     <div className="flex flex-col w-full justify-center">
       <div className="flex h-14 text-center justify-center items-center ">
@@ -11,19 +12,19 @@ export function ResultadoVotacao({dados, materia}){
       <div className="flex flex-col w-[80%] mx-auto text-2xl  mt-20 items-center justify-center">
         <div className="flex flex-col w-[300px] font-bold text-4xl gap-4">
           <span>
-            Sim: {dados.response.Yes}
+            Sim: {dados.data.response.Yes}
           </span>
           <span>
-            Não: {dados.response.Not}
+            Não: {dados.data.response.Not}
           </span>
           <span>
-            Abstenções: {dados.response.NVote}
+            Abstenções: {dados.data.response.NVote}
           </span>
           <span>
-            Presentes: {dados.response.Presence}
+            Presentes: {dados.data.response.Presence}
           </span>
           <span>
-            Total votos: {dados.response.totalVotes}
+            Total votos: {dados.data.response.totalVotes}
           </span>
         </div>
 

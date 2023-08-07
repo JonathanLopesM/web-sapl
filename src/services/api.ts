@@ -48,7 +48,7 @@ export const paineldados = async ({ id, token }) => {
 
 export const parliamentariansSearch = async () => {
   let errors = []
-  const response = await api.get("/api/parlamentares/parlamentar/")
+  const response = await api.get("/api/parlamentares/parlamentar/?page_size=50")
   errors = response.data.errors
   return response
 }
@@ -69,4 +69,12 @@ export const searchParlSpeech = async () => {
   return response
 }
 
+export const getSessionSapl = async ({year, month, day, type}) => {
+  let errors = []
+
+  const response =  await api.get(`/api/sessao/sessaoplenaria?o=-data_inicio&page_size=100`, 
+  { validateStatus: false} as any)
+  errors = response.data.errors
+  return response
+}
 

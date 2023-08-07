@@ -76,6 +76,18 @@ export interface IContext extends IUser {
    setGetIdSpeech:any
    PatchSpeechParl:any
   DeleteUser: any
+  Matters:any
+  matters:any 
+  setMatters:any
+  voteResParl:any
+  setVoteResParl:any
+  votes:any
+  setVotes:any
+  matterComplet:any
+  setMatterComplet: any
+  CloseVote:any,
+  PatchVotePar:any
+  ReloadVotePanel:any
 }
 
 export interface IAuthProvider {

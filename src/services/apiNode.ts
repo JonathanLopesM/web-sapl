@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const api = axios.create({
   // @ts-ignore
-  baseURL: import.meta.env.VITE_URL_API_NODE,
+  baseURL: "http://localhost:3333" // import.meta.env.VITE_URL_API_NODE,
 })
 //https://api-sapl.onrender.com http://localhost:3333
 
@@ -56,10 +56,11 @@ export const openClosePanelView = async (idPanel, estado) => {
 
 
 
-export const PatchMatterVote = async (idPanel, matter) => {
+export const PatchMatterVote = async (idPanel, matter, register) => {
   let errors = [];
   const response = await api.patch(`/painel/dados/${idPanel}`, {
-    materia: matter
+    materia: matter,
+    registro: register
   })
   errors= response.data
   return response
@@ -157,10 +158,10 @@ export const deleteUser = async (id) => {
   return response
 }
 
-export const getSession = async ({year, month, day, type}) => {
+export const getSession = async (id) => {
   let errors = []
 
-  const response =  await api.get(`/api/sessao/sessaoplenaria/`, 
+  const response =  await api.get(`/api/sessao/sessaoplenaria/${id}`, 
   { validateStatus: false} as any)
   errors = response.data.errors
   return response
@@ -169,6 +170,48 @@ export const searchMaterias = async ( ) => {
   let errors =[];
   const response = await api.get('/api/materia/materialegislativa/')
   console.log(response, 'na api response ')
+
+  errors= response.data
+  return response
+}
+//api/sessao/votacao
+export const createCloseVote = async ({
+  materia, ordem,
+    tipo_resultado_votacao, observacao,
+    numero_votos_sim,
+    numero_votos_nao,
+    numero_abstencoes,
+	  votes 
+}) => {
+  let errors =[];
+  const response = await api.post('/api/sessao/votacao', {
+    materia, ordem,
+    tipo_resultado_votacao, observacao,
+    numero_votos_sim,
+    numero_votos_nao,
+    numero_abstencoes,
+	  votes 
+  })
+  console.log(response, 'na api response ')
+
+  errors= response.data
+  return response
+}
+
+// app.patch("/parl/vote/:user", Voting)
+export const patchVote = async ({id, novoVoto}) => {
+  console.log(id, novoVoto, "params no api do Vote")
+  let errors= [];
+  const response = await api.patch(`/parl/vote/${id}`, {
+    voto: novoVoto
+  })
+  errors= response.data
+  return response
+}
+
+export const registerReload = async () => {
+  let errors= [];
+  const response = await api.get("/api/sessao/zerar")
 
   errors= response.data
   return response

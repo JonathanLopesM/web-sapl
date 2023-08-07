@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession,  getParlamentares, ordemDia,paineldados, parliamentariansSearch,  searchParlSpeech} from "../../services/api";
+import { createSession,  getParlamentares, getSessionSapl, ordemDia,paineldados, parliamentariansSearch,  searchParlSpeech} from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias } from "../../services/apiNode"
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload } from "../../services/apiNode"
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
@@ -51,6 +51,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const [dayOrder, setDayOrders] = useState() as any
 
   const [getIdSpeech, setGetIdSpeech] = useState() as any
+  const [matters, setMatters] = useState()
+  const [voteResParl, setVoteResParl] = useState()
+  const [votes, setVotes] = useState(false)
+  const [matterComplet, setMatterComplet] = useState()
 
   useEffect(()=> {
     const recoveredUser = localStorage.getItem('sessionid')
@@ -98,11 +102,43 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   async function GetSessions(year: string, month: string, day: string, type: string) {
-    const response = await getSession({ year, month, day, type }) as any
+    const response = await getSessionSapl({ year, month, day, type}) as any
     console.log(response, "response sessions ")
-    setSessions(response.data)
+    setSessions(response.data.results)
 
     localStorage.setItem('sessions', JSON.stringify(sessions))
+  }
+
+  async function Matters(id){
+    console.log(id, "id do matters no autcontext")
+    const response = await getSession(id)
+    console.log(response, "response, matters")
+    setMatters(response.data)
+  }
+
+  async function CloseVote(
+    materia, ordem,
+    tipo_resultado_votacao, observacao,
+    numero_votos_sim,
+    numero_votos_nao,
+    numero_abstencoes,
+	  votes 
+    ){
+      console.log(materia, ordem,
+        tipo_resultado_votacao, observacao,
+        numero_votos_sim,
+        numero_votos_nao,
+        numero_abstencoes,
+        votes, "dentro cdo contexto 132" )
+        const response = await createCloseVote({
+          materia, ordem,
+            tipo_resultado_votacao, observacao,
+            numero_votos_sim,
+            numero_votos_nao,
+            numero_abstencoes,
+            votes 
+        })
+        console.log(response, "dentro do contexto a resposata")
   }
 
 
@@ -130,6 +166,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   async function GetVotes(){
     const response = await getVotes()
     setResultVote(response.data.response)
+    setVoteResParl(response.data.responseVote)
   }
 
   async function SaveIdPanel() {
@@ -180,8 +217,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     setParlSpeech(response.data.results)
   }
 
-  async function MatterUpdated(matter) {
-    const response = await PatchMatterVote(panelId, matter)
+  async function MatterUpdated(matter, register) {
+    const response = await PatchMatterVote(panelId, matter, register)
     
   }
   async function DayOrderIds(idSes){
@@ -216,6 +253,18 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
      })
       
   }
+  async function PatchVotePar(id, novoVoto) {
+    console.log(id, novoVoto, "params no context")
+    const response = await patchVote({id, novoVoto}) 
+    console.log(response, "PatchVoteParl no conetxt")
+    
+  }
+
+  async function ReloadVotePanel (){
+    const response = await registerReload()
+
+    console.log(response, "response do reload")
+  }
 
   async function Cadastros() {
     navigate('/sessoes/cadastros')
@@ -248,7 +297,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         SearchParlSpeech,parlSpeech, setParlSpeech, GetUsers,usersGet, setUsersGet,
         DayOrderIds,dayOrder, setDayOrders,
         GetIdSpeech,getIdSpeech, setGetIdSpeech, PatchSpeechParl,
-        CreateUser, DeleteUser
+        CreateUser, DeleteUser, Matters,matters, setMatters,
+        voteResParl, setVoteResParl, votes, setVotes,
+        matterComplet, setMatterComplet,CloseVote, PatchVotePar,
+        ReloadVotePanel
 
       }} >
       {children}

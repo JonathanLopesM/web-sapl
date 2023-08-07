@@ -73,7 +73,7 @@ export function Painel(){
     })
   }
 
-  console.log(dados, "dados")
+  console.log(dados, "dados de mater")
 
   return (
 
@@ -99,8 +99,8 @@ export function Painel(){
             {!dados?.data?.estado ? <WelcomeToPeapleHome dados={dados?.data} /> 
             : <>
                 {dados?.data?.tela === 0 && <WelcomeToPeapleHome dados={dados?.data} />}
-                {dados?.data?.tela === 1 && <PainelParlamentares dados={dados?.data.stateVote} materia={dados?.data.materia}  />}
-                {dados?.data?.tela === 2 && <ResultadoVotacao dados={dados?.data} materia={dados?.data.materia}  />}
+                {dados?.data?.tela === 1 && <PainelParlamentares dados={dados?.data} materia={dados?.data.materia}  />}
+                {dados?.data?.tela === 2 && <ResultadoVotacao dados={dados} materia={dados?.data.materia}   />}
                 {dados?.data?.tela === 3 && <SpeechPanel dados={dados?.data} />}
                 {dados?.data?.tela === 4 && <h5 className="flex w-full text-center mx-auto justify-center items-center bg-white text-black text-6xl font-extrabold p-4">SILÊNCIO!</h5>}
                 {dados?.data?.tela === 5 && <Message dados={dados?.data}  />}
@@ -110,8 +110,8 @@ export function Painel(){
             {/* {<ResultadoVotacao /> } */}
             </div>
         </div>
-        {dados?.data?.stateVote && 
-          <div className={`flex bg-gray-200 mt-auto justify-center  py-5`}>
+        {dados?.data?.stateVote && !dados?.data.materia &&
+          <div className={`flex bg-gray-200 mt-auto justify-center  py-1`}>
             <div className="flex justify-between sm:w-[80%]">
               <h4 className=" text-green-500 text-3xl font-bold ">
                 PRESENÇA PARLAMENTAR
@@ -123,6 +123,27 @@ export function Painel(){
             </div>
           </div>
         }
+
+        {
+          dados?.data?.result && 
+          <div className={`flex bg-gray-200 mt-auto justify-center py-2`}>
+            <div className="flex justify-between sm:w-[80%]">
+              <div className="flex gap-8">
+                <h4 className=" text-gray-800 text-2xl font-bold ">
+                SIM: {dados?.data?.response?.Yes}
+                </h4>
+                <h4 className=" text-gray-800 text-2xl font-bold ">
+                NÃO: {dados?.data?.response?.Not}
+                </h4>
+              </div>
+              <h4 className=" text-green-500 text-2xl font-bold ">
+                {dados?.data?.result?.resultado}
+              </h4>
+              
+            </div>
+          </div>
+        }
+
 
       </div>
     
