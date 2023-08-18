@@ -7,8 +7,15 @@ import { Header } from "../components/Header"
 export function Dashboard() {
   const [open, setOpen] = useState(false)
   const [openSearch, setOpenSearch] = useState(false)
-  const { GetSessions, GetParlamentares, parlamentares, sessions, navigate, year, setYear, month, setMonth, day, setDay, type, setType, dash, setDash, sess, setSess } = useContext(AuthContext)
+  const { GetSessions, GetParlamentares,userAdm, setUserAdm, parlamentares, sessions, navigate, year, setYear, month, setMonth, day, setDay, type, setType, dash, setDash, sess, setSess, userParl, setUserParl } = useContext(AuthContext)
 
+  useEffect(()=>{
+    const user = localStorage.getItem("novace@Admin")
+    console.log(user)
+    if(!user){      
+        navigate("/")
+    }
+  },[])
   useEffect(() => {
     if (!sessions) {
       GetSessions(year, month, day, type)

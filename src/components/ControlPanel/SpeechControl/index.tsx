@@ -103,7 +103,7 @@ export function SpeechControl () {
   console.log(userObj, "user obj")
 return (
   <div className="flex flex-col w-full gap-4">
-      <div className="flex w-full justify-between items-end border-b-2 pb-8">
+      <div className="flex w-full justify-between items-end border-b-2 pb-8 gap-2">
           <label
             className="flex flex-col font-bold text-2xl w-[60%] " 
             htmlFor="">
@@ -118,21 +118,23 @@ return (
                 ))}
               </select>
           </label>
-          <button type="button" onClick={handleSetParl} 
-            className="flex h-10 px-4 bg-green-500 hover:bg-green-300 text-white text-center justify-center py-2 rounded-md">
-                ATUALIZAR PAINEL
-          </button>
-          {
-            !soundPlay ? 
-            <button type="button" onClick={handleSongAlert}
-              className="flex w-[165px] h-10 px-4 bg-green-500 hover:bg-green-300 text-white text-center justify-center py-2 rounded-md">
-                Play Sinal Sonoro
-            </button> 
-            : <button type="button" onClick={handleSongAlert}
-              className="flex w-[165px] h-10 px-4 bg-green-500 hover:bg-green-300 text-white text-center justify-center py-2 rounded-md">
-                Stop Sinal Sonoro
-            </button> 
-          }
+          <div className="flex min-w-[350px] gap-2">
+            <button type="button" onClick={handleSetParl} 
+              className="flex h-10 px-4 bg-green-500 hover:bg-green-300 text-white text-center justify-center py-2 rounded-md">
+                  ATUALIZAR PAINEL
+            </button>
+            {
+              !soundPlay ? 
+              <button type="button" onClick={handleSongAlert}
+                className="flex w-[165px] h-10 px-4 bg-green-500 hover:bg-green-300 text-white text-center justify-center py-2 rounded-md">
+                  Play Sinal Sonoro
+              </button> 
+              : <button type="button" onClick={handleSongAlert}
+                className="flex w-[165px] h-10 px-4 bg-green-500 hover:bg-green-300 text-white text-center justify-center py-2 rounded-md">
+                  Stop Sinal Sonoro
+              </button> 
+            }
+          </div>
       </div>
       <div className="flex ">
         <SpeechTimes />

@@ -45,12 +45,10 @@ export function Speech ({dados}) {
   },[totalTimeInSeconds, dados?.speechParl?.speechTime, dados?.speechParl?.speechTimeBoolean, dados?.speechParl?.speechTimeInitBoolean ])
 
   return (
-    <div className="flex flex-col">
-        <span className="text-xl font-bold">
-          Cronometro do Discurso
-        </span>
-        <div className="my-2">
-          <h3 className="text-6xl">
+    <div className="flex flex-col  items-center justify-center  ">
+        
+        <div className="flex">
+          <h3 className="text-[250px] font-bold">
             <span>{minutes.toString().padStart(2, "0")}</span>
             : 
             <span>{seconds.toString().padStart(2, "0")}</span>

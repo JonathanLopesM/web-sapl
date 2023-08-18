@@ -32,8 +32,8 @@ export function PainelEletronico({ session }){
   console.log(session.id, "session id no painel de controle")
 
   return (
-    <div className="flex flex-col w-full">
-      <h2 className="flex gap-2 font-bold text-2xl">
+    <div className="flex flex-col w-full ">
+      <h2 className="flex gap-2 font-bold text-xl">
 
         {session &&
           session.__str__

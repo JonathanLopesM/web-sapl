@@ -6,6 +6,7 @@ import { Register } from "./Register"
 export function PresenceVoteControl ({sessionId} ){
   const { SearchMaterias,materias, setMaterias, MatterUpdated, GetVotes, resultVote, voteResParl, setVoteResParl, dayOrder, Matters, matters, setMatters, votes, setVotes, matterComplet, setMatterComplet } = useContext(AuthContext)
   const [matterState, setMatterState ] = useState('')
+  const [projectsView, setProjectsView] = useState("materias")
   
   const [vote, setVote] = useState("")
   // @ts-ignore
@@ -25,19 +26,34 @@ export function PresenceVoteControl ({sessionId} ){
   },[votes, matterState])
 
   const handleSetMatter = () => {
-    console.log(matterState, "matter onde ")
+    setProjectsView("register")
     setVotes(true)
   }
 
-  console.log(matterState, "matter")
-  // console.log(matterArrayDefin, "definitivo")
-
-  console.log(matters, "matters no foco ")
   return (
-    <div className="flex flex-col border p-4 py-5 gap-8">
-      <div className="flex  w-full items-center">
-
-        <table className="flex flex-col ">
+    <div className="flex flex-col border-2  gap-8 overflow-auto max-h-[630px] relative">
+      <div className="flex h-14 gap-4  bg-white border w-full absolute  py-2 px-2">
+        <button
+          type="button" 
+          className={`flex border-2  px-4 rounded-md items-center ${projectsView === "materias" && "bg-[#93C5FD] text-white border-blue-400" } text-xl font-bold`}
+          onClick={()=>setProjectsView("materias")}
+        >
+          Materias
+        </button>
+        {
+          votes && 
+          <button
+          type="button" 
+          className={`flex border-2  px-4 rounded-md items-center ${projectsView === "register" && "bg-[#93C5FD] text-white border-blue-400" } text-xl font-bold`}
+          onClick={()=>setProjectsView("register")}
+        >
+          Registro
+        </button>
+        }
+      </div>
+      {projectsView === "materias" &&
+      <div className="flex  w-full items-center mt-[55px]">
+        <table className="flex flex-col overflow-auto max-h-[470px] border">
             <thead className="flex gap-2">
               <td className="w-[60px] lg:w-[80px]">
                 Nº 
@@ -68,7 +84,7 @@ export function PresenceVoteControl ({sessionId} ){
                         </a>
                         
                       </td>
-                      <td className="flex flex-col border p-2 max-w-[40%]">
+                      <td className="flex flex-col border p-2 w-full max-w-[40%]">
                         {matter.ementa}
 
                         <span className="text-gray-600">
@@ -111,10 +127,10 @@ export function PresenceVoteControl ({sessionId} ){
                   )).reverse()
                 }
           </table>
-      </div>
-      <Register 
-        setMatterState={setMatterState} sessionId={sessionId}
-      />
+      </div>}
+      {projectsView === "register" && <Register 
+        setMatterState={setMatterState} sessionId={sessionId} setProjectsView={setProjectsView}
+      />}
     </div>
   )
 }

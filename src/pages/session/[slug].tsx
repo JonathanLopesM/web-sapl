@@ -58,7 +58,7 @@ export function Session () {
             <button onClick={()=> setOpenSearch(!openSearch)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300 ">Pesquisa Textual</button>
             <button onClick={()=> setOpen(!open)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300">Adicionar Sessão Plenária</button>
           </div> */}
-        <div className="flex w-full  2xl:w-full justify-start gap-4 my-5">
+        <div className="flex w-full  2xl:w-full justify-start gap-4 mt-2">
           {/* <Abertura setLayout={setLayout} />
           <Expedientes />
           <OrdemDoDia setLayout={setLayout} /> */}

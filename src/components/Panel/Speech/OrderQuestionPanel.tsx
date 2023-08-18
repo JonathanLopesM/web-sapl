@@ -43,7 +43,7 @@ export function OrderQuestionPanel ({dados}) {
   return (
     <div className="flex flex-col">
         <span className="text-xl font-bold">
-          Cronômetro de Questão de Ordem
+          Questão de Ordem
         </span>
         <div className="my-2">
           <h3 className="text-6xl">

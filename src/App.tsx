@@ -6,18 +6,34 @@ import { AuthContext, AuthProvider } from './contexts/AuthProvider'
 import { Dashboard } from './pages/Dashboard'
 import { Session } from './pages/session/[slug]'
 import { DefaultLayout } from './layouts/DefaultLayout'
+
 import { Painel } from './pages/PanelPage'
 import { NewUser } from './pages/NewUser'
 import ModalEdit from './components/NewUser/ModalEdit'
+import LoginParl from './pages/LoginParl'
+import { ParlDashboard } from './pages/ParlDashboard'
+import { DefaultLayoutParl } from './layouts/DefaultLayoutParl'
 
 function App() {
   const Private = ({ children }) => {
-    const { authenticated } = useContext(AuthContext)
+    const { authenticated, userParl } = useContext(AuthContext)
     if (!authenticated) {
+      if(!userParl){
       return <Navigate to='/' />
+      }
     }
     return children
   }
+  const ParlPrivate = ({ children }) => {
+    const { authenticated, userAdm } = useContext(AuthContext)
+    if (!authenticated) {
+      if(!userAdm){
+        return <Navigate to='/parlamentar' />
+      }
+    }
+    return children
+  }
+
   return (
     <AuthProvider>
       <Routes>
@@ -30,6 +46,11 @@ function App() {
         </Route>
         <Route path='/sessoes/painel' element={<Painel /> } />
         {/* <Route path='/dashboard' element={<Private> <Dashboard  /></Private>} /> */}
+        <Route path='/parlamentar' element={<LoginParl />} />
+        <Route path='/parlamentar/acesso' element={<ParlPrivate><DefaultLayoutParl /> </ParlPrivate>} >
+          <Route path='/parlamentar/acesso/votacao' element={ <ParlDashboard /> } />
+        </Route>
+
       </Routes>
     </AuthProvider>
   )

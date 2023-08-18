@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../contexts/AuthProvider"
 
-export function Register({ setMatterState, sessionId}) {
+export function Register({ setMatterState, sessionId, setProjectsView}) {
   const { MatterUpdated, GetVotes, resultVote, voteResParl, votes, setVotes,matterComplet, CloseVote, Matters, PatchVotePar, ReloadVotePanel } = useContext(AuthContext)
   useEffect(()=>{
       if(!resultVote){
@@ -19,12 +19,12 @@ export function Register({ setMatterState, sessionId}) {
 
   const [valueVote, setValueVote] = useState() as any
 
-  console.log("idmateria", matterComplet?.id,"idordem",matterComplet?.matterId,"resultado", resultVoteForm, observation, resultVote?.Yes, resultVote?.Not, resultVote?.totalVotes, "votos parlame" ,voteResParl, "formulario")
   const handleCancel = () => {
     setMatterState("")
     ReloadVotePanel()
     MatterUpdated("", false)
     setVotes(!votes)
+    setProjectsView("materias")
   }
 
   function handleCloseVote(e) {
@@ -43,20 +43,16 @@ export function Register({ setMatterState, sessionId}) {
   }
 
   function handleEditVote (id, novoVoto ){
-
-    console.log(id, novoVoto, "voto direcionado")
     PatchVotePar(id, novoVoto)
     setTimeout(()=>{
       GetVotes()
     },1000)
   }
-  console.log(voteResParl, "votes no")
-  console.log(matterComplet, "complet materState ")
   return (
     <>
     {
         votes && 
-        <div className="flex flex-col border p-8">
+        <div className="flex flex-col border p-8 mt-[55px] overflow-auto">
             <div className="flex font-bold text-xl">
               <h3 className="flex flex-col">
                 Matéria Votada: 
@@ -72,7 +68,7 @@ export function Register({ setMatterState, sessionId}) {
                 </h3>
                 <ul  className="flex flex-col gap-2">
                   {voteResParl && voteResParl.map(parl => (
-                    <li key={parl.id} className="flex gap-8 text-center items-center w-[500px] justify-between">
+                    <>{parl.presenca && <li key={parl.id} className="flex gap-8 text-center items-center w-[500px] justify-between">
                     {parl.name}
                     
                     <div className="flex gap-4">
@@ -103,6 +99,8 @@ export function Register({ setMatterState, sessionId}) {
                         }
                     </div>
                   </li>
+                  }
+                  </>
                   ))}
                 </ul>
 

@@ -17,6 +17,17 @@ export const getToken = async ({username, password}) => {
 
   return response 
 }
+export const getTokenAdmin = async ({username, password}) => {
+  let errors = []
+  console.log(username, password)
+  const response = await api.post('/auth/login/admin', {
+    username,
+    password
+  }, { validateStatus: false} as any)
+  errors = response.data
+
+  return response 
+}
 
 
 
@@ -216,3 +227,31 @@ export const registerReload = async () => {
   errors= response.data
   return response
 }
+
+// Vote Routes 
+export const presenceParl = async (id) => {
+  let errors= [];
+  const response = await api.get(`/parl/vote/${id}`)
+  errors = response.data
+  return response
+}
+//Updated presence
+export const presenceParlNew = async ({voteId, presence}) => {
+  let errors= [];
+  const response = await api.patch(`/parl/presence/${voteId}`, {
+    presence: presence
+  })
+  errors = response.data
+  return response
+}
+// vote 
+export const parlVote = async ({idVote, vote}) => {
+  let errors= [];
+
+  const response = await api.patch(`/parl/vote/${idVote}`, {
+    voto: vote
+  })
+  errors = response.data
+  return response
+}
+

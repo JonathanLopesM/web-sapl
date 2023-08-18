@@ -14,6 +14,9 @@ interface ObjectStatement {
 export interface IContext extends IUser {
   authenticated: boolean;
   CreateSession: (email: string, password: string) => Promise<void>;
+  CreateSessionAdmin:(email: string, password: string) => Promise<void>;
+  userParl:any;
+  setUserParl:any;
   GetSessions: any;
   sessions: any;
   navigate: any;
@@ -88,6 +91,19 @@ export interface IContext extends IUser {
   CloseVote:any,
   PatchVotePar:any
   ReloadVotePanel:any
+  LogoutParl:any
+  userAdm:any
+  setUserAdm:any
+  error:any
+  setError:any
+
+  PresenceId:any,GetVotePresence:any
+  voteId:any
+  setVoteId:any
+  presence:any 
+  setPresence:any
+  GetDadosPainel:any
+  ParlVote:any
 }
 
 export interface IAuthProvider {

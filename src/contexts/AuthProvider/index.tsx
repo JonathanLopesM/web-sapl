@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
 import { createSession,  getParlamentares, getSessionSapl, ordemDia,paineldados, parliamentariansSearch,  searchParlSpeech} from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload } from "../../services/apiNode"
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload, getTokenAdmin, presenceParl, presenceParlNew, parlVote } from "../../services/apiNode"
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
@@ -23,6 +23,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   const [idSession, setIdSession] = useState('')
   const [parlamentares, setParlamentares,] = useState() as any
+  const [userParl, setUserParl] = useState() as any
+  const [userAdm, setUserAdm] = useState() as any
 
   const [year, setYear] = useState('2023')
   const [month, setMonth] = useState('')
@@ -56,31 +58,66 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const [votes, setVotes] = useState(false)
   const [matterComplet, setMatterComplet] = useState()
 
+  const [voteId, setVoteId] = useState()
+  const [presence ,setPresence] = useState()
+
   useEffect(()=> {
     const recoveredUser = localStorage.getItem('sessionid')
-    
+    const userset = localStorage.getItem('novace@userParl')
     if(recoveredUser){
       setTokenOn(recoveredUser)
     }
+    if(userset){
+      setUserParl(JSON.parse(userset))
+    }
     },[])
+    // getTokenAdmin
+    async function CreateSessionAdmin(username, password) {
+
+      const response = await getTokenAdmin({ username, password })
+  
+      if (response.data.token) {
+        
+        const token = response.data.token
+  
+        localStorage.setItem('sessionid', token)
+        localStorage.setItem('novace@Admin', JSON.stringify(response.data.response))
+        
+        setTokenOn(token)
+        setIdSession(token)
+        setUserAdm(response.data.response)
+        // navigate('/sessoes')
+      } else if (response.data.message) {
+        setError(response.data.message)
+        
+      } else {
+        setError('Email/Senha Inválidos!')
+      }
+  
+    }
 
   async function CreateSession(username, password) {
 
     const response = await getToken({ username, password })
 
     if (response.data.token) {
+      
       const token = response.data.token
 
       localStorage.setItem('sessionid', token)
+      localStorage.setItem('novace@userParl', JSON.stringify(response.data.response.user) )
       
       setTokenOn(token)
       setIdSession(token)
+      setUserParl(response.data.response.user)
       // navigate('/sessoes')
     } else if (response.data.message) {
       setError(response.data.message)
       
+      
     } else {
       setError('Email/Senha Inválidos!')
+
     }
 
   }
@@ -103,16 +140,16 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   async function GetSessions(year: string, month: string, day: string, type: string) {
     const response = await getSessionSapl({ year, month, day, type}) as any
-    console.log(response, "response sessions ")
+    
     setSessions(response.data.results)
 
     localStorage.setItem('sessions', JSON.stringify(sessions))
   }
 
   async function Matters(id){
-    console.log(id, "id do matters no autcontext")
+    
     const response = await getSession(id)
-    console.log(response, "response, matters")
+    
     setMatters(response.data)
   }
 
@@ -124,12 +161,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     numero_abstencoes,
 	  votes 
     ){
-      console.log(materia, ordem,
-        tipo_resultado_votacao, observacao,
-        numero_votos_sim,
-        numero_votos_nao,
-        numero_abstencoes,
-        votes, "dentro cdo contexto 132" )
+      
         const response = await createCloseVote({
           materia, ordem,
             tipo_resultado_votacao, observacao,
@@ -138,7 +170,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
             numero_abstencoes,
             votes 
         })
-        console.log(response, "dentro do contexto a resposata")
+        
   }
 
 
@@ -157,7 +189,14 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   async function Logout() {
     localStorage.removeItem('sessionid')
+    localStorage.removeItem("novace@userParl")
+    localStorage.removeItem("novace@Admin")
     navigate('/')
+  }
+  async function LogoutParl() {
+    localStorage.removeItem('sessionid')
+    localStorage.removeItem("novace@userParl")
+    navigate('/parlamentar')
   }
 
   async function PatchPanelMessage (tela, message){
@@ -207,7 +246,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   async function SearchMaterias(){
     const response = await searchMaterias()
     
-    console.log(response, "data materias ")
+    
     setMaterias(response.data)
   }
 
@@ -254,16 +293,16 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       
   }
   async function PatchVotePar(id, novoVoto) {
-    console.log(id, novoVoto, "params no context")
+    
     const response = await patchVote({id, novoVoto}) 
-    console.log(response, "PatchVoteParl no conetxt")
+    
     
   }
 
   async function ReloadVotePanel (){
     const response = await registerReload()
 
-    console.log(response, "response do reload")
+    
   }
 
   async function Cadastros() {
@@ -279,10 +318,32 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       await GetUsers()
   }
 
+  async function GetVotePresence(){
+    const id = userParl?.id
+    const response = await presenceParl(id)
+    
+    setVoteId(response.data._id)
+    setPresence(response.data.presenca)
+  }
+  //Get ID for Presence patch up
+  async function PresenceId (presence:boolean){
+    
+     const response = await presenceParlNew({voteId, presence})
+     
+     setPresence(response.data.response.presenca)
+  }
+
+  async function GetDadosPainel(){
+    await getData(setDados)
+  }
+  async function ParlVote (idVote:string, vote:string) {
+     await parlVote({idVote, vote})
+  }
+
   return (
     <AuthContext.Provider value={
       { 
-        authenticated: !!tokenOn, CreateSession, GetSessions, 
+        authenticated: !!tokenOn, CreateSession,CreateSessionAdmin, userParl, setUserParl, GetSessions, 
         sessions, navigate, basicDataOpen, setBasicDataOpen,
         tableOpen, setTableOpen, presenceOpen, setPresenceOpen,
         absenceOpen, setAbsenceOpen, personalTalkOpen, setPersonalTalkOpen,
@@ -290,7 +351,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         idSession, setIdSession, year, setYear, month, setMonth, day, setDay, type, 
         setType, dash, setDash, sess, setSess, parlamentares, setParlamentares, 
         GetParlamentares, CreateSessionPlen, painelLayout, setPainelLayout, GetPainel, 
-        dadosPainel, setDadosPainel, Logout, Cadastros, MenuInicial, SearchParliamen,
+        dadosPainel, setDadosPainel, Logout,LogoutParl, Cadastros, MenuInicial, SearchParliamen,
         searchParl, setSearchParl, SaveIdPanel, panelId, setPanelId, 
         estado, setEstado, dados, setDados, SearchMaterias,materias, setMaterias,
         MatterUpdated, GetVotes,resultVote, setResultVote,PatchPanelMessage, 
@@ -300,7 +361,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         CreateUser, DeleteUser, Matters,matters, setMatters,
         voteResParl, setVoteResParl, votes, setVotes,
         matterComplet, setMatterComplet,CloseVote, PatchVotePar,
-        ReloadVotePanel
+        ReloadVotePanel, userAdm, setUserAdm, error, setError,
+        voteId, setVoteId,presence ,setPresence, PresenceId,GetVotePresence,
+        GetDadosPainel, ParlVote
 
       }} >
       {children}

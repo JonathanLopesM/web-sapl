@@ -43,7 +43,7 @@ export function FinalConsiderationsPanel ({dados}) {
   return (
     <div className="flex flex-col">
         <span className="text-xl font-bold">
-          Cronômetro de Considerações finais
+          Considerações finais
         </span>
         <div className="my-2">
           <h3 className="text-6xl">

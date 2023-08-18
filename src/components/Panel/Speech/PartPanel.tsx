@@ -42,7 +42,7 @@ export function PartPanel ({dados}) {
   return (
     <div className="flex flex-col">
         <span className="text-xl font-bold">
-          Cronômetro do Aparte
+          Aparte
         </span>
         <div className="my-2">
           <h3 className="text-6xl">
