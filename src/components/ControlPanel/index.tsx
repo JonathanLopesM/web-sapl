@@ -29,8 +29,6 @@ export function PainelEletronico({ session }){
     PatchPanelView(panelId, tela);
   }
 
-  console.log(session.id, "session id no painel de controle")
-
   return (
     <div className="flex flex-col w-full ">
       <h2 className="flex gap-2 font-bold text-xl">
@@ -39,14 +37,14 @@ export function PainelEletronico({ session }){
           session.__str__
         } 
       </h2>
-      <div className="flex w-full justify-between my-5">
+      <div className="sm:flex w-full justify-between my-5 ">
         <a onClick={handleFunction} target="_blank">
           <button className="flex border px-4 py-2 rounded-lg bg-blue-400 hover:bg-blue-300 text-white ">
             Iniciar painel completo
           </button>
         </a>
-        <div className="flex">
-        <button onClick={()=>handleOpenPanel(true)} className={`flex border px-4 py-2 rounded-l-lg ${color && 'bg-green-400 hover:bg-green-300 text-white'} `}>
+        <div className="flex mt-2 sm:mt-0">
+          <button onClick={()=>handleOpenPanel(true)} className={`flex border px-4 py-2 rounded-l-lg ${color && 'bg-green-400 hover:bg-green-300 text-white'} `}>
               Abrir painel
           </button>
           <button onClick={()=>handleOpenPanel(false)} className={`flex border px-4 py-2 rounded-r-lg ${!color && 'bg-red-400 hover:bg-red-300 text-white'} `}>
@@ -55,14 +53,14 @@ export function PainelEletronico({ session }){
         </div>
       </div>
       <form className="flex flex-col gap-4">
-              <div className="flex justify-between">
+            <div className="grid grid-cols-2 gap-2 sm:flex justify-between">
               <button 
                     onClick={(e:any)=>{
                       handleViewWindow(0)
                       setForm(e.target.value)
                       setPainelLayout('bemvindos')
                     }} 
-                    className={`flex border px-2 py-2 rounded-md ${form == 'bemvindos' && 'bg-gray-400 text-white'}`} 
+                    className={`flex border px-2 py-2 rounded-md ${form == 'bemvindos' && 'bg-gray-400 text-white'} `} 
                     value="bemvindos"
                     type="button"
                 >

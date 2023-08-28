@@ -18,7 +18,7 @@ import { Header } from "../../components/Header"
 export function Session () {
   const [open, setOpen] = useState(false)
   const [openSearch, setOpenSearch] = useState(false)
-  const {sessions, GetSessions, DayOrderIds,dayOrder, setDayOrders } = useContext(AuthContext)
+  const {sessions, GetSessions, DayOrderIds,dayOrder, setDayOrders, PresenceReload } = useContext(AuthContext)
   const { id } = useParams()
   const [layout, setLayout] = useState('dadosbasicos')
 
@@ -30,13 +30,16 @@ export function Session () {
   },[])
   useEffect(()=>{
     DayOrderIds(id)
+
+    return ()=> {
+      console.log("Executou a função de zerar as presenças")
+      PresenceReload()
+    }
   },[])
 
   
   const history = useNavigate()
-  console.log(id, 'id')
 
-  console.log(sessions, 'sessions')
   let session = ''
   if(sessions){
     session = sessions.filter(ses => {
@@ -53,7 +56,7 @@ export function Session () {
     <ModalAddSession open={open} setOpen={setOpen} /> */}
     {
       session && 
-      <div className="flex flex-col w-[95%]  px-5 lg:px-0  md:max-w-[1200px] mx-auto gap-2">
+      <div className="flex flex-col sm:w-[95%] px-2 sm:px-5 lg:px-0  md:max-w-[1200px] mx-auto gap-2">
         {/* <div className=" flex w-full gap-4 justify-end my-5">
             <button onClick={()=> setOpenSearch(!openSearch)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300 ">Pesquisa Textual</button>
             <button onClick={()=> setOpen(!open)} className="flex border px-2 py-1 items-center rounded-lg hover:bg-gray-300">Adicionar Sessão Plenária</button>

@@ -8,7 +8,7 @@ export const api = axios.create({
 
 export const getToken = async ({username, password}) => {
   let errors = []
-  console.log(username, password)
+  
   const response = await api.post('/auth/login', {
     username,
     password
@@ -19,7 +19,7 @@ export const getToken = async ({username, password}) => {
 }
 export const getTokenAdmin = async ({username, password}) => {
   let errors = []
-  console.log(username, password)
+  
   const response = await api.post('/auth/login/admin', {
     username,
     password
@@ -147,7 +147,6 @@ export const patchSpeechParl = async ({
    finalConsiderationsTime,finalConsiderationsTimeInit,finalConsiderationsTimeInitBoolean,
    soundPlay
 }) => {
-  console.log(getIdSpeech,"na api")
   let errors = [];
   const response = await api.patch(`/speech/timer/${getIdSpeech}`, {
     id, name, fotografia, speechTime, speechTimeInit,
@@ -164,7 +163,7 @@ export const patchSpeechParl = async ({
 
 export const deleteUser = async (id) => {
   let errors = [];
-  console.log(id, "id na api 166")
+  
   const response = await api.delete(`/auth/users/${id}`)
   return response
 }
@@ -180,7 +179,7 @@ export const getSession = async (id) => {
 export const searchMaterias = async ( ) => {
   let errors =[];
   const response = await api.get('/api/materia/materialegislativa/')
-  console.log(response, 'na api response ')
+  
 
   errors= response.data
   return response
@@ -203,7 +202,7 @@ export const createCloseVote = async ({
     numero_abstencoes,
 	  votes 
   })
-  console.log(response, 'na api response ')
+  
 
   errors= response.data
   return response
@@ -211,7 +210,7 @@ export const createCloseVote = async ({
 
 // app.patch("/parl/vote/:user", Voting)
 export const patchVote = async ({id, novoVoto}) => {
-  console.log(id, novoVoto, "params no api do Vote")
+  
   let errors= [];
   const response = await api.patch(`/parl/vote/${id}`, {
     voto: novoVoto
@@ -220,9 +219,17 @@ export const patchVote = async ({id, novoVoto}) => {
   return response
 }
 
+//zerar todos os votos
 export const registerReload = async () => {
   let errors= [];
   const response = await api.get("/api/sessao/zerar")
+
+  errors= response.data
+  return response
+}
+export const presenceReload = async () => {
+  let errors= [];
+  const response = await api.get("/api/sessao/presencezero")
 
   errors= response.data
   return response

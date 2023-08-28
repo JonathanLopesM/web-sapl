@@ -11,8 +11,8 @@ export function Processo({session}){
         
       </div>
       <div className="flex flex-col gap-4">
-        <div className="flex w-full justify-end gap-4" >
-          <button className="hidden bg-blue-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-900">
+        <div className="hidden w-full justify-end gap-4" >
+          <button className="flex bg-blue-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-900">
               Editar
           </button>
           <button className="flex bg-red-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-red-900">

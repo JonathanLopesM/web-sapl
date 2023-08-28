@@ -80,10 +80,10 @@ export function Painel(){
       <div className="flex flex-col text-white h-screen w-full bg-gray-900 " >
         <header className="flex w-full h-14 border-b justify-center text-white gap-4 my-4 pb-4">
             <div className="flex w-[80%] items-center gap-2">
-              <div className='flex py-4 px-2 bg-white rounded-full '>
+              <div className='flex py-2 px-2 bg-white rounded-full '>
                 <img 
-                  className="w-10 h-6 " 
-                  src="/novace_logo.png" 
+                  className="w-8 h-8 " 
+                  src="/Brasao_barra_Mansa.jpeg" 
                   alt="" 
                   />
               </div>

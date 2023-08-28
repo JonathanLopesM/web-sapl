@@ -27,7 +27,7 @@ export default function ModalCadastro({ open, setOpen, }) {
         //Função de busca dos parlamentares na api
         SearchParliamen()
     }, [])
-    console.log(formIdParl, "user id ")
+    
 
     const enviaForm = (event) => {
         event.preventDefault()
@@ -68,8 +68,8 @@ export default function ModalCadastro({ open, setOpen, }) {
         const lowerCaseName = formParl.toLowerCase()
         return searchParl ? searchParl.filter(par => par.nome_completo.toLowerCase().includes(lowerCaseName)) : []
     }, [formParl, searchParl])
-    console.log(filterNameParlm, "filter")
-    console.log(searchParl, "palrmaentares")
+    
+    
     return (
         <div>
             <Transition.Root show={open} as={Fragment}>

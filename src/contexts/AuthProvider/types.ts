@@ -104,6 +104,7 @@ export interface IContext extends IUser {
   setPresence:any
   GetDadosPainel:any
   ParlVote:any
+  PresenceReload:any
 }
 
 export interface IAuthProvider {

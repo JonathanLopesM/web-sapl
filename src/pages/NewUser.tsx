@@ -8,7 +8,6 @@ import { Link } from "react-router-dom"
 export function NewUser() {
     const [openCadastro, setOpenCadastro] = useState(false)
     const { GetUsers, usersGet, DeleteUser } = useContext(AuthContext)
-    console.log(usersGet, "useContext: usersGet")
 
     useEffect(() => {
         GetUsers()

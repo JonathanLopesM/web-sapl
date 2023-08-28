@@ -11,7 +11,7 @@ export function Dashboard() {
 
   useEffect(()=>{
     const user = localStorage.getItem("novace@Admin")
-    console.log(user)
+
     if(!user){      
         navigate("/")
     }
@@ -30,7 +30,6 @@ export function Dashboard() {
   function HandleSearch() {
     GetSessions(year, month, day, type)
   }
-  console.log(sessions, parlamentares, 'sessions e parlamentares')
 
   function formatDate(newDate) {
     const months = {

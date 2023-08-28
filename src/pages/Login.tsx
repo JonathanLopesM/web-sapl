@@ -13,16 +13,12 @@ export default function Login() {
   const navigate = useNavigate();
   const token = localStorage.getItem('sessionid')
   const admin = localStorage.getItem('novace@Admin')
-  console.log(admin, "admins")
   useEffect(()=> {
-    // Conferir se tem um token, 
-    // se tiver rediciona para a dashboard 
     
     if( !admin){
       if(!token){
         navigate('/')        
       }
-
     }
     else {
       navigate('/sessoes')

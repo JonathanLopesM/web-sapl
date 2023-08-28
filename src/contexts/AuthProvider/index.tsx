@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
 import { createSession,  getParlamentares, getSessionSapl, ordemDia,paineldados, parliamentariansSearch,  searchParlSpeech} from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload, getTokenAdmin, presenceParl, presenceParlNew, parlVote } from "../../services/apiNode"
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload, getTokenAdmin, presenceParl, presenceParlNew, parlVote, presenceReload } from "../../services/apiNode"
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
@@ -293,16 +293,15 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       
   }
   async function PatchVotePar(id, novoVoto) {
-    
-    const response = await patchVote({id, novoVoto}) 
-    
-    
+    await patchVote({id, novoVoto}) 
   }
 
+  //Zerar todos os votos
   async function ReloadVotePanel (){
-    const response = await registerReload()
-
-    
+     await registerReload()
+  }
+  async function PresenceReload(){
+    await presenceReload()
   }
 
   async function Cadastros() {
@@ -363,7 +362,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         matterComplet, setMatterComplet,CloseVote, PatchVotePar,
         ReloadVotePanel, userAdm, setUserAdm, error, setError,
         voteId, setVoteId,presence ,setPresence, PresenceId,GetVotePresence,
-        GetDadosPainel, ParlVote
+        GetDadosPainel, ParlVote, PresenceReload
 
       }} >
       {children}

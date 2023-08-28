@@ -55,7 +55,7 @@ export const parliamentariansSearch = async () => {
 
 export const ordemDia = async ({idSes}) => {
   let errors = [];
-  console.log(idSes, "ordem do dia id")
+  
   const response = await api.get(`/api/sessao/ordemdia/?sessao_plenaria=${idSes}`)
   errors = response.data.errors
   return response

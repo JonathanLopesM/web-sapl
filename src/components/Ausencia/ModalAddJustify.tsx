@@ -21,7 +21,6 @@ export default function ModalAddJustify({open, setOpen}) {
       return par.nome_parlamentar
     }
   })
-  console.log(ParlamenOption, options, 'option parlamentar')
 
   return (
     <Transition.Root show={open} as={Fragment}>
