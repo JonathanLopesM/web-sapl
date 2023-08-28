@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/AuthProvider"
 export function SpeechTimes () {
   const { dados, PatchSpeechParl,GetIdSpeech, getIdSpeech } = useContext(AuthContext)
   const [timerOn, setTimerOn] = useState(false)
-  const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(600)//dados?.data?.speechParl?.speechTimeInit)
+  const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(450)//dados?.data?.speechParl?.speechTimeInit)
   const minutes = Math.floor(totalTimeInSeconds / 60)
   const seconds = totalTimeInSeconds % 60
   let speechTime;

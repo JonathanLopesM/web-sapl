@@ -77,9 +77,9 @@ export function Painel(){
 
   return (
 
-      <div className="flex flex-col text-white h-screen w-full bg-gray-900 " >
-        <header className="flex w-full h-14 border-b justify-center text-white gap-4 my-4 pb-4">
-            <div className="flex w-[80%] items-center gap-2">
+      <div className="flex flex-col text-white h-full lg:h-screen w-full bg-gray-900 " >
+        <header className="flex w-full border-b justify-center text-white lg:gap-4 py-1 lg:my-4 lg:pb-4">
+            <div className="flex sm:w-[80%] items-center gap-2">
               <div className='flex py-2 px-2 bg-white rounded-full '>
                 <img 
                   className="w-8 h-8 " 
@@ -87,13 +87,13 @@ export function Painel(){
                   alt="" 
                   />
               </div>
-              <h1 className="flex text-4xl font-bold">
+              <h1 className="flex lg:text-4xl font-bold">
                 Painel de votação
               </h1>
             </div>
         </header>
-        <div className="flex flex-col items-center justify-items-center ">
-          <div className="flex flex-col w-full  items-center h-[600px]">
+        <div className="flex flex-col  ">
+          <div className="flex flex-col w-full  items-center h-full  mb-5">
               {/* { <h3 className="flex bg-white text-green-500 justify-center text-center items-center font-extrabold px-8 p-2 text-3xl">SESSÃO AUTORIZADA </h3>} */}
            
             {!dados?.data?.estado ? <WelcomeToPeapleHome dados={dados?.data} /> 

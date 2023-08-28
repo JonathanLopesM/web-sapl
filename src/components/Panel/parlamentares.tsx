@@ -23,27 +23,27 @@ console.log(materia, "materia")
     <>
      {
       materia &&
-      <div className="flex h-14 text-center justify-center items-center gap-2">
-        <h4 className="text-2xl font-extrabold">
+      <div className=" sm:flex text-center justify-center items-center lg:gap-2 sm:px-8">
+        <h4 className="text-xs lg:text-base xl:text-xl font-extrabold">
           {materia.__str__}
         </h4>  
         -
-        <h4 className="text-2xl font-extrabold">
+        <h4 className=" text-xs  xl:text-xl font-extrabold">
           {materia.ementa}
         </h4>  
      </div>
      }
     {dados && 
-    <div className="flex flex-col w-full max-h-screen justify-center items-center mt-5">
-      <div className="grid grid-cols-3 gap-4 w-[80%]">
+    <div className="flex flex-col w-full sm:max-h-screen justify-center items-center mt-5">
+      <div className="grid  sm:grid-cols-3 gap-4 px-2 sm:w-[80%]">
         {dados.stateVote.map(par=> (
           <div key={par.id} className="flex gap-4 justify-between border rounded-l-[48px]">
-            <div className="flex gap-2 ">
-              <div className="flex bg-white w-16 xl:w-16 h-16 xl:h-16 object-cover overflow-hidden rounded-full justify-center">
+            <div className="flex gap-2 items-center ">
+              <div className="flex bg-white w-5 h-5 lg:w-12 lg:h-12 xl:w-16  xl:h-16 object-cover overflow-hidden rounded-full justify-center">
                 <img className="flex object-contain " src={par.fotografia} alt={`foto do parlamentar ${par.name}`} />
               </div>
-              <div className="flex flex-col justify-center">
-                <h2 className="flex text-xl font-semibold">
+              <div className="flex flex-col justify-center sm:text-xs lg:text-xl">
+                <h2 className="flex sm:text-[8px] font-semibold">
                   {par.name}
                 </h2>
                 {
@@ -63,7 +63,7 @@ console.log(materia, "materia")
                     {par.voto}
                   </span>
               </div>
-              : <div className={`flex border w-[100px] items-center justify-center px-2 ${par.voto !== "Não votou" ? "bg-yellow-300" : "bg-white"}`}>
+              : <div className={`flex border w-[20px] lg:w-20 xl:w-[100px] items-center justify-center px-2 ${par.voto !== "Não votou" ? "bg-yellow-300" : "bg-white"}`}>
                 </div>
             }
           </div>
