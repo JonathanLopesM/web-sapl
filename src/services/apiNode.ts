@@ -29,9 +29,6 @@ export const getTokenAdmin = async ({username, password}) => {
   return response 
 }
 
-
-
-
 export const getData = async (setDados) => {
   let errors = [];
   const response = await api.get("/painel/dados")
