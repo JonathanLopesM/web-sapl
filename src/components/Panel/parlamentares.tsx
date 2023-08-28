@@ -35,15 +35,15 @@ console.log(materia, "materia")
      }
     {dados && 
     <div className="flex flex-col w-full max-h-screen justify-center items-center mt-5">
-      <div className="grid grid-cols-2 gap-4 w-[80%]">
+      <div className="grid grid-cols-3 gap-4 w-[80%]">
         {dados.stateVote.map(par=> (
           <div key={par.id} className="flex gap-4 justify-between border rounded-l-[48px]">
             <div className="flex gap-2 ">
-              <div className="flex bg-white w-16 xl:w-20 h-16 xl:h-20 object-cover overflow-hidden rounded-full justify-center">
+              <div className="flex bg-white w-16 xl:w-16 h-16 xl:h-16 object-cover overflow-hidden rounded-full justify-center">
                 <img className="flex object-contain " src={par.fotografia} alt={`foto do parlamentar ${par.name}`} />
               </div>
               <div className="flex flex-col justify-center">
-                <h2 className="flex text-2xl font-semibold">
+                <h2 className="flex text-xl font-semibold">
                   {par.name}
                 </h2>
                 {
