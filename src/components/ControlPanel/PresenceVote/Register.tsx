@@ -2,18 +2,19 @@ import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../contexts/AuthProvider"
 
 export function Register({ setMatterState, sessionId, setProjectsView}) {
-  const { MatterUpdated, GetVotes, resultVote, voteResParl, votes, setVotes,matterComplet, CloseVote, Matters, PatchVotePar, ReloadVotePanel } = useContext(AuthContext)
+  const { MatterUpdated, GetVotes, resultVote, voteResParl, votes, setVotes,matterComplet, CloseVote, Matters, PatchVotePar, ReloadVotePanel, RegisterVoteSapl } = useContext(AuthContext)
   useEffect(()=>{
       if(!resultVote){
         GetVotes()
       }   
   },[])
+  
   const [yesVoteForm, setYesVoteForm] = useState(resultVote && resultVote?.Yes )
   const [notVoteForm, setNotVoteForm] = useState(resultVote && resultVote?.Not )
   const [abstentionForm, setAbstentionForm] = useState(resultVote && resultVote?.Yes )
   const [precenseForm, setPresenseForm] = useState(resultVote && resultVote?.Presense )
   const [voteTotalForm, setVoteTotalForm] = useState(resultVote && resultVote?.totalVotes )
-  const [resultVoteForm, setResultVoteForm] = useState(resultVote && resultVote?.Yes > resultVote?.Not ? 2 : 3) as any
+  const [resultVoteForm, setResultVoteForm] = useState(resultVote && resultVote?.Yes > resultVote?.Not ? 2 : 4) as any
   const [observation, setObservation] = useState("")
   const [buttonClose, setButtonClose] = useState(true)
 
@@ -35,11 +36,27 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
   }
 
   function handleEncerrar() {
-    ReloadVotePanel()
-    Matters(sessionId)
-    setMatterState("")
-    MatterUpdated("", false)
-    setVotes(!votes)
+    console.log(yesVoteForm, notVoteForm, abstentionForm, observation, "", resultVoteForm,   Number(resultVote?.materia), matterComplet.matterId, null, null )
+    RegisterVoteSapl(yesVoteForm, notVoteForm, abstentionForm, observation, "", resultVoteForm,   Number(resultVote?.materia), matterComplet.matterId, null, null )
+    // ReloadVotePanel()
+    // Matters(sessionId)
+
+    // setMatterState("")
+    // MatterUpdated("", false)
+    // setVotes(!votes)
+  }
+  function HandleRegister(voteId){
+    for(let par of voteResParl){
+      console.log({
+        voto: par.vote,
+        ip: "",
+        votacao: "idVotação",
+        parlamentar: par.id,
+        user: null,
+        ordem: matterComplet.matterId,
+        expediente: null
+      })
+    }
   }
 
   function handleEditVote (id, novoVoto ){
@@ -48,6 +65,8 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
       GetVotes()
     },1000)
   }
+  console.log(matterComplet.matterId, "matter complet Id")
+  console.log(voteResParl, "resulte Vote mttercomplet votes   ")
   return (
     <>
     {
@@ -57,7 +76,10 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
               <h3 className="flex flex-col">
                 Matéria Votada: 
                 <span  className="flex ml-4">
-                  {resultVote?.materia && resultVote?.materia}
+                  matéria: <span className="font-normal ml-2"> {matterComplet && matterComplet?.__str__} </span>
+                </span>
+                <span  className="flex ml-4">
+                  ementa: <span className="font-normal ml-2"> {matterComplet && matterComplet?.ementa}</span> 
                 </span>
               </h3>
             </div>
@@ -139,27 +161,30 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                       APROVADO POR MAIORIA SIMPLES
                     </option>
                     <option value={3}>
-                      REPROVADA
+                      APROVADO POR UNANIMIDADE
                     </option>
                     <option value={4}>
-                      Matéria lida
+                      REPROVADA
                     </option>
                     <option value={5}>
-                      APROVADA EM 1º DISCUSSÃO
+                      MATÉRIA LIDA
                     </option>
                     <option value={6}>
-                      APROVADA EM 2º DISCUSSÃO
+                      APROVADA EM 1º DISCUSSÃO
                     </option>
                     <option value={7}>
-                      APROVADA EM REGIME DE URGÊNCIA ESPECIAL
+                      APROVADA EM 2º DISCUSSÃO
                     </option>
                     <option value={8}>
-                      APROVADA EM DISCUSSÃO ÚNICA
+                      APROVADA EM REGIME DE URGÊNCIA ESPECIAL
                     </option>
                     <option value={9}>
-                      APROVADO POR 2/3
+                      APROVADA EM DISCUSSÃO ÚNICA
                     </option>
                     <option value={10}>
+                      APROVADO POR 2/3
+                    </option>
+                    <option value={11}>
                       PEDIDO DE VISTA
                     </option>
                   </select>

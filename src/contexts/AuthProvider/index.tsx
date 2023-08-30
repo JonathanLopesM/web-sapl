@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession,  getParlamentares, getSessionSapl, ordemDia,paineldados, parliamentariansSearch,  searchParlSpeech} from "../../services/api";
+import { createSession,  getParlamentares, getSessionSapl, ordemDia,paineldados, parliamentariansSearch,  registerResultVote,  searchParlSpeech} from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
 import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload, getTokenAdmin, presenceParl, presenceParlNew, parlVote, presenceReload } from "../../services/apiNode"
 
@@ -147,7 +147,6 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   async function Matters(id){
-    
     const response = await getSession(id)
     
     setMatters(response.data)
@@ -339,6 +338,19 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
      await parlVote({idVote, vote})
   }
 
+  async function RegisterVoteSapl (
+    numero_votos_sim, numero_votos_nao, numero_abstencoes,
+    observacao, ip, tipo_resultado_votacao, materia, 
+    ordem, expediente, user){
+      const response = await registerResultVote({
+        numero_votos_sim, numero_votos_nao, numero_abstencoes,
+        observacao, ip, tipo_resultado_votacao, materia, 
+        ordem, expediente, user
+      })
+      console.log(response, "response do register vote context 350")
+
+  }
+
   return (
     <AuthContext.Provider value={
       { 
@@ -362,7 +374,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         matterComplet, setMatterComplet,CloseVote, PatchVotePar,
         ReloadVotePanel, userAdm, setUserAdm, error, setError,
         voteId, setVoteId,presence ,setPresence, PresenceId,GetVotePresence,
-        GetDadosPainel, ParlVote, PresenceReload
+        GetDadosPainel, ParlVote, PresenceReload, RegisterVoteSapl
 
       }} >
       {children}

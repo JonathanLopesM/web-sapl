@@ -4,7 +4,7 @@ export const api = axios.create({
   // @ts-ignore
   baseURL: import.meta.env.VITE_URL_API_NODE,
 })
-//https://api-sapl.onrender.com http://localhost:3333
+// "http://localhost:3333"
 
 export const getToken = async ({username, password}) => {
   let errors = []
@@ -254,8 +254,31 @@ export const parlVote = async ({idVote, vote}) => {
 
   const response = await api.patch(`/parl/vote/${idVote}`, {
     voto: vote
-  })
+  }, { validateStatus: false} as any)
   errors = response.data
   return response
 }
 
+//Registro do Resultado da Votação
+export const registerResultVote = async ({
+  numero_votos_sim, numero_votos_nao, numero_abstencoes,
+  observacao, ip, tipo_resultado_votacao, materia, 
+  ordem, expediente, user
+}) => {
+let errors = []
+
+const response = await api.post(`/api/sessao/registrovotacao/`, {
+  numero_votos_sim,
+  numero_votos_nao,
+  numero_abstencoes,
+  observacao,
+  ip,
+  tipo_resultado_votacao,
+  materia,
+  ordem,
+  expediente,
+  user
+})
+errors = response.data.errors
+return response
+}

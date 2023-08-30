@@ -22,15 +22,19 @@ export function Vote ({page, setPage}) {
         },3000)
       }
     }
-  },[])
+  },[dados])
   console.log(userParl, "parl user ")
   function handleConfirmVote(){
     console.log("confirm vote")
+    console.log(userParl._id, vote, "voto enviado ")
     ParlVote (userParl._id, vote)
-    setPage("presence")
+
+    setTimeout(() => {
+      setPage("presence")
+    }, 2000);
   }
   return (
-    <div className="flex flex-col justify-center items-center max-w-[900px]">
+    <div className="flex flex-col justify-center items-center max-w-[900px] mx-auto ">
       <div className="flex w-full justify-center border-y-2">
         { dados && dados?.data?.estado 
           ? <h3 className="flex text-2xl font-bold text-green-500">
