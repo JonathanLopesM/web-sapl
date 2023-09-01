@@ -85,7 +85,7 @@ export function PainelEletronico({ session }){
                       setPainelLayout('presencavotacao')
                     }
                   } 
-                  className={`flex border px-2 py-2 rounded-md ${form == 'resultadodevotacao' && 'bg-gray-400 text-white'}`} 
+                  className={`hidden border px-2 py-2 rounded-md ${form == 'resultadodevotacao' && 'bg-gray-400 text-white'}`} 
                   value="resultadodevotacao"
                   type="button"
                 >
