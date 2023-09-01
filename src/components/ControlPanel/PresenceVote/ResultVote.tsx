@@ -102,7 +102,7 @@ export function ResultVote({ setMatterState, sessionId, setProjectsView}) {
                               const novoVoto = e.target.value
                               handleEditVote(parl.user, novoVoto )
                               }} value={parl.voto} className="border rounded-md px-2 py-1 w-[150px] text-center" name="" id="">
-                              <option value="Não votou">Não votou</option>
+                              <option value="Não Votou">Não votou</option>
                               <option value="Sim">Sim</option>
                               <option value="Não">Não</option>
                               <option value="Abster">Abster</option>

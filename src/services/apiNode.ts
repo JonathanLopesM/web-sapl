@@ -200,7 +200,6 @@ export const createCloseVote = async ({
 	  votes 
   })
   
-
   errors= response.data
   return response
 }
