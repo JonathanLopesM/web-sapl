@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../contexts/AuthProvider"
 import axios from "axios"
 import { Register } from "./Register"
+import { LoadingMatter } from "./LoadingMatter"
 
 export function PresenceVoteControl ({sessionId} ){
   const { SearchMaterias,materias, setMaterias, MatterUpdated, GetVotes, resultVote, voteResParl, setVoteResParl, dayOrder, Matters, matters, setMatters, votes, setVotes, matterComplet, setMatterComplet } = useContext(AuthContext)
@@ -20,6 +21,7 @@ export function PresenceVoteControl ({sessionId} ){
   useEffect(()=>{
     SearchMaterias()
     GetVotes()
+    Matters(sessionId)
   },[matterState])
   useEffect(()=>{
     GetVotes()
@@ -30,6 +32,7 @@ export function PresenceVoteControl ({sessionId} ){
     setVotes(true)
   }
 
+  console.log(matters, "matters teste ")
   return (
     <div className="flex flex-col border-2  gap-8 overflow-auto max-h-[630px] relative">
       <div className="flex h-14 gap-4  bg-white border w-full absolute  py-2 px-2">
@@ -68,6 +71,7 @@ export function PresenceVoteControl ({sessionId} ){
                 Resultado
               </td>
             </thead>
+                {!matters && <LoadingMatter /> }
                 { matters &&
                   matters.map(matter => (
                     <tbody key={matter.id} className="flex  ">

@@ -79,6 +79,7 @@ export const getSessionSapl = async ({year, month, day, type}) => {
 }
 
 export const registerResultVote = async ({
+  voteResParl,
     numero_votos_sim, numero_votos_nao, numero_abstencoes,
     observacao, ip, tipo_resultado_votacao, materia, 
     ordem, expediente, user
@@ -86,6 +87,7 @@ export const registerResultVote = async ({
   let errors = []
 
   const response = await api.post(`/api/sessao/registrovotacao/`, {
+    voteResParl,
     numero_votos_sim,
     numero_votos_nao,
     numero_abstencoes,

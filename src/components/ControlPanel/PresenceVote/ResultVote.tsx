@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../contexts/AuthProvider"
 
-export function Register({ setMatterState, sessionId, setProjectsView}) {
+export function ResultVote({ setMatterState, sessionId, setProjectsView}) {
   const { MatterUpdated, GetVotes, resultVote, voteResParl, votes, setVotes,matterComplet, CloseVote, Matters, PatchVotePar, ReloadVotePanel, RegisterVoteSapl } = useContext(AuthContext)
   useEffect(()=>{
       if(!resultVote){
@@ -29,9 +29,6 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
   }
 
   function handleCloseVote(e) {
-    console.log(sessionId, voteResParl, resultVote?.Yes, resultVote?.Not, resultVote?.abstain, observation, "", resultVoteForm,   Number(resultVote?.materia), matterComplet.matterId, null, null )
-    RegisterVoteSapl(sessionId, voteResParl, resultVote?.Yes, resultVote?.Not, resultVote?.abstain, observation, "", resultVoteForm,   Number(resultVote?.materia), matterComplet.matterId, null, null )
-    
     setButtonClose(false)
     CloseVote(matterComplet.id, matterComplet?.matterId, Number(resultVoteForm), observation, resultVote?.Yes, resultVote?.Not, resultVote?.totalVotes, voteResParl)
     Matters(sessionId)
@@ -39,6 +36,8 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
   }
 
   function handleEncerrar() {
+    console.log(sessionId, voteResParl, resultVote?.Yes, resultVote?.Not, abstentionForm, observation, "", resultVoteForm,   Number(resultVote?.materia), matterComplet.matterId, null, null )
+    RegisterVoteSapl(sessionId, voteResParl, resultVote?.Yes, resultVote?.Not, abstentionForm, observation, "", resultVoteForm,   Number(resultVote?.materia), matterComplet.matterId, null, null )
     
     Matters(sessionId)
     ReloadVotePanel()
@@ -54,6 +53,8 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
       GetVotes()
     },1000)
   }
+
+  console.log(resultVote, "matter complet Id")
 
   return (
     <>

@@ -25,13 +25,7 @@ export function Painel(){
 
     // se tiver rediciona para a dashboard 
     const token = localStorage.getItem('sessionid')
-    // if(!token){
-    //   navigate('/')
-    // }
-    // else {
-    //   navigate('/sessoes')
-    // }
-    //se não direciona Login
+    
   }, [idSession])
   
   useEffect(()=>{
@@ -40,29 +34,6 @@ export function Painel(){
    return () => clearTimeout(poolingTimeout)
   },[])
 
-  // useEffect(()=>{
-    
-  //   //Evento para receber os dados do socket back
-  //   socket.on("dados-atualizados", (dadosrecebidos)=>{
-  //     console.log(dadosrecebidos, 'dadosrecebidos')
-  //       setDados(dadosrecebidos)
-  //   })
-  //   // Evento para lidar com erros
-  //   socket.on('erro', (mensagem) => {
-  //     console.error('Erro:', mensagem);
-  //   });
-
-  //   // Emitir o evento para o servidor Socket.io solicitar os dados
-  //   socket.emit('obter-dados-atualizados', {
-  //     id:1
-  //   });
-    
-  //   // Remover os event listeners quando o componente for desmontado
-  //   return () => {
-  //     socket.off('dados');
-  //     socket.off('erro');
-  //   };
-  // },[])
   let presences = []
 
   if(dados && dados?.data && dados?.data?.stateVote){
@@ -73,7 +44,13 @@ export function Painel(){
     })
   }
 
-  console.log(dados, "dados de mater")
+  let result;
+  if(dados?.data?.result){
+    let array = dados?.data?.result?.__str__.split(" - ")
+    console.log(array[2], "tipo da resposta ")
+    result = array[2]
+  }
+  console.log(dados?.data, "dados de mater")
 
   return (
 
@@ -135,9 +112,12 @@ export function Painel(){
                 <h4 className=" text-gray-800 text-2xl font-bold ">
                 NÃO: {dados?.data?.response?.Not}
                 </h4>
+                <h4 className=" text-gray-800 text-2xl font-bold ">
+                ABSTER: {dados?.data?.response?.Abstain}
+                </h4>
               </div>
-              <h4 className=" text-green-500 text-2xl font-bold ">
-                {dados?.data?.result?.resultado}
+              <h4 className=" text-gray-800 text-2xl font-bold ">
+                {result}
               </h4>
               
             </div>

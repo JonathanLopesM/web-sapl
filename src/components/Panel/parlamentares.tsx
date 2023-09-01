@@ -63,7 +63,7 @@ console.log(materia, "materia")
                     {par.voto}
                   </span>
               </div>
-              : <div className={`flex border w-[20px] lg:w-20 xl:w-[100px] items-center justify-center px-2 ${par.voto !== "Não votou" ? "bg-yellow-300" : "bg-white"}`}>
+              : <div className={`flex border w-[20px] lg:w-20 xl:w-[100px] items-center justify-center px-2 ${par.voto !== "Não Votou" ? "bg-yellow-300" : "bg-white"}`}>
                 </div>
             }
           </div>

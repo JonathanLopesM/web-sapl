@@ -1,8 +1,11 @@
 import React, { createContext, useEffect, useState } from "react"
 import { IAuthProvider, IContext } from "./types"
-import { createSession,  getParlamentares, getSessionSapl, ordemDia,paineldados, parliamentariansSearch,  registerResultVote,  searchParlSpeech} from "../../services/api";
+import { createSession,  getParlamentares, getSessionSapl, ordemDia,paineldados, parliamentariansSearch,    searchParlSpeech} from "../../services/api";
 import { Link, useNavigate } from "react-router-dom"
-import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl,  deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload, getTokenAdmin, presenceParl, presenceParlNew, parlVote, presenceReload } from "../../services/apiNode"
+import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, 
+  getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl, 
+   deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload,
+    getTokenAdmin, presenceParl, presenceParlNew, parlVote, presenceReload, registerResultVote } from "../../services/apiNode"
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
@@ -339,10 +342,12 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   async function RegisterVoteSapl (
+    sessionId, voteResParl,
     numero_votos_sim, numero_votos_nao, numero_abstencoes,
     observacao, ip, tipo_resultado_votacao, materia, 
     ordem, expediente, user){
       const response = await registerResultVote({
+        sessionId, voteResParl,
         numero_votos_sim, numero_votos_nao, numero_abstencoes,
         observacao, ip, tipo_resultado_votacao, materia, 
         ordem, expediente, user

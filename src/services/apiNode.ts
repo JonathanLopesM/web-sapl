@@ -261,6 +261,7 @@ export const parlVote = async ({idVote, vote}) => {
 
 //Registro do Resultado da Votação
 export const registerResultVote = async ({
+  sessionId, voteResParl,
   numero_votos_sim, numero_votos_nao, numero_abstencoes,
   observacao, ip, tipo_resultado_votacao, materia, 
   ordem, expediente, user
@@ -268,6 +269,7 @@ export const registerResultVote = async ({
 let errors = []
 
 const response = await api.post(`/api/sessao/registrovotacao/`, {
+  sessionId, voteResParl,
   numero_votos_sim,
   numero_votos_nao,
   numero_abstencoes,
