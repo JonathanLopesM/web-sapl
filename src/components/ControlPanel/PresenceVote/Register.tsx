@@ -14,7 +14,7 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
   const [abstentionForm, setAbstentionForm] = useState(resultVote && resultVote?.Yes )
   const [precenseForm, setPresenseForm] = useState(resultVote && resultVote?.Presense )
   const [voteTotalForm, setVoteTotalForm] = useState(resultVote && resultVote?.totalVotes )
-  const [resultVoteForm, setResultVoteForm] = useState(resultVote && resultVote?.Yes > resultVote?.Not ? 2 : 4) as any
+  const [resultVoteForm, setResultVoteForm] = useState(0) as any
   const [observation, setObservation] = useState("")
   const [buttonClose, setButtonClose] = useState(true)
 
@@ -22,8 +22,8 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
 
   const handleCancel = () => {
     setMatterState("")
-    ReloadVotePanel()
-    MatterUpdated("", false)
+    // ReloadVotePanel()
+    // MatterUpdated("", false)
     setVotes(!votes)
     setProjectsView("materias")
   }
@@ -41,11 +41,10 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
   function handleEncerrar() {
     
     Matters(sessionId)
-    ReloadVotePanel()
-    setProjectsView("materias")
-    setMatterState("")
-    MatterUpdated("", false)
-    setVotes(!votes)
+    setTimeout(()=>{
+      setProjectsView("materias")
+      setVotes(!votes)
+    },2000)
   }
 
   function handleEditVote (id, novoVoto ){
@@ -97,7 +96,7 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                               {parl.voto}
                             </span>
                             :
-                            <select onChange={(e)=>{
+                            (parl.voto.toLowerCase() === "não votou" ? <select onChange={(e)=>{
                               const novoVoto = e.target.value
                               handleEditVote(parl.user, novoVoto )
                               }} value={parl.voto} className="border rounded-md px-2 py-1 w-[150px] text-center" name="" id="">
@@ -105,7 +104,11 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                               <option value="Sim">Sim</option>
                               <option value="Não">Não</option>
                               <option value="Abster">Abster</option>
-                            </select>
+                            </select> 
+                            : <span className="border rounded-md px-2 py-1 w-[150px]">
+                                {parl.voto}
+                              </span>
+                          )
                         }
                     </div>
                   </li>
@@ -141,7 +144,9 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
               <div className="flex flex-col gap-4">
                 <label className="flex flex-col" >
                   Resultado de Votação
-                  <select onChange={(e)=>setResultVoteForm(e.target.value)} value={resultVoteForm} className="border rounded-md p-2" >
+                  {
+                  buttonClose 
+                  ? <select onChange={(e)=>setResultVoteForm(e.target.value)} value={resultVoteForm} className="border rounded-md p-2" >
                     <option value="">
                       ----------
                     </option>
@@ -178,7 +183,21 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                     <option value={11}>
                       PEDIDO DE VISTA
                     </option>
-                  </select>
+                   </select>
+                  : <div className="border rounded-md p-2">
+                      { resultVoteForm == 1 && "APROVADO POR MAIORIA ABSOLUTA"}
+                      { resultVoteForm == 2 && "APROVADO POR MAIORIA SIMPLES"}
+                      { resultVoteForm == 3 && "APROVADO POR UNANIMIDADE"}
+                      { resultVoteForm == 4 && "REPROVADA"}
+                      { resultVoteForm == 5 && "MATÉRIA LIDA"}
+                      { resultVoteForm == 6 && "APROVADA EM 1º DISCUSSÃO"}
+                      { resultVoteForm == 7 && "APROVADA EM 2º DISCUSSÃO"}
+                      { resultVoteForm == 8 && "APROVADA EM REGIME DE URGÊNCIA ESPECIAL"}
+                      { resultVoteForm == 9 && "APROVADA EM DISCUSSÃO ÚNICA"}
+                      { resultVoteForm == 10 && "APROVADO POR 2/3"}
+                      { resultVoteForm == 11 && "PEDIDO DE VISTA"}
+                   </div>
+                  }
                 </label>
 
                 <label className="flex flex-col max-w-[500px]" htmlFor="">
@@ -195,9 +214,13 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                   </button>
                 }
                 {buttonClose 
-                ? <button type="button" onClick={handleCloseVote} className="border p-2 px-4 rounded-lg bg-blue-500 hover:bg-blue-400 text-white font-bold">
+                ? (resultVoteForm == 0 ?
+                  <div className="border cursor-default opacity-50 p-2 px-4 rounded-lg bg-gray-500  text-white font-bold">
+                    Fechar Votação
+                  </div>
+                 :<button type="button" onClick={handleCloseVote} className="border p-2 px-4 rounded-lg bg-blue-500 hover:bg-blue-400 text-white font-bold">
                   Fechar Votação
-                </button>
+                </button>)
                 : <button type="button" onClick={handleEncerrar} className="border p-2 px-4 rounded-lg bg-red-500 hover:bg-red-400 text-white font-bold">
                     Encerrar
                   </button>

@@ -3,11 +3,13 @@ import { AuthContext } from "../../../contexts/AuthProvider"
 import axios from "axios"
 import { Register } from "./Register"
 import { LoadingMatter } from "./LoadingMatter"
+import { ArrowPathIcon } from "@heroicons/react/24/outline"
 
 export function PresenceVoteControl ({sessionId} ){
-  const { SearchMaterias,materias, setMaterias, MatterUpdated, GetVotes, resultVote, voteResParl, setVoteResParl, dayOrder, Matters, matters, setMatters, votes, setVotes, matterComplet, setMatterComplet } = useContext(AuthContext)
+  const { SearchMaterias,materias, setMaterias, MatterUpdated, GetVotes, resultVote, voteResParl, setVoteResParl, dayOrder, ReloadVotePanel, Matters, matters, setMatters, votes, setVotes, matterComplet, setMatterComplet } = useContext(AuthContext)
   const [matterState, setMatterState ] = useState('')
   const [projectsView, setProjectsView] = useState("materias")
+  const [resultLoading, setResultLoading] = useState(false)
   
   const [vote, setVote] = useState("")
   // @ts-ignore
@@ -19,15 +21,20 @@ export function PresenceVoteControl ({sessionId} ){
   },[])
 
   useEffect(()=>{
+    setResultLoading(true)
     SearchMaterias()
     GetVotes()
-    Matters(sessionId)
-  },[matterState])
+    Matters(sessionId).then(res => setResultLoading(false))
+
+    
+  },[projectsView])
+
   useEffect(()=>{
     GetVotes()
   },[votes, matterState])
 
   const handleSetMatter = () => {
+    
     setProjectsView("register")
     setVotes(true)
   }
@@ -97,34 +104,41 @@ export function PresenceVoteControl ({sessionId} ){
                         </span>
                       </td>
                       <td className="flex  border p-2 w-[30%]">
-                      {matter.resultado 
+                      {
+                        !resultLoading ?
+                        matter.resultado 
                         ? (matter.resultado) 
                         : (
-                        <div className="flex flex-col">
-                          <span>Projeto não votado </span>
-                        {(matter.id) !== matterState
-                          ? <button
-                              value={matter.ementa}
-                              onClick={(event)=>{
-                                setMatterState(matter.id);
-                                setMatterComplet(matter);
-                                console.log(matterState, "matter dentro da funcao ")
-                                MatterUpdated(matter.id);
-                               }} 
-                              type="button" 
-                              className="flex bg-green-500 min-w-[160px] h-10 px-2 text-white text-center justify-center py-2 rounded-md ">
-                                  Abrir Votação
-                            </button> 
-                          : <button
-                              value={matter.id}
-                              onClick={handleSetMatter} 
-                              type="button" 
-                              className="flex bg-green-500 min-w-[160px] h-10 px-2 text-white text-center justify-center py-2 rounded-md ">
-                                  Registrar
-                            </button>
-                           }
+                          <div className="flex flex-col">
+                            <span>Projeto não votado </span>
+                          {(matter.id) !== matterState
+                            ? <button
+                                value={matter.ementa}
+                                onClick={(event)=>{
+                                  ReloadVotePanel()
+                                  setMatterState(matter.id);
+                                  setMatterComplet(matter);
+                                  console.log(matterState, "matter dentro da funcao ")
+                                  MatterUpdated(matter.id);
+                                }} 
+                                type="button" 
+                                className="flex bg-green-500 min-w-[160px] h-10 px-2 text-white text-center justify-center py-2 rounded-md ">
+                                    Abrir Votação
+                              </button> 
+                            : <button
+                                value={matter.id}
+                                onClick={handleSetMatter} 
+                                type="button" 
+                                className="flex bg-green-500 min-w-[160px] h-10 px-2 text-white text-center justify-center py-2 rounded-md ">
+                                    Registrar
+                              </button>
+                            }
                           </div>
-                          ) 
+                          ) : (
+                            <span className="flex items-center gap-4 mx-auto text-xl">
+                              <ArrowPathIcon className="flex w-8 animate-spin opacity-70" />
+                            </span>
+                          )
                       }
                       </td>
                 </tbody>

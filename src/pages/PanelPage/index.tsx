@@ -103,22 +103,25 @@ export function Painel(){
 
         {
           dados?.data?.result && 
-          <div className={`flex bg-gray-200 mt-auto justify-center py-2`}>
-            <div className="flex justify-between sm:w-[80%]">
+          <div className={`flex bg-gray-200 mt-auto justify-center py-2 text-xl sm:text-xl lg:text-2xl`}>
+            <div className="flex flex-col sm:flex-row justify-center sm:justify-between sm:w-[80%] items-center">
               <div className="flex gap-8">
-                <h4 className=" text-gray-800 text-2xl font-bold ">
+                <h4 className=" text-gray-800 font-bold ">
                 SIM: {dados?.data?.response?.Yes}
                 </h4>
-                <h4 className=" text-gray-800 text-2xl font-bold ">
+                <h4 className=" text-gray-800 font-bold ">
                 NÃO: {dados?.data?.response?.Not}
                 </h4>
-                <h4 className=" text-gray-800 text-2xl font-bold ">
+                <h4 className=" text-gray-800 font-bold ">
                 ABSTER: {dados?.data?.response?.Abstain}
                 </h4>
               </div>
-              <h4 className=" text-gray-800 text-2xl font-bold ">
+              {result.includes("APROVADO") && <h4 className=" text-green-700 text-xs sm:text-xl lg:text-2xl font-bold ">
                 {result}
-              </h4>
+              </h4>}
+              {result.includes("REPROVADO") && <h4 className=" text-red-700 text-xs sm:text-xl lg:text-2xl font-bold ">
+                {result}
+              </h4>}
               
             </div>
           </div>
