@@ -41,10 +41,11 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
   function handleEncerrar() {
     
     Matters(sessionId)
-    setTimeout(()=>{
-      setProjectsView("materias")
-      setVotes(!votes)
-    },2000)
+    // ReloadVotePanel()
+    setProjectsView("materias")
+    // setMatterState("")
+    // MatterUpdated("", false)
+    setVotes(!votes)
   }
 
   function handleEditVote (id, novoVoto ){

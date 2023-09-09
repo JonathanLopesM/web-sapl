@@ -119,7 +119,7 @@ export function Painel(){
               {result.includes("APROVADO") && <h4 className=" text-green-700 text-xs sm:text-xl lg:text-2xl font-bold ">
                 {result}
               </h4>}
-              {result.includes("REPROVADO") && <h4 className=" text-red-700 text-xs sm:text-xl lg:text-2xl font-bold ">
+              {result.includes("REPROVADA") && <h4 className=" text-red-700 text-xs sm:text-xl lg:text-2xl font-bold ">
                 {result}
               </h4>}
               
