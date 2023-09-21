@@ -173,8 +173,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
             votes 
         })
         
-  }
-
+  }                   
 
   async function GetParlamentares() {
     const response = await getParlamentares()
@@ -272,8 +271,9 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   // Updated Speech Parl
   async function GetIdSpeech(){
     const response = await getSpeechParlData()
+    console.log(response.data.response[0]._id, 'response no autcontext')
     
-     setGetIdSpeech(response.data.response._id)
+     setGetIdSpeech(response.data.response[0]._id)
 
   }
   //ADICIONAR AS FUNCOES QUE FALTAM DOS STATES 

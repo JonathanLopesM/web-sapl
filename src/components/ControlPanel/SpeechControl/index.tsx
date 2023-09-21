@@ -6,81 +6,47 @@ import { OrderQuestionTimes } from "./OrderQuestionTimes"
 import { FinalConsiderationsTimes } from "./FinalConsiderationsTimes"
 
 export function SpeechControl () {
-
-  const parlamentares = [
-      {
-        id:0,
-        name: '- - - - - - - '
-      },
-      {
-        id:1,
-        name: 'CASÉ'
-      },
-      {
-        id:2,
-        name: 'CRISTINA MAGNO'
-      },
-      {
-        id:3,
-        name: 'DANIEL MACIEL'
-      },
-      {
-        id:4,
-        name: 'DR EDUARDO'
-      },
-      {
-        id:5,
-        name: 'FURLANI'
-      },
-      {
-        id:6,
-        name: 'GUSTAVO GOMES'
-      },
-      {
-        id:7,
-        name: 'JOÃOZINHO DO AR'
-      },
-      {
-        id:8,
-        name: 'LUCIANA ALVES'
-      },
-      {
-        id:9,
-        name: 'MAMEDE'
-      },
-      {
-        id:10,
-        name: 'MARCEL CASTRO'
-      },
-      {
-        id:11,
-        name: 'MARQUINHO'
-      },
-  
-  
-    ]
-  const { SearchParlSpeech, parlSpeech, GetPainel, dados, PatchSpeechParl,GetIdSpeech, getIdSpeech, setGetIdSpeech } = useContext(AuthContext)
+  const { SearchParlSpeech, parlSpeech, GetPainel, dados, PatchSpeechParl,GetIdSpeech, getIdSpeech, setGetIdSpeech, parlamentares, GetVotes,voteResParl } = useContext(AuthContext)
   const [userObj, setUserObj] = useState({})
   const [soundPlay, setSoundPlay] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     SearchParlSpeech()
     GetIdSpeech()
     GetPainel()
+    GetVotes()
+    return ()=>{
+      setUserObj("selecione")
+      autoSetReload()
+    }
   },[])
+
+
+  const parlaActives = parlamentares.filter(parl => {
+    if(parl.ativo){
+      return parl
+    }
+  })
+  console.log(parlaActives, 'parlamentares')
+
+  function autoSetReload(){
+    let user = [{
+      ativo:true,
+      fotografia: "http://votacao.novace.com.br/novace_logo.png",
+      nome_parlamentar:"Usuário",
+    }]
+    PatchSpeechParl(getIdSpeech, 100, user[0]?.nome_parlamentar, user[0]?.fotografia)
+  }
 
   function handleSetParl(){
     let user;
     
     if(userObj){
-      console.log(userObj, "user obj")
       user = parlSpeech.filter(parl => {
         console.log(parl.id)
         if(parl.id == userObj){
-          
           return parl
         }
-        
         return
       })
       if(userObj == "selecione"){
@@ -90,8 +56,7 @@ export function SpeechControl () {
           nome_parlamentar:"Usuário",
         }]
     }
-      console.log(user, "objeto que preciso")
-      PatchSpeechParl(getIdSpeech, user[0].id, user[0].nome_parlamentar, user[0].fotografia)
+      PatchSpeechParl(getIdSpeech, user[0]?.id ? user[0]?.id : 100, user[0]?.nome_parlamentar, user[0]?.fotografia)
     }
   }
   
@@ -113,8 +78,9 @@ return (
                 className="flex w-full text-lg border px-4 py-1 rounded-md"
               name="" id="">
                 <option value="selecione">Selecione...</option>
-                {parlSpeech.map(par => (
-                  <option key={par.id} value={par.id}>{par.__str__}</option>
+                {
+                parlaActives.map(par => (
+                  <option key={par.id} value={par.id}>{par.nome_parlamentar}</option>
                 ))}
               </select>
           </label>

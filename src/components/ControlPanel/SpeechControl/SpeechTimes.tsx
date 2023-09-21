@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/AuthProvider"
 export function SpeechTimes () {
   const { dados, PatchSpeechParl,GetIdSpeech, getIdSpeech } = useContext(AuthContext)
   const [timerOn, setTimerOn] = useState(false)
-  const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(450)//dados?.data?.speechParl?.speechTimeInit)
+  const [totalTimeInSeconds, setTotalTimeInSeconds] = useState( 10 * 45 )//dados?.data?.speechParl?.speechTimeInit)
   const minutes = Math.floor(totalTimeInSeconds / 60)
   const seconds = totalTimeInSeconds % 60
   let speechTime;
@@ -16,11 +16,7 @@ export function SpeechTimes () {
     }
   },[])
   useEffect(()=>{
-    // if(dados.data?.speechParl?.speechTime !== timerOn){
-    //   setTimerOn(dados.data?.speechParl?.speechTime)
-    //   // setTotalTimeInSeconds(dados.data?.speechParl?.speechTimeInit)
-
-    // }
+    
     if(dados.data?.speechParl?.speechTimeInitBoolean){
       speechTimeInitBoolean = false
       setTotalTimeInSeconds(dados.data?.speechParl?.speechTimeInit)
@@ -41,7 +37,7 @@ export function SpeechTimes () {
   },[totalTimeInSeconds, timerOn, dados?.data?.speechParl?.speechTime, dados?.data?.speechParl?.speechTimeBoolean, dados?.data?.speechParl?.speechTimeInitBoolean ])
  
   function handleRestartDisc () {
-    setTotalTimeInSeconds(10*60)
+    setTotalTimeInSeconds(10*45)
     speechTimeInitBoolean = true
     PatchSpeechParl(getIdSpeech, undefined,undefined,undefined, undefined, undefined, undefined, speechTimeInitBoolean )
   }
@@ -63,7 +59,6 @@ export function SpeechTimes () {
 
   return (
     <div className="flex w-full justify-between">
-
       <div className="flex flex-col">
         <span className="font-bold">
           Cronometro do Discurso

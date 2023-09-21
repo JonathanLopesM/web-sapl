@@ -6,7 +6,6 @@ export function Speech ({dados}) {
 
   const [totalTimeInSeconds, setTotalTimeInSeconds] = useState(dados?.speechParl?.speechTimeInit) //10*60 10 minutes
 
-
   const minutes = Math.floor(totalTimeInSeconds / 60)
   const seconds = totalTimeInSeconds % 60
   let speechTimeInitBoolean;

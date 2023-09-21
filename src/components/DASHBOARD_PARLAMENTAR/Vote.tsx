@@ -16,14 +16,15 @@ export function Vote ({page, setPage}) {
           setPage("presence")
         },3000)
       }
-      if(!dados?.data?.materia){
+      if(!dados?.data?.materia || !!dados?.data?.result){
         setTimeout(()=>{
           setPage("presence")
         },3000)
       }
     }
   },[dados])
-  console.log(userParl, "parl user ")
+  console.log(dados, "dados painel ")
+  console.log(!!dados?.data?.result, "data dados visualisar ")
   function handleConfirmVote(){
     console.log("confirm vote")
     console.log(userParl._id, vote, "voto enviado ")
@@ -46,7 +47,7 @@ export function Vote ({page, setPage}) {
         }
       </div>
       <div className="flex w-full ">
-        { dados && dados?.data?.materia 
+        { dados && (dados?.data?.materia && !!dados?.data?.result == false)
         ? 
         <div className="flex flex-col w-full mt-10 ">
           <div className="flex flex-col w-[90%] justify-center items-center text-center mx-auto gap-2">

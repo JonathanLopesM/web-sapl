@@ -38,6 +38,9 @@ export function PresenceVoteControl ({sessionId} ){
     setProjectsView("register")
     setVotes(true)
   }
+  if(matters){
+    matters.sort((a, b) => (a.numero_ordem > b.numero_ordem) ? 1 : -1)
+  }
 
   console.log(matters, "matters teste ")
   return (

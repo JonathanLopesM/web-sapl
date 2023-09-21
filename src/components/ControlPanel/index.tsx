@@ -117,7 +117,6 @@ export function PainelEletronico({ session }){
                 </button>
                 <button 
                   onClick={(e:any)=>{
-                    handleViewWindow(5)
                     setForm(e.target.value)
                     setPainelLayout('mensagem')
                   }} 
@@ -139,7 +138,6 @@ export function PainelEletronico({ session }){
         {form == 'discurso' 
         && <SpeechControl />
         }
-
 
         {form == 'mensagem' 
           && <MessageControl />

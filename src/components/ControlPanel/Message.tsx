@@ -1,12 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 export function MessageControl () {
   const { PatchPanelMessage } = useContext(AuthContext)
   const [message, setMessage] = useState('')
   const tela = 5
+
+  useEffect(()=>{
+    return ()=> {
+      console.log("Executou a função de zerar as presenças")
+      setMessage('')
+      PatchPanelMessage(tela, message )
+    }
+  },[])
   const handleSetMessage = () => {
     PatchPanelMessage(tela, message )
+
   }
 
   return (

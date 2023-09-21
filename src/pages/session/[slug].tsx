@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Processo } from "../../components/Processo"
 import { MesaDiretora } from "../../components/Mesa"
 import { PainelEletronico } from "../../components/ControlPanel/index"
+import { PatchPanelView } from "../../services/apiNode"
 import { OrdemDoDiaLayout } from "../../components/OrdemDoDia"
 import { Presenca } from "../../components/Presenca"
 import { Ausencia } from "../../components/Ausencia"
@@ -18,26 +19,34 @@ import { Header } from "../../components/Header"
 export function Session () {
   const [open, setOpen] = useState(false)
   const [openSearch, setOpenSearch] = useState(false)
-  const {sessions, GetSessions, DayOrderIds,dayOrder, setDayOrders, PresenceReload } = useContext(AuthContext)
+  const {sessions, GetSessions, DayOrderIds,dayOrder, setDayOrders, PresenceReload, panelId, SaveIdPanel, GetIdSpeech, getIdSpeech } = useContext(AuthContext)
   const { id } = useParams()
   const [layout, setLayout] = useState('dadosbasicos')
 
   
   useEffect(()=>{
+    if(!getIdSpeech){
+      GetIdSpeech()
+    }
+    
       if(!sessions){
         GetSessions('2023', '','', '',)
+      }
+      if(!panelId){
+        SaveIdPanel()
       }
   },[])
   useEffect(()=>{
     DayOrderIds(id)
-
-    return ()=> {
-      console.log("Executou a função de zerar as presenças")
-      PresenceReload()
-    }
+    if(panelId){
+      return ()=> {
+        console.log("Executou a função de zerar as presenças")
+        PresenceReload()
+          PatchPanelView(panelId, 0);
+      }}
   },[])
 
-  
+  console.log(getIdSpeech, 'getId no session slug')
   const history = useNavigate()
 
   let session = ''
