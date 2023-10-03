@@ -15,7 +15,7 @@ let poolingTimeout;
 async function PoolingToBack (setDados) {
   await getData(setDados)
 
-  poolingTimeout = setTimeout(()=> PoolingToBack(setDados), 800)
+  poolingTimeout = setTimeout(()=> PoolingToBack(setDados), 500)
 }
 export function Painel(){
   const { dados, setDados, idSession } = useContext(AuthContext)

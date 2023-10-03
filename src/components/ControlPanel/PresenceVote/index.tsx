@@ -39,7 +39,7 @@ export function PresenceVoteControl ({sessionId} ){
     setVotes(true)
   }
   if(matters){
-    matters.sort((a, b) => (a.numero_ordem > b.numero_ordem) ? 1 : -1)
+    matters.sort((a, b) => (a.numero_ordem < b.numero_ordem) ? 1 : -1)
   }
 
   console.log(matters, "matters teste ")
