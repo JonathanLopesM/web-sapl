@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const api = axios.create({
   // @ts-ignore
-  baseURL: import.meta.env.VITE_URL_API_NODE,
+  baseURL: "http://localhost:3333" //import.meta.env.VITE_URL_API_NODE,
 })
 // "http://localhost:3333"
 
@@ -214,6 +214,21 @@ export const patchVote = async ({id, novoVoto}) => {
   errors= response.data
   return response
 }
+
+export const patchPresence = async ({id, presence}) => {
+  console.log(id, presence, 'api')
+  const response = await api.patch(`/parl/presence/${id}`, {
+    presence: presence
+  })
+  return response
+}
+export const patchPresenceParlMany = async ({presence}) => {
+  const response = await api.patch('/parl/presence/many',{
+    presence: presence
+  })
+  return response 
+}
+
 
 //zerar todos os votos
 export const registerReload = async () => {

@@ -106,6 +106,8 @@ export interface IContext extends IUser {
   ParlVote:any
   PresenceReload:any
   RegisterVoteSapl:any
+  PatchPresenceParl:any
+  PatchPresenceParlMany:any
 }
 
 export interface IAuthProvider {

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { PatchMatterVote, createUsers, getData, getDataIdPanel, getSpeechParlData, 
   getToken, getUsers, getVotes, patchPanelMessage, patchSpeechParl, 
    deleteUser,  getSession,searchMaterias, createCloseVote, patchVote, registerReload,
-    getTokenAdmin, presenceParl, presenceParlNew, parlVote, presenceReload, registerResultVote } from "../../services/apiNode"
+    getTokenAdmin, presenceParl, presenceParlNew, parlVote, presenceReload, registerResultVote, patchPresence, patchPresenceParlMany } from "../../services/apiNode"
 
 export const AuthContext = createContext<IContext>({} as IContext)
 
@@ -276,7 +276,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
      setGetIdSpeech(response.data.response[0]._id)
 
   }
-  //ADICIONAR AS FUNCOES QUE FALTAM DOS STATES 
+
   async function PatchSpeechParl(getIdSpeech, id, name, fotografia, speechTime, speechTimeInit,
     presenca, speechTimeInitBoolean, partTime, partTimeInit, partTimeInitBoolean,
     orderQuestionTime, orderQuestionTimeInit,orderQuestionTimeInitBoolean,
@@ -296,6 +296,13 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
   async function PatchVotePar(id, novoVoto) {
     await patchVote({id, novoVoto}) 
+  }
+  async function PatchPresenceParl(id, presence){
+    console.log(id, presence, 'context')
+    await patchPresence({id, presence})
+  }
+  async function PatchPresenceParlMany(presence){
+    await patchPresenceParlMany({presence})
   }
 
   //Zerar todos os votos
@@ -379,7 +386,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         matterComplet, setMatterComplet,CloseVote, PatchVotePar,
         ReloadVotePanel, userAdm, setUserAdm, error, setError,
         voteId, setVoteId,presence ,setPresence, PresenceId,GetVotePresence,
-        GetDadosPainel, ParlVote, PresenceReload, RegisterVoteSapl
+        GetDadosPainel, ParlVote, PresenceReload, RegisterVoteSapl,
+        PatchPresenceParl, PatchPresenceParlMany
 
       }} >
       {children}

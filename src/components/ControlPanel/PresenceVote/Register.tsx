@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../contexts/AuthProvider"
 
 export function Register({ setMatterState, sessionId, setProjectsView}) {
-  const { MatterUpdated, GetVotes, resultVote, voteResParl, votes, setVotes,matterComplet, CloseVote, Matters, PatchVotePar, ReloadVotePanel, RegisterVoteSapl } = useContext(AuthContext)
+  const { MatterUpdated, GetVotes, resultVote, voteResParl, votes, setVotes,matterComplet, CloseVote, Matters, PatchVotePar, ReloadVotePanel, RegisterVoteSapl, PatchPresenceParl, PatchPresenceParlMany } = useContext(AuthContext)
   useEffect(()=>{
       if(!resultVote){
         GetVotes()
@@ -17,6 +17,7 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
   const [resultVoteForm, setResultVoteForm] = useState(0) as any
   const [observation, setObservation] = useState("")
   const [buttonClose, setButtonClose] = useState(true)
+  const [presenceMany, setPresenceMany] = useState(false)
 
   const [valueVote, setValueVote] = useState() as any
 
@@ -54,7 +55,25 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
       GetVotes()
     },1000)
   }
+  function handleEditPresence(id, presence){
+    console.log(id, presence)
+    let precensaBoolean = false
+    if(presence === 'Presente') precensaBoolean = true
+    PatchPresenceParl(id, precensaBoolean)
+    setTimeout(()=>{
+      GetVotes()
+    },1000)
+  }
+  function handleEditMany(presenceMany){
+    let precensaBoolean = false
+    if(presenceMany === 'Presente') precensaBoolean = true
+    PatchPresenceParlMany(precensaBoolean)
+    setTimeout(()=>{
+      GetVotes()
+    },1000)
+  }
 
+  console.log(voteResParl, 'voteResParl')
   return (
     <>
     {
@@ -77,35 +96,55 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                   Votos parlamentares
                 </h3>
                 <ul  className="flex flex-col gap-2">
-                  {voteResParl && voteResParl.map(parl => (
-                    <>{parl.presenca && <li key={parl.id} className="flex gap-8 text-center items-center w-[500px] justify-between">
+                    <li 
+                      className="hidden gap-8 text-center items-center w-[500px] justify-between border-b-2 pb-2"
+                    >
+                      Modificar Todos
+                      <div className="flex gap-4">
+                          <select onChange={(e)=>{
+                            const novaPresenca = e.target.value
+                            handleEditMany(novaPresenca)
+                          }} value={presenceMany ? 'Presente': 'Ausente'} 
+                          className={`border rounded-md px-2 py-1 w-[150px] text-center ${!presenceMany ? 'text-red-400' : 'text-green-400'}`} name="" id=""
+                        >
+                              <option value="Ausente">Ausente</option>
+                              <option value="Presente">Presente</option>
+                        </select> 
+                      </div>
+
+                    </li>
+                  {voteResParl.map(parl => (
+                    <li 
+                    key={parl.id} 
+                    className="flex gap-8 text-center items-center w-[500px] justify-between"
+                    >
                     {parl.name}
                     
                     <div className="flex gap-4">
-                        {!parl.presenca ?
-                          <span className="flex text-red-400">
-                            Ausente
-                        </span>
-                        : <span className="flex text-green-400">
-                          Presente
-                        </span> }
-                        
-                        {
-                          !parl.presenca
-                          ?
-                            <span className="border rounded-md px-2 py-1 w-[150px]">
+                        {/* {parl.presenca} */}
+                        <select onChange={(e)=>{
+                            const novaPresenca = e.target.value
+                            handleEditPresence(parl._id, novaPresenca)
+                          }} value={parl.presenca ? 'Presente': 'Ausente'} 
+                          className={`border rounded-md px-2 py-1 w-[150px] text-center ${!parl.presenca ? 'text-red-400' : 'text-green-400'}`} name="" id=""
+                        >
+                              <option value="Ausente">Ausente</option>
+                              <option value="Presente">Presente</option>
+                        </select> 
+                        {!parl.presenca
+                          ? <span className="border rounded-md px-2 py-1 w-[150px]">
                               {parl.voto}
                             </span>
-                            :
-                            (parl.voto.toLowerCase() === "não votou" ? <select onChange={(e)=>{
-                              const novoVoto = e.target.value
-                              handleEditVote(parl.user, novoVoto )
-                              }} value={parl.voto} className="border rounded-md px-2 py-1 w-[150px] text-center" name="" id="">
-                              <option value="Não votou">Não votou</option>
-                              <option value="Sim">Sim</option>
-                              <option value="Não">Não</option>
-                              <option value="Abster">Abster</option>
-                            </select> 
+                          : (parl.voto.toLowerCase() === "não votou" 
+                            ? <select onChange={(e)=>{
+                                const novoVoto = e.target.value
+                                handleEditVote(parl.user, novoVoto )
+                                }} value={parl.voto} className="border rounded-md px-2 py-1 w-[150px] text-center" name="" id="">
+                                <option value="Não votou">Não votou</option>
+                                <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                                <option value="Abster">Abster</option>
+                              </select> 
                             : <span className="border rounded-md px-2 py-1 w-[150px]">
                                 {parl.voto}
                               </span>
@@ -113,11 +152,8 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                         }
                     </div>
                   </li>
-                  }
-                  </>
                   ))}
                 </ul>
-
               </div>
             </div>
             <div>
