@@ -5,6 +5,7 @@ import { PatchPanelView, openClosePanelView } from "../../services/apiNode"
 import { ResultVoteControl } from "./ResultVote"
 import {  MessageControl } from "./Message"
 import { SpeechControl } from "./SpeechControl/index"
+import { Presence } from "./Presence"
 
 export function PainelEletronico({ session }){
   const { painelLayout, setPainelLayout,SearchParlSpeech, SaveIdPanel, panelId, setPanelId, estado, setEstado } = useContext(AuthContext)
@@ -70,13 +71,25 @@ export function PainelEletronico({ session }){
                     onClick={(e:any)=>{
                       handleViewWindow(1)
                       setForm(e.target.value)
+                      setPainelLayout('presenca')
+                    }} 
+                    className={`flex border px-2 py-2 rounded-md ${form == 'presenca' && 'bg-gray-400 text-white'}`} 
+                    value="presenca"
+                    type="button"
+                >
+                  Presença
+                </button>
+                <button 
+                    onClick={(e:any)=>{
+                      handleViewWindow(1)
+                      setForm(e.target.value)
                       setPainelLayout('presencavotacao')
                     }} 
                     className={`flex border px-2 py-2 rounded-md ${form == 'presencavotacao' && 'bg-gray-400 text-white'}`} 
                     value="presencavotacao"
                     type="button"
                 >
-                  Presença e votação
+                  votação
                 </button>
                 <button 
                   onClick={(e:any)=>{
@@ -130,6 +143,10 @@ export function PainelEletronico({ session }){
         {
           form == 'presencavotacao' 
           && <PresenceVoteControl sessionId={session.id} />
+        }
+        {
+          form == 'presenca' 
+          && <Presence sessionId={session.id} />
         }
         {
           form == 'resultadodevotacao' 
