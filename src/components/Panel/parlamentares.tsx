@@ -14,7 +14,31 @@ export function PainelParlamentares ({ dados, materia}) {
   },[])
   console.log(dados, "dados")
   console.log(matters, "mattersno painel ")
-
+  const partidos = [
+    { name: "CRISTINA MAGNO", partido: "PP" },
+    { name: "BRUNO OLIVEIRA", partido: "PRTB" },
+    { name: "CASÉ", partido: "UNIÃO" },
+    { name: "DANIEL MACIEL", partido: "PP" },
+    { name: "DECO", partido: "PSC" },
+    { name: "DR EDUARDO", partido: "PV" },
+    { name: "FURLANI", partido: "UNIÃO" },
+    { name: "GUSTAVO GOMES", partido: "REPUB" },
+    { name: "JOSÉ MARQUES", partido: "PSD" },
+    { name: "JOÃOZINHO DO AR", partido: "DC" },
+    { name: "LUCIANA ALVES", partido: "DC" },
+    { name: "MAMEDE", partido: "PSC" },
+    { name: "MARIA LÚCIA", partido: "PRTB" },
+    { name: "MARQUINHO", partido: "UNIÃO" },
+    { name: "PAOLA DA PIZZARIA", partido: "PSDB" },
+    { name: "PAULO GRÁFICA", partido: "UNIÃO" },
+    { name: "PAULO CHUCHU", partido: "UNIÃO" },
+    { name: "PAULO SANDRO", partido: "DC" },
+    { name: "PISSULA", partido: "PV" },
+    { name: "PROF. FERNANDA", partido: "PT" },
+    { name: "RAYANE BRAGA", partido: "UNIÃO" },
+    { name: "WAGUIM", partido: "UNIÃO" },
+    { name: "MARCELL CASTRO", partido: "CIDADANIA" }
+  ];
 
 // Verificar os dados do retorno parar conferir se 
 // visualizar o voto do parl na tela do painel
@@ -36,7 +60,7 @@ console.log(materia, "materia")
     {dados && 
     <div className="flex flex-col w-full min-h-[600px] lg:min-h-full sm:max-h-screen justify-center items-center mt-5">
       <div className="grid  sm:grid-cols-3 gap-4 px-2 lg:w-[80%]">
-        {dados.stateVote.map(par=> (
+        {dados.stateVote.map((par, index)=> (
           <div key={par.id} className="flex gap-4 justify-between border rounded-l-[48px]">
             <div className="flex gap-2 items-center ">
               <div className="flex bg-white w-12 h-12 lg:w-12 lg:h-12 xl:w-16  xl:h-16 object-cover overflow-hidden rounded-full justify-center">
@@ -46,13 +70,18 @@ console.log(materia, "materia")
                 <h2 className="flex sm:text-[8px] lg:text-base font-semibold">
                   {par.name}
                 </h2>
-                {
-                  par.presenca ? 
-                  <span className="text-green-400 font-bold">Presente</span>
-                  : <span className="text-red-400 font-bold">
-                    Ausente
+                <div className="flex gap-2">
+                  <span>
+                    {partidos[index].partido} |
                   </span>
-                }
+                  {
+                    par.presenca ? 
+                    <span className="text-green-400 font-bold">Presente</span>
+                    : <span className="text-red-400 font-bold">
+                      Ausente
+                    </span>
+                  }
+                </div>
               </div>
             </div>
             {
