@@ -72,7 +72,7 @@ console.log(materia, "materia")
                 </h2>
                 <div className="flex gap-2">
                   <span>
-                    {partidos[index].partido} |
+                    {partidos[index]?.partido ? partidos[index]?.partido : ''} |
                   </span>
                   {
                     par.presenca ? 
