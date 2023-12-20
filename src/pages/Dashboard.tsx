@@ -161,7 +161,7 @@ export function Dashboard() {
           <div className="flex flex-col gap-2">
             <h3 className="px-2 py-4 text-xl">Resultados</h3>
             <div className="flex flex-col gap-5">
-              {sessions && sessions.map(ses => (
+              {sessions ? sessions.map(ses => (
                 <div key={ses.id} onClick={() => { navigate(`/sessoes/sessao/${ses.id}`) }} className="flex flex-col bg-gray-200 p-2 rounded-md cursor-pointer">
                   <h3 className="flex font-bold text-blue-500 text-xl">
                     {ses.__str__}
@@ -183,7 +183,9 @@ export function Dashboard() {
                     {ses.tipo == 1 && <span>Sessão Ordinária</span>}
                   </div>
                 </div>
-              ))}
+              ))
+              : <h5 className="mx-auto">Nenhuma sessão encontrada...</h5>
+            }
             </div>
           </div>
         </div>

@@ -113,7 +113,7 @@ export function Register({ setMatterState, sessionId, setProjectsView}) {
                       </div>
 
                     </li>
-                  {voteResParl.map(parl => (
+                  {voteResParl && voteResParl.map(parl => (
                     <li 
                     key={parl.id} 
                     className="flex gap-8 text-center items-center w-[500px] justify-between"
