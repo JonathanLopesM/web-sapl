@@ -8,9 +8,7 @@ export function PainelParlamentares ({ dados, materia}) {
     if(!parlamentares){
       GetParlamentares()
     }
-    // if(!matters){
-    //    Matters(sessionId)
-    // }
+
   },[])
   console.log(dados, "dados")
   console.log(matters, "mattersno painel ")
