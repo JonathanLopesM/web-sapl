@@ -46,13 +46,15 @@ export default function Login() {
     <div className="flex px-10 justify-items-center h-screen ">
         <div className="hidden sm:flex flex-col items-center gap-4 justify-center mx-auto ">
           <img className="w-70" src="/novace_logo.png" alt="Logo Novace" />
+          
         </div>
         <div className="flex min-h-full flex-col justify-center  py-12 sm:px-12 sm:border-l-2 ">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="flex-row sm:mx-auto sm:w-full sm:max-w-sm text-center">
             <img className="sm:hidden mx-auto w-70" src="/novace_logo.png" alt="Logo Novace" />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Faça o login para acessar a área!
             </h2>
+            <h4 className="mx-auto font-semibold">Itaiaia</h4>
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
