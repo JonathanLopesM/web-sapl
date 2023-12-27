@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const api = axios.create({
   // @ts-ignore
-  baseURL: 'https://saplitatiaia.novace.com.br'
+  baseURL: import.meta.env.VITE_URL_API,
 })
 
 
