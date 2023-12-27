@@ -9,6 +9,11 @@ export default function Login() {
   const [visible, setVisible ] = useState(false)
   const InputType = visible ? "text" : "password"
 
+  // @ts-ignore
+  const city = import.meta.env.VITE_LOCAL ? import.meta.env.VITE_LOCAL : ''  
+
+  console.log(city)
+
   const history = useNavigate()
   const navigate = useNavigate();
   const token = localStorage.getItem('sessionid')
@@ -54,7 +59,7 @@ export default function Login() {
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Faça o login para acessar a área!
             </h2>
-            <h4 className="mx-auto font-semibold">Itaiaia</h4>
+            <h4 className="mx-auto font-semibold">{city}</h4>
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
